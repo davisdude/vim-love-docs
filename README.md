@@ -1,6 +1,6 @@
 Vim LOVE Docs
 ###
 
-Run [`gen\gen.bat`](gen/gen.bat) or [`gen\gen.sh`](gen/gen.sh) (__untested__) and put the output [`lua.vim`](syntax/lua.vim) inside of `vimfiles\after\syntax` for the most up-to-date.
+Put the [`gen`](gen) directory inside `vimfiles\after` then run [`gen.bat`](gen/gen.bat) or [`gen.sh`](gen/gen.sh).
 
-The file included should work fine until the next update.
+The file included should work fine until the next update of LOVE.
