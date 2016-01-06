@@ -11,13 +11,13 @@ oldprint( [[if exists( "b:love_syntax" )
 endif]] )
 oldprint( 'let b:love_syntax = 1' )
 
-local originalfuncstr = 'syntax match lovefunction "\\(^\\|\\s\\)love\\.\\('
+local originalfuncstr = 'syntax match lovefunction "\\<love\\.\\('
 local funcstr = originalfuncstr
 
 local originaltypestr = 'syntax match lovetype "[\\:\\.]\\('
 local typestr = originaltypestr
 
-local originalcallbackstr = 'syntax match lovefunction "\\(^\\|\\s\\)love\\.\\('
+local originalcallbackstr = originalfuncstr
 local callbackstr = originalcallbackstr
 
 local function extractData( tab, index )
@@ -43,7 +43,7 @@ local function extractData( tab, index )
 			end
 			if func then 
 				-- We don't want to be able to have underscores after the word
-				funcstr = funcstr:sub( 1, -3 ) .. '\\)\\)\\_[^_a-zA-Z]"me=e-1'
+				funcstr = funcstr:sub( 1, -3 ) .. '\\)\\)\\>"'
 				oldprint( funcstr )
 				funcstr = originalfuncstr
 			end
@@ -55,7 +55,7 @@ local function extractData( tab, index )
 			end
 			if callback then 
 				-- We don't want to be able to have underscores after the word
-				callbackstr = callbackstr:sub( 1, -3 ) .. '\\)\\_[^_a-zA-Z]"me=e-1'
+				callbackstr = callbackstr:sub( 1, -3 ) .. '\\)\\>"'
 				oldprint( callbackstr )
 				callbackstr = originalcallbackstr
 			end
