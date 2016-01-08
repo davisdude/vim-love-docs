@@ -1,15 +1,9 @@
 local api = require 'love-api.love_api'
 
-local oldprint = print
-local function print( group, str, contained )
-	oldprint( 'syntax match ' .. group .. ' ' .. '"' .. str:gsub( '[%.:]', '\\%1' ) .. '"' .. ( contained or '' ) )
-end
-
-
-oldprint( [[if exists( "b:love_syntax" )
+print( [[if exists( "b:love_syntax" )
 	finish
 endif]] )
-oldprint( 'let b:love_syntax = 1' )
+print( 'let b:love_syntax = 1' )
 
 local originalfuncstr = 'syntax match lovefunction "\\<love\\.\\('
 local funcstr = originalfuncstr
@@ -42,21 +36,19 @@ local function extractData( tab, index )
 				end
 			end
 			if func then 
-				-- We don't want to be able to have underscores after the word
 				funcstr = funcstr:sub( 1, -3 ) .. '\\)\\)\\>"'
-				oldprint( funcstr )
+				print( funcstr )
 				funcstr = originalfuncstr
 			end
 			if typ then
 				-- We don't want to be able to have underscores after the word or highlight the . or :
 				typestr = typestr:sub( 1, -3 ) .. '\\)\\_[^_a-zA-Z]"ms=s+1,me=e-1'
-				oldprint( typestr )
+				print( typestr )
 				typestr = originaltypestr
 			end
 			if callback then 
-				-- We don't want to be able to have underscores after the word
 				callbackstr = callbackstr:sub( 1, -3 ) .. '\\)\\>"'
-				oldprint( callbackstr )
+				print( callbackstr )
 				callbackstr = originalcallbackstr
 			end
 		end
@@ -65,8 +57,8 @@ local function extractData( tab, index )
 end
 extractData( api )
 
-oldprint( 'let b:current_syntax = "lua"' )
-oldprint( 'highlight lovefunction guifg=#ff60e2' )
-oldprint( 'highlight lovetype guifg=#ff60e2' )
+print( 'let b:current_syntax = "lua"' )
+print( 'highlight lovefunction guifg=#ff60e2' )
+print( 'highlight lovetype guifg=#ff60e2' )
 
 love.event.quit()
