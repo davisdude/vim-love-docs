@@ -22,10 +22,10 @@ local function extractData( tab, index )
 			local typ = false
 			local callback = false
 			if i == 'config' then
-				confstr = confstr .. '\\(\\<love\\.conf\\>\\)\\|'
+				print( 'syntax match loveconf "\\(\\<love\\.conf\\>\\)"' )
 				for _, vv in pairs( v ) do
 					if vv.name then
-						confstr = confstr .. '\\(\\<'
+						confstr = confstr .. '\\(\\.'
 						if type( vv ) == 'table' then
 							confstr = confstr .. vv.name .. '\\('
 							local hasSubs = false
@@ -40,7 +40,7 @@ local function extractData( tab, index )
 						confstr = confstr:sub( 1, -1 ) .. '\\)\\|'
 					end
 				end
-				print( confstr:sub( 1, -3 ) .. '" contained' )
+				print( confstr:sub( 1, -3 ) .. '"ms=s+1 contained' )
 			else
 				for _, vv in pairs( v ) do
 					if tab.name then

@@ -64,7 +64,8 @@ syntax match lovefunction "\<love\.\(directorydropped\|draw\|errhand\|filedroppe
 syntax match lovefunction "\<love\.\(getVersion\)\>"
 syntax match lovetype "[\:\.]\(getPointer\|getSize\|getString\)\_[^_a-zA-Z]"ms=s+1,me=e-1
 syntax match lovetype "[\:\.]\(type\|typeOf\)\_[^_a-zA-Z]"ms=s+1,me=e-1
-syntax match loveconf "\(\<love\.conf\>\)\|\(\<identity\>\)\|\(\<version\>\)\|\(\<console\>\)\|\(\<accelerometerjoystick\>\)\|\(\<window\(\.title\|\.icon\|\.width\|\.height\|\.borderless\|\.resizable\|\.minwidth\|\.minwidth\|\.fullscreen\|\.fullscreentype\|\.vsync\|\.msaa\|\.display\|\.highdpi\|\.x\|\.y\)\>\)\|\(\<modules\(\.audio\|\.event\|\.graphics\|\.image\|\.joystick\|\.keyboard\|\.math\|\.mouse\|\.physics\|\.sound\|\.system\|\.timer\|\.touch\|\.video\|\.window\|\.thread\)\>\)" contained
+syntax match loveconf "\(\<love\.conf\>\)"
+syntax match loveconf "\(\.identity\>\)\|\(\.version\>\)\|\(\.console\>\)\|\(\.accelerometerjoystick\>\)\|\(\.gammacorrect\>\)\|\(\.window\(\.title\|\.icon\|\.width\|\.height\|\.borderless\|\.resizable\|\.minwidth\|\.minheight\|\.fullscreen\|\.fullscreentype\|\.vsync\|\.msaa\|\.display\|\.highdpi\|\.x\|\.y\)\>\)\|\(\.modules\(\.audio\|\.event\|\.graphics\|\.image\|\.joystick\|\.keyboard\|\.math\|\.mouse\|\.physics\|\.sound\|\.system\|\.timer\|\.touch\|\.video\|\.window\|\.thread\)\>\)"ms=s+1 contained
 highlight lovefunction guifg=#ff60e2
 highlight lovetype guifg=#ff60e2
 highlight loveconf guifg=#ff60e2
