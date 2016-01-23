@@ -1,11 +1,4 @@
-if exists( "b:love_syntax" )
-	finish
-endif
-let b:love_syntax = 1
-syntax match lovefunction "\<love\.\(directorydropped\|draw\|errhand\|filedropped\|focus\|gamepadaxis\|gamepadpressed\|gamepadreleased\|joystickadded\|joystickaxis\|joystickhat\|joystickpressed\|joystickreleased\|joystickremoved\|keypressed\|keyreleased\|load\|lowmemory\|mousefocus\|mousemoved\|mousepressed\|mousereleased\|quit\|resize\|run\|textedited\|textinput\|threaderror\|touchmoved\|touchpressed\|touchreleased\|update\|visible\|wheelmoved\)\>"
-syntax match lovefunction "\<love\.\(getVersion\)\>"
-syntax match lovetype "[\:\.]\(getPointer\|getSize\|getString\)\_[^_a-zA-Z]"ms=s+1,me=e-1
-syntax match lovetype "[\:\.]\(type\|typeOf\)\_[^_a-zA-Z]"ms=s+1,me=e-1
+syn region lovefuncregion transparent start='love.conf' end='end' contains=ALL
 syntax match lovetype "[\:\.]\(clone\|getAttenuationDistances\|getChannels\|getCone\|getDirection\|getDuration\|getPitch\|getPosition\|getRolloff\|getType\|getVelocity\|getVolume\|getVolumeLimits\|isLooping\|isPaused\|isPlaying\|isStopped\|pause\|play\|resume\|rewind\|seek\|setDirection\|setAttenuationDistances\|setCone\|setLooping\|setPitch\|setPosition\|setRolloff\|setVelocity\|setVolume\|setVolumeLimits\|stop\|tell\)\_[^_a-zA-Z]"ms=s+1,me=e-1
 syntax match lovefunction "\<love\.\(audio\.\(getDistanceModel\|getDopplerScale\|getSourceCount\|getOrientation\|getPosition\|getVelocity\|getVolume\|newSource\|pause\|play\|resume\|rewind\|setDistanceModel\|setDopplerScale\|setOrientation\|setPosition\|setVelocity\|setVolume\|stop\)\)\>"
 syntax match lovefunction "\<love\.\(event\.\(clear\|poll\|pump\|push\|quit\|wait\)\)\>"
@@ -67,6 +60,11 @@ syntax match lovefunction "\<love\.\(touch\.\(getPosition\|getPressure\|getTouch
 syntax match lovefunction "\<love\.\(video\.\(newVideoStream\)\)\>"
 syntax match lovetype "[\:\.]\(getDimensions\|getFilter\|getHeight\|getSource\|getStream\|getWidth\|isPlaying\|pause\|play\|rewind\|seek\|setFilter\|setSource\|tell\)\_[^_a-zA-Z]"ms=s+1,me=e-1
 syntax match lovefunction "\<love\.\(window\.\(close\|fromPixels\|getDisplayName\|getFullscreen\|getFullscreenModes\|getIcon\|getMode\|getPixelScale\|getPosition\|getTitle\|hasFocus\|hasMouseFocus\|isCreated\|isDisplaySleepEnabled\|isVisible\|maximize\|minimize\|requestAttention\|setDisplaySleepEnabled\|setFullscreen\|setIcon\|setMode\|setPosition\|setTitle\|showMessageBox\|toPixels\)\)\>"
-let b:current_syntax = "lua"
+syntax match lovefunction "\<love\.\(directorydropped\|draw\|errhand\|filedropped\|focus\|gamepadaxis\|gamepadpressed\|gamepadreleased\|joystickadded\|joystickaxis\|joystickhat\|joystickpressed\|joystickreleased\|joystickremoved\|keypressed\|keyreleased\|load\|lowmemory\|mousefocus\|mousemoved\|mousepressed\|mousereleased\|quit\|resize\|run\|textedited\|textinput\|threaderror\|touchmoved\|touchpressed\|touchreleased\|update\|visible\|wheelmoved\)\>"
+syntax match lovefunction "\<love\.\(getVersion\)\>"
+syntax match lovetype "[\:\.]\(getPointer\|getSize\|getString\)\_[^_a-zA-Z]"ms=s+1,me=e-1
+syntax match lovetype "[\:\.]\(type\|typeOf\)\_[^_a-zA-Z]"ms=s+1,me=e-1
+syntax match loveconf "\(\<love\.conf\>\)\|\(\<identity\>\)\|\(\<version\>\)\|\(\<console\>\)\|\(\<accelerometerjoystick\>\)\|\(\<window\(\.title\|\.icon\|\.width\|\.height\|\.borderless\|\.resizable\|\.minwidth\|\.minwidth\|\.fullscreen\|\.fullscreentype\|\.vsync\|\.msaa\|\.display\|\.highdpi\|\.x\|\.y\)\>\)\|\(\<modules\(\.audio\|\.event\|\.graphics\|\.image\|\.joystick\|\.keyboard\|\.math\|\.mouse\|\.physics\|\.sound\|\.system\|\.timer\|\.touch\|\.video\|\.window\|\.thread\)\>\)" contained
 highlight lovefunction guifg=#ff60e2
 highlight lovetype guifg=#ff60e2
+highlight loveconf guifg=#ff60e2
