@@ -1,5 +1,6 @@
 local api = require 'love-api.love_api'
 
+local tags = {}
 local bodies = {}
 local enums = {}
 local maxWidth = 78
@@ -12,10 +13,28 @@ local function increment()
 end
 
 -- {{{
+local function rightAlign( ... )
+	local elements = { ... }
+	local last = ''
+	local width = maxWidth
+	if elements[#elements] == true then
+		table.remove( elements, #elements )
+		width = elements[#elements]
+		table.remove( elements, #elements )
+		last = elements[#elements]
+		elements[#elements] = ' '
+	end
+	local length = width
+	for i = 1, #elements - 1 do
+		length = length - #elements[i]
+	end
+	return ( ( '%s' ):rep( #elements - 1 ) .. '%+' .. length .. 's' ):format( unpack( elements ) ) .. last
+end
+
 local seps = {
 	'==',
 	'--',
-	'- '
+	' -'
 }
 
 local function newSection( name, ref )
@@ -23,7 +42,7 @@ local function newSection( name, ref )
 
 %s
 %s
-]]):format( seps[ ( select( 2, index:gsub( '%.', '' ) ) ) - 0 ]:rep( maxWidth / 2 ), ( '%s%+' .. maxWidth - #name ..'s' ):format( name, '*' .. docName .. ref .. '*' ) )
+]]):format( seps[ ( select( 2, index:gsub( '%.', '' ) ) ) ]:rep( maxWidth / 2 ), rightAlign( name, '*' .. docName .. ref .. '*' ) )
 end
 
 local function printBodies()
@@ -44,7 +63,7 @@ local function addContent( ... )
 				local tabs = (' '):rep( 4 * select( 2, index:gsub( '(%.)', '%1' ) ) )
 				local ref = '|' .. docName .. v[2] .. '|'
 				local name = ' ' .. v[1]
-				print( tabs .. ( '%s%s%+' .. contentWidth - #index - #name + #ref - #tabs .. 's' ):format( index, name, ref ):gsub( '([%d%.%s]+%w+)(%s*)(|.*)', function( a, b, c ) return a .. ('.'):rep( #b ) .. c end ) .. '' )
+				print( rightAlign( tabs, index, name, ref, contentWidth, true ):gsub( '([%d%.%s]+%w+)(%s*)(|.*)', function( a, b, c ) return a .. ('.'):rep( #b ) .. c end ) .. '' )
 				table.insert( bodies, { newSection( index .. ' ' .. v[1], v[2] ), ( v[3] or function() end )( v[1], v[2] ) } )
 			else
 				index = index .. '0.'
@@ -84,7 +103,7 @@ local function shallowReturn( element )
 		for i, v in ipairs( element ) do
 			local temp = ( ' ' ):rep( 4 ) ..   '- ' .. v.name
 			local ref = makeRef( '*' .. docName .. v.name .. '*' )
-			str = str .. temp .. ( '%+' .. maxWidth - #temp .. 's\n' ):format( ref )
+			str = str .. rightAlign( temp, ref ) .. '\n'
 		end
 		return str:sub( 1, -2 )
 	end
