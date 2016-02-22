@@ -15,6 +15,7 @@ To-Do:
 - Enums
 - Callbacks
 - Make args and returns that are enums point to enums
+- Generate tags file
 
 Screenshots
 ---
