@@ -6,7 +6,7 @@ Installing
 
 - Pathogen: Put in `vimfiles/bundles`
 - Vundle: Should work (untested)
-- Other: Put the folders (other than [gen](gen) into their corresponding directories in `vimfiles`. 
+- Other: Put the folders (other than [src](src)) into their corresponding directories in `vimfiles`. 
 
 
 
