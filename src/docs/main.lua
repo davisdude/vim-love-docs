@@ -12,7 +12,6 @@ local function increment()
 	index = index:gsub( '(.-)(%d+)%.$', function( a, b ) return a .. ( b + 1 ) .. '.' end )
 end
 
--- {{{
 local function rightAlign( ... )
 	local elements = { ... }
 	local last = ''
@@ -31,10 +30,31 @@ local function rightAlign( ... )
 	return ( ( '%s' ):rep( #elements - 1 ) .. '%+' .. length .. 's' ):format( unpack( elements ) ) .. last
 end
 
+local function getLengthOfLongestLine( str )
+	local length = #str:match( '^([^\n]+)\n?' )
+	str:gsub( '\n([^\n]-)', function( a ) length = #a > length and #a or length end )
+	return length
+end
+
+local function center( text )
+	local str = ''
+	if type( text ) == 'string' then
+		local longest = getLengthOfLongestLine( text )
+		text:gsub( 's*([^\n]+)\n?', function( a ) 
+                    local len = math.floor( ( maxWidth - longest ) / 2 )
+                    str = str .. ( ' ' ):rep( len ) .. a .. ( ' ' ):rep( len ) .. '\n' end )
+	else
+		for i, v in ipairs( text ) do
+			str = str .. center( v )
+		end
+	end
+	return str
+end
+
 local seps = {
 	'==',
 	'--',
-	' -'
+	'--'
 }
 
 local function newSection( name, ref )
@@ -51,7 +71,6 @@ local function printBodies()
 		print( v[2] )
 	end
 end
--- }}}
 
 local function addContent( ... )
 	local info = { ... }
@@ -63,7 +82,7 @@ local function addContent( ... )
 				local tabs = (' '):rep( 4 * select( 2, index:gsub( '(%.)', '%1' ) ) )
 				local ref = '|' .. docName .. v[2] .. '|'
 				local name = ' ' .. v[1]
-				print( rightAlign( tabs, index, name, ref, contentWidth, true ):gsub( '([%d%.%s]+%w+)(%s*)(|.*)', function( a, b, c ) return a .. ('.'):rep( #b ) .. c end ) .. '' )
+				print( rightAlign( tabs, index, name, ref, contentWidth, true ):gsub( '([%d%.%s]+%w+)(%s*)(%s|.*)', function( a, b, c ) return a .. ('.'):rep( #b ) .. c end ) .. '' )
 				table.insert( bodies, { newSection( index .. ' ' .. v[1], v[2] ), ( v[3] or function() end )( v[1], v[2] ) } )
 			else
 				index = index .. '0.'
@@ -113,7 +132,7 @@ local function makeVariant( index, tab, fail )
 	local str = '- ' .. index:gsub( '(.)(.*)', function( a, b ) return a:upper() .. b .. ':' end )
 	if tab[index] then
 		for i, v in ipairs( tab[index] ) do
-			str = str .. '\n' .. ( ' ' ):rep( 12 ).. wrap( '-~ ' .. v.name .. ': [' .. v.type .. '] ' .. v.description, ( ' ' ):rep( 14 ), 12 )
+			str = str .. '\n' .. ( ' ' ):rep( 12 ).. wrap( '-~ ' .. v.name .. ': <' .. v.type .. '> ' .. v.description, ( ' ' ):rep( 14 ), 12 )
 		end
 		str = str .. '\n' .. ( ' ' ):rep( 4 )
 	else
@@ -124,7 +143,7 @@ end
 
 local function generateVariants( tab )
 	local str = ''
-	str = str .. 'Variants:\n' .. ( ' ' ):rep( 4 )
+	str = str .. '- Variants:\n' .. ( ' ' ):rep( 4 )
 	for i, v in ipairs( tab ) do
 		str = str .. '- ' .. i .. ':\n' .. ( ' ' ):rep( 8 )
 		str = str .. makeVariant( 'returns', v, 'Nothing' ) .. ( ' ' ):rep( 4 ) .. makeVariant( 'arguments', v, 'None' )
@@ -153,25 +172,19 @@ local function prepend( parent, new )
 end
 
 function love.load( a )
-	-- {{{ Header
-	--print
-([[*love.txt*	Documentation for the LOVE game engine version %s
+	print( ( [[*love.txt*	Documentation for the LOVE game engine version %s
 
-                      .sy+ :yy/
-                      +NNm.hNNh
-    /+                .+so+os+.    :+`                -+.   `.:+++/-.`
-   :Md             `/hmdysssydmh/` +Mh`              -NN- .sdmhsssydmh+`
-   hM:            .hNs-       -oNd. sMy             .mN: /Nm/`      .oNd.
-   NM`            dM+           /Md  yMs           .mN/ :Mm.          yMo
-   mM.           .Mm             mM. `hMo         .mN/  yM/         .+Nm.
-   oMs           `MN`           `NM`  `yMs       -mN/   sM+     :+sdmdo.
-   `hMs`          oMy`         `yMo    `yMy`    /Nm:    .NN:    ss+:.`
-    `+mms:.`   `.  +mmo-`` `.-omm+       oNd: .sNh.      .hNy:.`  `` :+/.
-      `:shdmmmmmd:  `/ydmmmmddy/`         -ymmmd/`        `:shdmmdmd-+s+-
-          ```.```      ```.```              ````              ``````  ``
+%s
+%s
+]] ):format( '0.10.1' --[[ Pending pull request api.version ]], center( [[
+ _       o__o __      __ ______ 
+| |     / __ \\ \    / /|  ____|
+| |    | |  | |\ \  / / | |__   
+| |    | |  | | \ \/ /  |  __|  
+| |____| |__| |  \  /   | |____ 
+|______|\____/    \/    |______|
 
-]]):format( api.config ) -- Get version string
-	-- }}}
+]] ), center{ 'The complete solution for Vim with LOVE.', 'Includes highlighting and documentation.' } ) ) -- Get version string
 	print( newSection( 'CONTENT', 'content' ) )
 
 	prepend( api.modules, { { name = 'love', description = 'General functions', functions = api.functions } } )
@@ -181,9 +194,9 @@ function love.load( a )
 	for i, v in ipairs( api.modules ) do
 		table.insert( tab, { v.name, makeRef( v.name ), function()
 			local str = v.description .. '\n\n'
-			str = str .. 'Types: '
+			str = str .. '- Types: '
 			str = str .. shallowReturn( v.types )
-			str = str .. '\nEnums: '
+			str = str .. '\n- Enums: '
 			str = str .. shallowReturn( v.enums )
 			return str
 		end } )
