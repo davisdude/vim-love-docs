@@ -42,6 +42,7 @@ end
 local function center( text )
 	local str = ''
 	if type( text ) == 'string' then
+		text = text
 		local longest = getLengthOfLongestLine( text )
 		text:gsub( 's*([^\n]+)\n?', function( a )
 			local len = math.floor( ( maxWidth - longest ) / 2 )
@@ -63,9 +64,9 @@ local function center( text )
 	local function newSection( name, ref, shouldDotRef )
 		return ([[
 
-		%s
-		%s
-		]]):format( seps[ ( select( 2, index:gsub( '%.', '' ) ) ) ]:rep( maxWidth / 2 ), rightAlign( name, ( shouldDotRef and makeRef or function( str ) return str end )( '*' .. docName .. ref .. '*' ) ) )
+%s
+%s
+]]):format( seps[ ( select( 2, index:gsub( '%.', '' ) ) ) ]:rep( maxWidth / 2 ), rightAlign( name, ( shouldDotRef and makeRef or function( str ) return str end )( '*' .. docName .. ref .. '*' ) ) )
 	end
 
 	local function printBodies()
@@ -176,17 +177,17 @@ local function center( text )
 		( [[
 
 
-		%s
-		%s]] ):format( center( [[
+%s
+%s]] ):format( center( [[
 
-		 _       o__o __      __ ______
-		| |     / __ \\ \    / //  ____\
-		| |    | |  | |\ \  / / | |__
-		| |    | |  | | \ \/ /  |  __|
-		| |____| |__| |  \  /   | |____
-		\______|\____/    \/    \______/
+ _       o__o __      __ ______
+| |     / __ \\ \    / //  ____\
+| |    | |  | |\ \  / / | |__
+| |    | |  | | \ \/ /  |  __|
+| |____| |__| |  \  /   | |____
+\______|\____/    \/    \______/
 
-		]] ), center{ 'The complete solution for Vim with LOVE.', 'Includes highlighting and documentation.' } ) ) -- Get version string
+]] ), center{ 'The complete solution for Vim with LOVE.', 'Includes highlighting and documentation.' } ) )
 		print( newSection( 'CONTENT', 'content' ) )
 
 		prepend( api.modules, { { name = 'love', description = 'General functions', functions = api.functions } } )

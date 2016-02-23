@@ -1,10 +1,10 @@
 *love.txt*           Documentation for the LOVE game framework version 0.10.1.	
 
-                        _       o__o __      __ ______ 
+                        _       o__o __      __ ______
                        | |     / __ \\ \    / //  ____\
-                       | |    | |  | |\ \  / / | |__   
-                       | |    | |  | | \ \/ /  |  __|  
-                       | |____| |__| |  \  /   | |____ 
+                       | |    | |  | |\ \  / / | |__
+                       | |    | |  | | \ \/ /  |  __|
+                       | |____| |__| |  \  /   | |____
                        \______|\____/    \/    \______/
 
                    The complete solution for Vim with LOVE.
