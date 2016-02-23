@@ -1,6 +1,5 @@
 local api = require 'love-api.love_api'
 
-local tags = {}
 local bodies = {}
 local enums = {}
 local maxWidth = 78
@@ -159,6 +158,7 @@ local function createFunctions( tab, funcs, n )
 	for i, v in ipairs( funcs ) do
 		local name = n .. v.name
 		table.insert( new, { v.name, makeRef( name ), function()
+			-- Add function descriptions
 			return generateVariants( v.variants )
 		end } )
 	end
@@ -206,8 +206,6 @@ function love.load( a )
 	
 	-- enums
 	-- callbacks
-	--
-	-- figure out why it does love-getSources-getSources
 
 	printBodies()
 end
