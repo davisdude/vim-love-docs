@@ -17,11 +17,12 @@ There is also a working portion that is not yet complete. This will allow you to
 Currently implemented:
 - Modules
 - Tag file
+- Make args and returns that are enums point to enums
+- Enums
 
 To-Do:
-- Enums
 - Callbacks
-- Make args and returns that are enums point to enums
+- Config flags
 
 Screenshots
 ---

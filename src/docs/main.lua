@@ -2,6 +2,7 @@ local api = require 'love-api.love_api'
 
 local bodies = {}
 local enums = {}
+local types = {}
 local maxWidth = 78
 local contentWidth = 46
 local index = '0.'
@@ -86,7 +87,7 @@ local function addContent( shouldDotRefs, ... )
 				local ref = ( shouldDotRefs and makeRef or function( str ) return str end )( '|' .. docName .. v[2] .. '|' )
 				local name = ' ' .. v[1]
 				print( rightAlign( tabs, index, name, ref, contentWidth, true ):gsub( '([%d%.%s]+%w+)(%s*)(%s|.*)', function( a, b, c ) return a .. ('.'):rep( #b ) .. c end ) .. '' )
-				table.insert( bodies, { newSection( index .. ' ' .. v[1], v[2], true ), ( v[3] or function() end )( v[1], v[2] ) } )
+				table.insert( bodies, { newSection( index .. ' ' .. v[1], v[2], v[4] ), ( v[3] or function() end )( v[1], v[2] ) } )
 			else
 				index = index .. '0.'
 				for subelement = ii, #v do
@@ -102,13 +103,14 @@ end
 local function wrap( text, tabs, offset )
 	text = text .. ' '
 	tabs = tabs or ''
+	offset = offset or #tabs
 	local str = text:match( '^(.-%s)' )
-	local w = #str + ( offset or 0 )
+	local w = #str + offset
 	text:gsub( '%f[%S].-%f[%s]', function( word )
 		word = word .. ' '
 		w = w + #word
 		if w > maxWidth then
-			w = #word
+			w = #( tabs .. word )
 			word = '\n' .. tabs .. word
 		end
 		str = str .. word
@@ -122,7 +124,7 @@ local function shallowReturn( element )
 	else
 		for i, v in ipairs( element ) do
 			local temp = ( ' ' ):rep( 4 ) ..   '- ' .. v.name
-			local ref = '*' .. docName .. v.name .. '*'
+			local ref = '|' .. docName .. v.name .. '|'
 			str = str .. rightAlign( temp, ref ) .. '\n'
 		end
 		return str:sub( 1, -2 )
@@ -133,7 +135,10 @@ local function makeVariant( index, tab, fail )
 	local str = '- ' .. index:gsub( '(.)(.*)', function( a, b ) return a:upper() .. b .. ':' end )
 	if tab[index] then
 		for i, v in ipairs( tab[index] ) do
-			str = str .. '\n' .. ( ' ' ):rep( 12 ).. wrap( '-~ ' .. v.name .. ': <' .. v.type .. '> ' .. v.description, ( ' ' ):rep( 14 ), 12 )
+			if enums[v.type] or types[v.type] then
+				v.description = v.description .. ' See |' .. docName .. v.type .. '| for more.'
+			end
+			str = str .. '\n' .. ( ' ' ):rep( 12 ).. wrap( '- ' .. v.name .. ': <' .. v.type .. '> ' .. v.description, ( ' ' ):rep( 14 ), 12 )
 		end
 		str = str .. '\n' .. ( ' ' ):rep( 4 )
 	else
@@ -189,6 +194,19 @@ function love.load( a )
 ]] ), center{ 'The complete solution for Vim with LOVE.', 'Includes highlighting and documentation.' } ) )
 	print( newSection( 'CONTENT', 'content' ) )
 
+	for i, v in ipairs( api.modules ) do
+		for ii, vv in ipairs( v.enums or {} ) do
+			enums[vv.name] = true
+		end
+		for ii, vv in ipairs( v.types or {} ) do
+			types[vv.name] = true
+		end
+	end
+	for i, v in ipairs( api.types ) do
+		types[v.name] = true
+	end
+
+	-- Modules
 	prepend( api.modules, { { name = 'love', description = 'General functions', functions = api.functions } } )
 	local tab = { 'Modules', 'modules', function()
 		return 'The modules for LOVE, i.e. love.graphics'
@@ -206,8 +224,26 @@ function love.load( a )
 	end
 	addContent( false, tab )
 
-	-- enums
-	-- callbacks
+	-- Enums
+	local tab = { 'Enums', 'enums', function()
+		return 'Constants associated with specific functions.'
+	end, false }
+	for i, v in ipairs( api.modules ) do
+		for ii, vv in ipairs( v.enums or {} ) do
+			table.insert( tab, { vv.name, vv.name, function()
+				local str = wrap( vv.description or 'ERROR: Nothing seems to be here. Check out the repo (https://github.com/love2d-community/love-api) and make a pull request' ) .. '\n'
+				str = str .. '\nConstants:\n\n'
+				for iii, vvv in ipairs( vv.constants ) do
+					str = str .. ( ' ' ):rep( 4 ) .. vvv.name .. ( ' ' ):rep( contentWidth / 2 - #vvv.name ) .. wrap( vvv.description, ( ' ' ):rep( contentWidth / 2 + 4 ) ) .. '\n'
+				end
+				return str
+			end, false } )
+		end
+	end
+	addContent( false, tab )
+
+	-- Callbacks
+	-- Config flags
 
 	printBodies()
 end
