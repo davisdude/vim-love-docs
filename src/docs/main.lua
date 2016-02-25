@@ -44,9 +44,10 @@ local function center( text )
 	local str = ''
 	if type( text ) == 'string' then
 		local longest = getLengthOfLongestLine( text )
-	text:gsub( 's*([^\n]+)\n?', function( a )
-		local len = math.floor( ( maxWidth - longest ) / 2 )
-		str = str .. ( ' ' ):rep( len ) .. a .. '\n' end )
+		text:gsub( 's*([^\n]+)\n?', function( a )
+			local len = math.floor( ( maxWidth - longest ) / 2 )
+			str = str .. ( ' ' ):rep( len ) .. a .. '\n' 
+		end )
 	else
 		for i, v in ipairs( text ) do
 			str = str .. center( v )
@@ -135,7 +136,11 @@ local function makeVariant( index, tab, fail )
 	local str = '- ' .. index:gsub( '(.)(.*)', function( a, b ) return a:upper() .. b .. ':' end )
 	if tab[index] then
 		for i, v in ipairs( tab[index] ) do
-			if enums[v.type] or types[v.type] then
+			if enums[v.type] then
+				table.insert( enums[v.type], v.name )
+				v.description = v.description .. ' See |' .. docName .. v.type .. '| for more.'
+			elseif types[v.type] then
+				table.insert( types[v.type], v.name )
 				v.description = v.description .. ' See |' .. docName .. v.type .. '| for more.'
 			end
 			str = str .. '\n' .. ( ' ' ):rep( 12 ).. wrap( '- ' .. v.name .. ': <' .. v.type .. '> ' .. v.description, ( ' ' ):rep( 14 ), 12 )
@@ -196,14 +201,14 @@ function love.load( a )
 
 	for i, v in ipairs( api.modules ) do
 		for ii, vv in ipairs( v.enums or {} ) do
-			enums[vv.name] = true
+			enums[vv.name] = {}
 		end
 		for ii, vv in ipairs( v.types or {} ) do
-			types[vv.name] = true
+			types[vv.name] = {}
 		end
 	end
 	for i, v in ipairs( api.types ) do
-		types[v.name] = true
+		types[v.name] = {}
 	end
 
 	-- Modules
@@ -213,7 +218,7 @@ function love.load( a )
 	end, false }
 	for i, v in ipairs( api.modules ) do
 		table.insert( tab, { v.name, makeRef( v.name ), function()
-			local str = v.description .. '\n\n'
+			local str = wrap( v.description ) .. '\n\n'
 			str = str .. '- Types: '
 			str = str .. shallowReturn( v.types )
 			str = str .. '\n- Enums: '
@@ -241,6 +246,10 @@ function love.load( a )
 		end
 	end
 	addContent( false, tab )
+	-- Use enums table and types tables to list functions using these elements
+	-- In these functions: 
+	-- 		love.audio.newSource
+	-- 		etc.
 
 	-- Callbacks
 	-- Config flags

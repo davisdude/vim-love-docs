@@ -1251,13 +1251,18 @@ Variants:
 ------------------------------------------------------------------------------
 1.5. graphics                                                  *love.graphics*
 
-The primary responsibility for the love.graphics module is the drawing of lines, shapes, text, Images and other Drawable objects onto the screen. Its secondary responsibilities include loading external files (including Images and Fonts) into memory, creating specialized objects (such as ParticleSystems or Framebuffers) and managing screen geometry.
-
-LÖVE's coordinate system is rooted in the upper-left corner of the screen, which is at location (0, 0). The x-axis is horizontal: larger values are further to the right. The y-axis is vertical: larger values are further towards the bottom.
-
-In many cases, you draw images or shapes in terms of their upper-left corner (See the picture above).
-
-Many of the functions are used to manipulate the graphics coordinate system, which is essentially the way coordinates are mapped to the display. You can change the position, scale, and even rotation in this way.
+The primary responsibility for the love.graphics module is the drawing of 
+lines, shapes, text, Images and other Drawable objects onto the screen. Its 
+secondary responsibilities include loading external files (including Images 
+and Fonts) into memory, creating specialized objects (such as ParticleSystems 
+or Framebuffers) and managing screen geometry. LÖVE's coordinate system is 
+rooted in the upper-left corner of the screen, which is at location (0, 0). 
+The x-axis is horizontal: larger values are further to the right. The y-axis 
+is vertical: larger values are further towards the bottom. In many cases, you 
+draw images or shapes in terms of their upper-left corner (See the picture 
+above). Many of the functions are used to manipulate the graphics coordinate 
+system, which is essentially the way coordinates are mapped to the display. 
+You can change the position, scale, and even rotation in this way.
 
 - Types: 
     - Canvas                                                     |love-Canvas|
@@ -3912,7 +3917,9 @@ Variants:
 ------------------------------------------------------------------------------
 1.11. physics                                                   *love.physics*
 
-Can simulate 2D rigid body physics in a realistic manner. This module is based on Box2D, and this API corresponds to the Box2D API as closely as possible.
+Can simulate 2D rigid body physics in a realistic manner. This module is 
+based on Box2D, and this API corresponds to the Box2D API as closely as 
+possible.
 
 - Types: 
     - Body                                                         |love-Body|
@@ -4465,7 +4472,8 @@ Variants:
 ------------------------------------------------------------------------------
 1.12. sound                                                       *love.sound*
 
-This module is responsible for decoding sound files. It can't play the sounds, see love.audio for that.
+This module is responsible for decoding sound files. It can't play the 
+sounds, see love.audio for that.
 
 - Types: 
     - Decoder                                                   |love-Decoder|
@@ -4641,13 +4649,16 @@ Variants:
 ------------------------------------------------------------------------------
 1.14. thread                                                     *love.thread*
 
-Allows you to work with threads.
-
-Threads are separate Lua environments, running in parallel to the main code. As their code runs separately, they can be used to compute complex operations without adversely affecting the frame rate of the main thread. However, as they are separate environments, they cannot access the variables and functions of the main thread, and communication between threads is limited.
-
-All LOVE objects (userdata) are shared among threads so you'll only have to send their references across threads. You may run into concurrency issues if you manipulate an object on multiple threads at the same time.
-
-When a Thread is started, it only loads the love.thread module. Every other module has to be loaded with require.
+Allows you to work with threads. Threads are separate Lua environments, 
+running in parallel to the main code. As their code runs separately, they can 
+be used to compute complex operations without adversely affecting the frame 
+rate of the main thread. However, as they are separate environments, they 
+cannot access the variables and functions of the main thread, and 
+communication between threads is limited. All LOVE objects (userdata) are 
+shared among threads so you'll only have to send their references across 
+threads. You may run into concurrency issues if you manipulate an object on 
+multiple threads at the same time. When a Thread is started, it only loads 
+the love.thread module. Every other module has to be loaded with require.
 
 - Types: 
     - Thread                                                     |love-Thread|
@@ -4841,9 +4852,9 @@ Variants:
 ------------------------------------------------------------------------------
 1.17. video                                                       *love.video*
 
-This module is responsible for decoding, controlling, and streaming video files.
-
-It can't draw the videos, see love.graphics.newVideo and Video objects for that.
+This module is responsible for decoding, controlling, and streaming video 
+files. It can't draw the videos, see love.graphics.newVideo and Video objects 
+for that.
 
 - Types: 
     - VideoStream                                           |love-VideoStream|
@@ -4874,7 +4885,8 @@ Variants:
 ------------------------------------------------------------------------------
 1.18. window                                                     *love.window*
 
-Provides an interface for modifying and retrieving information about the program's window.
+Provides an interface for modifying and retrieving information about the 
+program's window.
 
 - Types: None
 - Enums: 
