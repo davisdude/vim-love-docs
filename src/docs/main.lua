@@ -10,7 +10,7 @@ local function increment()
 	index = index:gsub( '(.-)(%d+)%.$', function( a, b ) return a .. ( b + 1 ) .. '.' end )
 end
 
-local function rightAlign( ... )
+local function rightAlign( ... ) -- If last argument is true, right align to ...[# - 1], put ...[#] at end
 	local elements = { ... }
 	local last = ''
 	local width = maxWidth
@@ -41,8 +41,7 @@ local function center( text )
 	if type( text ) == 'string' then
 		local longest = getLengthOfLongestLine( text )
 		text:gsub( 's*([^\n]+)\n?', function( a )
-			local len = math.floor( ( maxWidth - longest ) / 2 )
-			str = str .. ( ' ' ):rep( len ) .. a .. '\n'
+			str = str .. ( ' ' ):rep( ( maxWidth - longest ) / 2 ) .. a .. '\n'
 		end )
 	else
 		for i, v in ipairs( text ) do
@@ -59,16 +58,19 @@ local seps = setmetatable( {
 	__index = function( tab ) return tab[2] end
 } )
 
-local function newSection( name, ref, shouldDotRef )
+local function newSection( name, ref )
 	local str = ''
-	ref = type( ref ) == 'table' and ref or { ref }
-	for i = 1, #ref do
-		str = str .. '*' .. ref[i] .. '*' .. ' '
-	end
-	str = str:sub( 1, -2 )
-	local header = seps[ ( select( 2, index:gsub( '%.', '' ) ) ) ]:rep( maxWidth )
 	local first = name
 
+	ref = type( ref ) == 'table' and ref or { ref }
+	for i = 1, #ref do
+		str = str .. ( #ref[i] > 0 and ( '*' .. ref[i] .. '*' .. ' ' ) or '' )
+	end
+	str = str:sub( 1, -2 )
+
+	local header = seps[ ( select( 2, index:gsub( '%.', '' ) ) ) ]:rep( maxWidth )
+
+	-- Wrap refs if they are too long
 	if #first + #str > maxWidth then
 		local currentWidth = #first
 		local currentStr = ''
@@ -97,30 +99,33 @@ end
 
 local function printBodies()
 	for i, v in ipairs( bodies ) do
-		print( v[1] )
-		print( v[2] )
+		print( v[1] ) -- Header
+		print( v[2] ) -- Content
 	end
 end
 
-local function addContent( shouldDotRefs, ... )
+local function addContent( ... )
 	local info = { ... }
 	for i, v in ipairs( info ) do
-		for ii = 1, #v, 4 do
+		for ii = 1, #v, 4 do -- { name, ref, body, shouldDotRef, ... }
 			if type( v[ii] ) == 'string' then
-				v[2] = type( v[2] ) == 'table' and v[2] or { v[2] }
+				-- Allow for multiple refs
+				v[2] = type( v[2] ) == 'table' and v[2] or { v[2] } 
 				increment()
-				local tabs = (' '):rep( 2 * select( 2, index:gsub( '(%.)', '%1' ) ) )
-				local ref = ( shouldDotRefs and function( str ) return str end or function( str ) return str:gsub( '%.', '%-' ) end )( '|' .. v[2][1] .. '|' )
-				local name = ( ' ' .. v[1] )
+				local tabs = ( ' ' ):rep( 2 * select( 2, index:gsub( '(%.)', '' ) ) )
+				local ref = ( v[4] and function( str ) return str end or function( str ) return str:gsub( '%.', '-' ) end )( '|' .. v[2][1] .. '|' )
+				local name = ' ' .. v[1]
+
+				-- Trim names that are too long
 				if #name + #tabs + #index > contentWidth then
 					name = name:sub( 1, contentWidth - #tabs - #index - 2 ) .. '-'
 				end
-				print( rightAlign( tabs, index, name, ref, contentWidth, true ):gsub( '([%d%.%s]+%w+%s)(%s*)(%s|.*)', function( a, b, c ) return a .. ('.'):rep( #b ) .. c end ) .. '' )
-				table.insert( bodies, { newSection( index .. ' ' .. v[1], v[2], v[4] ), ( v[3] or function() end )( v[1], v[2] ) } )
+				print( rightAlign( tabs, index, name, ref, contentWidth, true ):gsub( '([%d%.%s]+%w+%s)(%s*)(%s|.*)', function( a, b, c ) return a .. ( '.' ):rep( #b ) .. c end ) .. '' )
+				table.insert( bodies, { newSection( index .. ' ' .. v[1], v[2] ), ( v[3] or function() end )( v[1], v[2] ) } )
 			else
 				index = index .. '0.'
 				for subelement = ii, #v do
-					addContent( v[subelement][4], v[subelement] )
+					addContent( v[subelement] )
 				end
 				index = index:match( '^(.*%.)%d+%.$' )
 				break
@@ -130,25 +135,28 @@ local function addContent( shouldDotRefs, ... )
 end
 
 local function wrap( text, tabs, offset )
-	text = text .. ' '
 	tabs = tabs or ''
-	offset = offset or #tabs
-	local str = text:match( '^(.-%s)' )
-	local w = #str + offset
-	text:gsub( '%f[%S].-%f[%s]', function( word )
-		word = word .. ' '
-		w = w + #word
-		if w > maxWidth then
-			w = #( tabs .. word )
-			word = '\n' .. tabs .. word
-		end
-		str = str .. word
+	offset = offset or tabs
+	local rows = {}
+	text = '\n' .. text:gsub( '\n\n', '\n \n' ) .. '\n'
+	text:gsub( '%f[^\n](.-)[\n]', function( word )
+		local str = word:match( '^(.-)%s' )
+		word:gsub( '%s(%S+)', function( sub )
+			local len = #str + #offset + #tabs
+			if len + #sub > maxWidth then
+				table.insert( rows, str )
+				str = tabs .. offset .. sub
+			else
+				str = str .. ' ' .. sub
+			end
+		end )
+		table.insert( rows, str )
 	end )
-	return str:gsub( '~', ' ' ):sub( 1, -2 )
+	return table.concat( rows, '\n' )
 end
 
 local function shallowReturn( element, pre )
-	local str = '\n'
+	local str = ''
 	if not element then return 'None'
 	else
 		for i, v in ipairs( element ) do
@@ -156,17 +164,18 @@ local function shallowReturn( element, pre )
 			local temp = ( ' ' ):rep( 4 ) ..   '- ' .. name
 			local ref = '|' .. ( pre and pre .. name or docName:sub( 1, -2 ) .. name ) .. '|'
 
-			str = str .. rightAlign( temp, ref ) .. '\n'
+			str = str .. '\n' .. rightAlign( temp, ref )
 		end
-		return str:sub( 1, -2 )
+		return str
 	end
 end
 
 local function makeVariant( index, tab, fail )
+	-- Capitalize first letter
 	local str = '- ' .. index:gsub( '(.)(.*)', function( a, b ) return a:upper() .. b .. ':' end )
 	if tab[index] then
 		for i, v in ipairs( tab[index] ) do
-			str = str .. '\n' .. ( ' ' ):rep( 12 ).. wrap( '- ' .. v.name .. ': <' .. v.type .. '> ' .. v.description, ( ' ' ):rep( 14 ), 12 )
+			str = str .. '\n' .. ( ' ' ):rep( 12 ).. wrap( '- ' .. v.name .. ': <' .. v.type .. '> ' .. v.description, ( ' ' ):rep( 2 ), ( ' ' ):rep( 12 ) )
 		end
 		str = str .. '\n' .. ( ' ' ):rep( 4 )
 	else
@@ -210,27 +219,35 @@ local function mixin( old, new )
 end
 
 function love.load( a )
-	print( rightAlign( '*love.txt*', 'Documentation for the LOVE game framework version ' .. api.version .. '.' ),
+	print( rightAlign( '*love.txt*', '  Documentation for the LOVE game framework.', '|love|' ),
 	( [[
 
 
 %s
 %s]] ):format( center( [[
 
- _       o__o __      __ ______
-l l     / __ \\ \    / //  ____\
-l l    l l  l l\ \  / / l l__
-l l    l l  l l \ \/ /  l  __l
-l l____l l__l l  \  /   l l____
-\______l\____/    \/    \______/
+ _       o__o __      __ ______  ~
+| |     / __ \\ \    / //  ____\ ~
+| |    | |  | |\ \  / / | |__    ~
+| |    | |  | | \ \/ /  |  __|   ~
+| |____| |__| |  \  /   | |____  ~
+\______|\____/    \/    \______/ ~
 
 ]] ), center{ 'The complete solution for Vim with LOVE.', 'Includes highlighting and documentation.' } ) )
-	print( newSection( 'CONTENT', 'content' ) )
+	print( newSection( 'CONTENT', docName:sub( 1, -2 ) .. '-content' ) )
 
 	prepend( api.modules, { { name = 'love', description = 'General functions' } } )
 	mixin( api.modules[1], api )
 
-	local tab = { 'modules', docName .. 'modules', function() return 'All LOVE modules and their functions, enums, and types.' end, false }
+	addContent{ 'About', docName:sub( 1, -2 ) .. '-' .. 'about', function()
+		return wrap( ( [[For LOVE (http://love2d.org) version %s.
+
+Generated from https://github.com/love2d-community/love-api using https://github.com/davisdude/vim-love-docs
+
+Made by Davis Claiborne under the zlib license. See LICENSE.md for more info. ]] ):format( api.version ), '', '  ' )
+	end, true }
+
+	local tab = { 'modules', docName:sub( 1, -2 ) .. '-modules', function() return 'All LOVE modules and their functions, enums, and types.' end, false }
 	for i, v in ipairs( api.modules ) do
 		local new = { v.name, docName .. v.name, function()
 			local str = wrap( v.description ) .. '\n\n'
@@ -242,22 +259,23 @@ l l____l l__l l  \  /   l l____
 		end, true }
 
 		-- Functions
-		table.insert( new, { 'functions', docName .. v.name .. '-functions', function() return wrap( 'The functions of ' .. v.name .. '.' ) end, true } )
+		table.insert( new, { 'functions', ( v.name ~= 'love' and docName .. v.name or docName:sub( 1, -2 ) ) .. '-functions', function() return wrap( 'The functions of ' .. v.name .. '.' ) end, true } )
 		createFunctions( new, v.functions, v.name )
 
 		-- Types
 		if v.types then
-			table.insert( new, { 'types', docName .. v.name .. '-types', function() 
+			table.insert( new, { 'types', ( v.name ~= 'love' and docName .. v.name or docName:sub( 1, -2 ) ) .. '-types', function() 
 				local str = wrap( 'The types of ' .. v.name .. ':' ) .. '\n'
 				return str .. shallowReturn( v.types, docName:sub( 1, -2 ) .. '.' )
 			end, true } )
 			local stack = {}
 			local n = v.name and ( v.name ~= 'love' and docName ) or ''
 			for ii, vv in ipairs( v.types ) do
-				table.insert( stack, { vv.name, { docName:sub( 1, -2 ) .. '-' .. vv.name, n .. v.name .. '-' .. vv.name }, function()
+				table.insert( stack, { vv.name, { docName:sub( 1, -2 ) .. '-' .. vv.name, ( ( n .. v.name ~= 'love' ) and ( n .. v.name .. '-' .. vv.name ) or '' ) }, function()
 					local str = wrap( vv.description )
 					str = str .. '\n\nConstructors: ' .. shallowReturn( vv.constructors, docName .. v.name .. '.' )
 					str = str .. '\n\nSupertypes: ' .. shallowReturn( vv.supertypes, docName:sub( 1, -2 ) .. '-' )
+					str = str .. '\n\nSubtypes: ' .. shallowReturn( vv.subtypes, docName:sub( 1, -2 ) .. '-' )
 					str = str .. '\n\nFunctions: ' .. shallowReturn( vv.functions, vv.name .. ':' )
 					return str
 				end, false } )
@@ -275,7 +293,7 @@ l l____l l__l l  \  /   l l____
 
 		-- Enums
 		if v.enums then
-			table.insert( new, { 'enums', docName .. v.name .. '-enums', function()
+			table.insert( new, { 'enums', ( v.name ~= 'love' and docName .. v.name or docName:sub( 1, -2 ) ) .. '-enums', function()
 				local str = 'Enums within ' .. docName .. v.name .. ':'
 				for ii, vv in ipairs( v.enums ) do
 					str = str .. '\n' .. rightAlign( ( ' ' ):rep( 4 ) .. vv.name, '|' .. docName .. vv.name .. '|' )
@@ -285,7 +303,7 @@ l l____l l__l l  \  /   l l____
 			local stack = {}
 			for ii, vv in ipairs( v.enums ) do
 				table.insert( stack, { vv.name, { docName:sub( 1, -2 ) .. '-' .. vv.name, docName .. v.name .. '-' .. vv.name }, function()
-					local str = wrap( vv.description or 'ERROR: Nothing seems to be here. Check out the repo (https://github.com/love2d-community/love-api) and make a pull request' ) .. '\n'
+					local str = wrap( vv.description ) .. '\n'
 					str = str .. '\nConstants:\n\n'
 					for iii, vvv in ipairs( vv.constants ) do
 						str = str .. ( ' ' ):rep( 4 ) .. vvv.name .. ( ' ' ):rep( contentWidth / 2 - #vvv.name ) .. wrap( vvv.description, ( ' ' ):rep( contentWidth / 2 + 4 ) ) .. '\n'
@@ -298,7 +316,7 @@ l l____l l__l l  \  /   l l____
 
 		table.insert( tab, new )
 	end
-	addContent( false, tab )
+	addContent( tab )
 	
 	-- Callbacks
 	-- Config flags

@@ -517,7 +517,6 @@ World:setGravity	love.txt	/*World:setGravity*
 World:setSleepingAllowed	love.txt	/*World:setSleepingAllowed*
 World:translateOrigin	love.txt	/*World:translateOrigin*
 World:update	love.txt	/*World:update*
-content	love.txt	/*content*
 love-AlignMode	love.txt	/*love-AlignMode*
 love-ArcType	love.txt	/*love-ArcType*
 love-AreaSpreadDistribution	love.txt	/*love-AreaSpreadDistribution*
@@ -541,12 +540,10 @@ love-Contact	love.txt	/*love-Contact*
 love-Cursor	love.txt	/*love-Cursor*
 love-CursorType	love.txt	/*love-CursorType*
 love-Data	love.txt	/*love-Data*
-love-Data	love.txt	/*love-Data*
 love-Decoder	love.txt	/*love-Decoder*
 love-DistanceJoint	love.txt	/*love-DistanceJoint*
 love-DistanceModel	love.txt	/*love-DistanceModel*
 love-DrawMode	love.txt	/*love-DrawMode*
-love-Drawable	love.txt	/*love-Drawable*
 love-Drawable	love.txt	/*love-Drawable*
 love-EdgeShape	love.txt	/*love-EdgeShape*
 love-Event	love.txt	/*love-Event*
@@ -581,7 +578,6 @@ love-MessageBoxType	love.txt	/*love-MessageBoxType*
 love-MotorJoint	love.txt	/*love-MotorJoint*
 love-MouseJoint	love.txt	/*love-MouseJoint*
 love-Object	love.txt	/*love-Object*
-love-Object	love.txt	/*love-Object*
 love-ParticleInsertMode	love.txt	/*love-ParticleInsertMode*
 love-ParticleSystem	love.txt	/*love-ParticleSystem*
 love-PointStyle	love.txt	/*love-PointStyle*
@@ -614,6 +610,11 @@ love-WeldJoint	love.txt	/*love-WeldJoint*
 love-WheelJoint	love.txt	/*love-WheelJoint*
 love-World	love.txt	/*love-World*
 love-WrapMode	love.txt	/*love-WrapMode*
+love-about	love.txt	/*love-about*
+love-content	love.txt	/*love-content*
+love-functions	love.txt	/*love-functions*
+love-modules	love.txt	/*love-modules*
+love-types	love.txt	/*love-types*
 love.audio	love.txt	/*love.audio*
 love.audio-DistanceModel	love.txt	/*love.audio-DistanceModel*
 love.audio-Source	love.txt	/*love.audio-Source*
@@ -843,8 +844,6 @@ love.keyboard.isScancodeDown	love.txt	/*love.keyboard.isScancodeDown*
 love.keyboard.setKeyRepeat	love.txt	/*love.keyboard.setKeyRepeat*
 love.keyboard.setTextInput	love.txt	/*love.keyboard.setTextInput*
 love.love	love.txt	/*love.love*
-love.love-functions	love.txt	/*love.love-functions*
-love.love-types	love.txt	/*love.love-types*
 love.math	love.txt	/*love.math*
 love.math-BezierCurve	love.txt	/*love.math-BezierCurve*
 love.math-CompressedData	love.txt	/*love.math-CompressedData*
@@ -868,7 +867,6 @@ love.math.randomNormal	love.txt	/*love.math.randomNormal*
 love.math.setRandomSeed	love.txt	/*love.math.setRandomSeed*
 love.math.setRandomState	love.txt	/*love.math.setRandomState*
 love.math.triangulate	love.txt	/*love.math.triangulate*
-love.modules	love.txt	/*love.modules*
 love.mouse	love.txt	/*love.mouse*
 love.mouse-Cursor	love.txt	/*love.mouse-Cursor*
 love.mouse-CursorType	love.txt	/*love.mouse-CursorType*
