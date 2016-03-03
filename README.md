@@ -1,6 +1,8 @@
 Vim LOVE Docs
 ===
 
+Vim syntax highlighting and helpfile for [LÖVE](http://love2d.org). 
+
 Installing
 ---
 
