@@ -110,7 +110,7 @@ local function addContent( ... )
 		for ii = 1, #v, 4 do -- { name, ref, body, shouldDotRef, ... }
 			if type( v[ii] ) == 'string' then
 				-- Allow for multiple refs
-				v[2] = type( v[2] ) == 'table' and v[2] or { v[2] } 
+				v[2] = type( v[2] ) == 'table' and v[2] or { v[2] }
 				increment()
 				local tabs = ( ' ' ):rep( 2 * select( 2, index:gsub( '(%.)', '' ) ) )
 				local ref = ( v[4] and function( str ) return str end or function( str ) return str:gsub( '%.', '-' ) end )( '|' .. v[2][1] .. '|' )
@@ -219,20 +219,18 @@ local function mixin( old, new )
 end
 
 function love.load( a )
-	print( rightAlign( '*love.txt*', '  Documentation for the LOVE game framework.', '|love|' ),
+	print( rightAlign( '*love.txt*', '  Documentation for the LOVE game framework.' ),
 	( [[
 
 
 %s
 %s]] ):format( center( [[
-
- _       o__o __      __ ______  ~
-| |     / __ \\ \    / //  ____\ ~
-| |    | |  | |\ \  / / | |__    ~
-| |    | |  | | \ \/ /  |  __|   ~
-| |____| |__| |  \  /   | |____  ~
-\______|\____/    \/    \______/ ~
-
+ _       o__o __      __ ______ ~
+| |     / __ \\ \    / //  ____\~
+| |    | |  | |\ \  / / | |__   ~
+| |    | |  | | \ \/ /  |  __|  ~
+| |____| |__| |  \  /   | |____ ~
+\______|\____/    \/    \______/~
 ]] ), center{ 'The complete solution for Vim with LOVE.', 'Includes highlighting and documentation.' } ) )
 	print( newSection( 'CONTENT', docName:sub( 1, -2 ) .. '-content' ) )
 
@@ -264,7 +262,7 @@ Made by Davis Claiborne under the zlib license. See LICENSE.md for more info. ]]
 
 		-- Types
 		if v.types then
-			table.insert( new, { 'types', ( v.name ~= 'love' and docName .. v.name or docName:sub( 1, -2 ) ) .. '-types', function() 
+			table.insert( new, { 'types', ( v.name ~= 'love' and docName .. v.name or docName:sub( 1, -2 ) ) .. '-types', function()
 				local str = wrap( 'The types of ' .. v.name .. ':' ) .. '\n'
 				return str .. shallowReturn( v.types, docName:sub( 1, -2 ) .. '.' )
 			end, true } )
@@ -317,7 +315,7 @@ Made by Davis Claiborne under the zlib license. See LICENSE.md for more info. ]]
 		table.insert( tab, new )
 	end
 	addContent( tab )
-	
+
 	-- Callbacks
 	-- Config flags
 
