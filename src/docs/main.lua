@@ -1,6 +1,7 @@
 local api = require 'love-api.love_api'
 
 local bodies = {}
+local types = {}
 local maxWidth = 78
 local contentWidth = 46
 local index = '0.'
@@ -144,11 +145,11 @@ local function getWidthOnce( w )
 	}, { __call = function( tab ) return select( 2, coroutine.resume( tab[1] ) ) end } )
 end
 
-local function wrap( text, tabs, offset )
+local function wrap( text, tabs, offset, initialLength )
 	tabs = tabs or ''
 	offset = offset or ''
 	local rows = {}
-	local f = getWidthOnce( #tabs )
+	local f = getWidthOnce( #tabs + ( initialLength or 0 ) )
 	text = '\n' .. text:gsub( '\n\n', '\n \n' ) .. '\n'
 	text:gsub( '%f[^\n](.-)[\n]', function( word )
 		local str = word:match( '^(.-)%s' ) or ''
@@ -201,7 +202,9 @@ local function generateVariants( tab )
 	local str = '\nVariants:\n' .. ( ' ' ):rep( 4 )
 	for i, v in ipairs( tab ) do
 		str = str .. i .. ':\n' .. ( ' ' ):rep( 8 )
-		str = str .. makeVariant( 'arguments', v, 'None' ) .. ( ' ' ):rep( 4 ) .. makeVariant( 'returns', v, 'Nothing' )
+		str = str .. ( v.description and '- Description: ' ..wrap( v.description, '', ( ' ' ):rep( 10 ), #'        - Description: ' ) .. '\n' .. ( ' ' ):rep( 8 ) or '' )
+			..  makeVariant( 'arguments', v, 'None' ) 
+			.. ( ' ' ):rep( 4 ) .. makeVariant( 'returns', v, 'Nothing' )
 	end
 	str = str:sub( 1, -6 )
 
@@ -250,6 +253,12 @@ function love.load( a )
 	prepend( api.modules, { { name = 'love', description = 'General functions' } } )
 	mixin( api.modules[1], api )
 
+	for i, v in ipairs( api.modules or {} ) do
+		for ii, vv in ipairs( v.types or {} ) do
+			types[vv.name] = vv
+		end
+	end
+
 	addContent{ 'About', docName:sub( 1, -2 ) .. '-' .. 'about', function()
 		return wrap( ( [[For LOVE (http://love2d.org) version %s.
 
@@ -288,6 +297,9 @@ Made by Davis Claiborne under the zlib license. See LICENSE.md for more info. ]]
 					str = str .. '\n\nSupertypes: ' .. shallowReturn( vv.supertypes, docName:sub( 1, -2 ) .. '-' )
 					str = str .. '\n\nSubtypes: ' .. shallowReturn( vv.subtypes, docName:sub( 1, -2 ) .. '-' )
 					str = str .. '\n\nFunctions: ' .. shallowReturn( vv.functions, vv.name .. ':' )
+					for iii, vvv in ipairs( vv.supertypes or {} ) do
+						str = str .. ( types[vvv].functions and shallowReturn( types[vvv].functions, types[vvv].name .. ':' ) or '' )
+					end
 					return str
 				end, false } )
 				local temp = {}
