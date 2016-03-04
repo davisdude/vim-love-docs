@@ -984,7 +984,39 @@ CONTENT                                                         *love-content*
     4.5. externalstorage .................... |love-externalstorage|
     4.6. gammacorrect ....................... |love-gammacorrect|
     4.7. window ............................. |love-window|
+        4.7.0.1. title ...................... |love-window-title|
+        4.7.0.2. icon ....................... |love-window-icon|
+        4.7.0.3. width ...................... |love-window-width|
+        4.7.0.4. height ..................... |love-window-height|
+        4.7.0.5. borderless ................. |love-window-borderless|
+        4.7.0.6. resizable .................. |love-window-resizable|
+        4.7.0.7. minwidth ................... |love-window-minwidth|
+        4.7.0.8. minheight .................. |love-window-minheight|
+        4.7.0.9. fullscreen ................. |love-window-fullscreen|
+        4.7.0.10. fullscreentype ............ |love-window-fullscreentype|
+        4.7.0.11. vsync ..................... |love-window-vsync|
+        4.7.0.12. msaa ...................... |love-window-msaa|
+        4.7.0.13. display ................... |love-window-display|
+        4.7.0.14. highdpi ................... |love-window-highdpi|
+        4.7.0.15. x ......................... |love-window-x|
+        4.7.0.16. y ......................... |love-window-y|
     4.8. modules ............................ |love-modules|
+        4.8.0.1. audio ...................... |love-modules-audio|
+        4.8.0.2. event ...................... |love-modules-event|
+        4.8.0.3. graphics ................... |love-modules-graphics|
+        4.8.0.4. image ...................... |love-modules-image|
+        4.8.0.5. joystick ................... |love-modules-joystick|
+        4.8.0.6. keyboard ................... |love-modules-keyboard|
+        4.8.0.7. math ....................... |love-modules-math|
+        4.8.0.8. mouse ...................... |love-modules-mouse|
+        4.8.0.9. physics .................... |love-modules-physics|
+        4.8.0.10. sound ..................... |love-modules-sound|
+        4.8.0.11. system .................... |love-modules-system|
+        4.8.0.12. timer ..................... |love-modules-timer|
+        4.8.0.13. touch ..................... |love-modules-touch|
+        4.8.0.14. video ..................... |love-modules-video|
+        4.8.0.15. window .................... |love-modules-window|
+        4.8.0.16. thread .................... |love-modules-thread|
 
 ==============================================================================
 1. About                                                          *love-about*
@@ -2189,7 +2221,7 @@ Constants:
     mousereleased          Mouse released
     resize                 Window size changed by the user
     threaderror            A Lua error has occurred in a thread.
-    quit                   
+    quit                    Quit
     visible                Window is minimized or un-minimized by the user
 
 ------------------------------------------------------------------------------
@@ -8821,15 +8853,15 @@ Joystick hat positions.
 
 Constants:
 
-    c                      
-    d                      
-    l                      
-    ld                     
-    lu                     
-    r                      
-    rd                     
-    ru                     
-    u                      
+    c                       Centered
+    d                       Down
+    l                       Left
+    ld                      Left+Down
+    lu                      Left+Up
+    r                       Right
+    rd                      Right+Down
+    ru                      Right+Up
+    u                       Up
 
 ------------------------------------------------------------------------------
 2.7.3.4. JoystickInputType                            *love-JoystickInputType*
@@ -8840,7 +8872,7 @@ Types of Joystick inputs.
 Constants:
 
     axis                   Analog axis.
-    button                 
+    button                  Button.
     hat                    8-direction hat value.
 
 ------------------------------------------------------------------------------
@@ -10344,7 +10376,7 @@ Variants:
 
 Gets a Cursor object representing a system-native hardware cursor.
 
- Hardware cursors are framerate-independent and work the same way as normal
+Hardware cursors are framerate-independent and work the same way as normal
 operating system cursors. Unlike drawing an image at the mouse's current
 coordinates, hardware cursors never have visible lag between when the mouse is
 moved and when the cursor position updates, even at low framerates.
@@ -16771,7 +16803,7 @@ Variants:
 Callback function triggered when the system is running out of memory on mobile
 devices.
 
- Mobile operating systems may forcefully kill the game if it uses too much
+Mobile operating systems may forcefully kill the game if it uses too much
 memory, so any non-critical resource should be removed if possible (by setting
 all variables referencing the resources to nil, and calling collectgarbage()),
 when this event is triggered. Sounds and images in particular tend to use the
@@ -17043,40 +17075,367 @@ and other stuff.
 ------------------------------------------------------------------------------
 4.1. identity                           *love-identity* *love-config-identity*
 
-filler
+Type: <string>
+
+Default: <nil>
 
 ------------------------------------------------------------------------------
 4.2. version                              *love-version* *love-config-version*
 
-filler
+Type: <string>
+
+Default: <"0.10.1">
 
 ------------------------------------------------------------------------------
 4.3. console                              *love-console* *love-config-console*
 
-filler
+Type: <boolean>
+
+Default: <false>
 
 ------------------------------------------------------------------------------
 4.4. accelerometerjoystick                        *love-accelerometerjoystick*
                                            *love-config-accelerometerjoystick*
 
-filler
+Type: <boolean>
+
+Default: <true>
 
 ------------------------------------------------------------------------------
 4.5. externalstorage      *love-externalstorage* *love-config-externalstorage*
 
-filler
+Type: <boolean>
+
+Default: <false>
 
 ------------------------------------------------------------------------------
 4.6. gammacorrect               *love-gammacorrect* *love-config-gammacorrect*
 
-filler
+Type: <boolean>
+
+Default: <false>
 
 ------------------------------------------------------------------------------
 4.7. window                                 *love-window* *love-config-window*
 
-filler
+Type: <table>
+
+------------------------------------------------------------------------------
+4.7.0.1. title                  *love-window.title* *love-config-window.title*
+
+Sets the title of the window the game is in. Alternatively
+love.window.setTitle can be used to change the window title outside of the
+config file.
+
+Type: <string>
+
+Default: <"Untitled">
+
+------------------------------------------------------------------------------
+4.7.0.2. icon                     *love-window.icon* *love-config-window.icon*
+
+A filepath to an image to use as the window's icon. Not all operating systems
+support very large icon images. The icon can also be changed with
+love.window.setIcon.
+
+Type: <string>
+
+Default: <nil>
+
+------------------------------------------------------------------------------
+4.7.0.3. width                  *love-window.width* *love-config-window.width*
+
+Sets the window's dimensions. If these flags are set to 0 LÖVE automatically
+uses the user's desktop dimensions.
+
+Type: <number>
+
+Default: <800>
+
+------------------------------------------------------------------------------
+4.7.0.4. height               *love-window.height* *love-config-window.height*
+
+Sets the window's dimensions. If these flags are set to 0 LÖVE automatically
+uses the user's desktop dimensions.
+
+Type: <string>
+
+Default: <600>
+
+------------------------------------------------------------------------------
+4.7.0.5. borderless   *love-window.borderless* *love-config-window.borderless*
+
+Removes all border visuals from the window. Note that the effects may wary
+between operating systems.
+
+Type: <boolean>
+
+Default: <false>
+
+------------------------------------------------------------------------------
+4.7.0.6. resizable      *love-window.resizable* *love-config-window.resizable*
+
+If set to true this allows the user to resize the game's window.
+
+Type: <boolean>
+
+Default: <false>
+
+------------------------------------------------------------------------------
+4.7.0.7. minwidth         *love-window.minwidth* *love-config-window.minwidth*
+
+Sets the minimum width and height for the game's window if it can be resized
+by the user. If you set lower values to window.width and window.height LÖVE
+will always favor the minimum dimensions set via window.minwidth and
+window.minheight.
+
+Type: <number>
+
+Default: <1>
+
+------------------------------------------------------------------------------
+4.7.0.8. minheight      *love-window.minheight* *love-config-window.minheight*
+
+Sets the minimum width and height for the game's window if it can be resized
+by the user. If you set lower values to window.width and window.height LÖVE
+will always favor the minimum dimensions set via window.minwidth and
+window.minheight.
+
+Type: <number>
+
+Default: <1>
+
+------------------------------------------------------------------------------
+4.7.0.9. fullscreen   *love-window.fullscreen* *love-config-window.fullscreen*
+
+Wether to run the game in fullscreen (true) or windowed (false) mode. The
+fullscreen can also be toggled via love.window.setFullscreen or
+love.window.setMode.
+
+Type: <boolean>
+
+Default: <false>
+
+------------------------------------------------------------------------------
+4.7.0.10. fullscreentype                          *love-window.fullscreentype*
+                                           *love-config-window.fullscreentype*
+
+Specifies the type of fullscreen mode to use (normal or desktop). Generally
+the desktop is recommended, as it is less restrictive than normal mode on some
+operating systems.
+
+Type: <string>
+
+Default: <"desktop">
+
+------------------------------------------------------------------------------
+4.7.0.11. vsync                 *love-window.vsync* *love-config-window.vsync*
+
+Enables or deactivates vertical synchronization. Vsync tries to keep the game
+at a steady framerate and can prevent issues like screen tearing. It is
+recommended to keep vsync activated if you don't know about the possible
+implications of turning it off.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.7.0.12. msaa                    *love-window.msaa* *love-config-window.msaa*
+
+The number of samples to use with multi-sampled antialiasing.
+
+Type: <number>
+
+Default: <0>
+
+------------------------------------------------------------------------------
+4.7.0.13. display           *love-window.display* *love-config-window.display*
+
+The index of the display to show the window in, if multiple monitors are
+available.
+
+Type: <number>
+
+Default: <1>
+
+------------------------------------------------------------------------------
+4.7.0.14. highdpi           *love-window.highdpi* *love-config-window.highdpi*
+
+See love.window.getPixelScale, love.window.toPixels, and
+love.window.fromPixels. It is recommended to keep this option disabled if you
+can't test your game on a Mac or iOS system with a Retina display, because
+code will need tweaking to make sure things look correct.
+
+Type: <boolean>
+
+Default: <false>
+
+------------------------------------------------------------------------------
+4.7.0.15. x                             *love-window.x* *love-config-window.x*
+
+Determines the position of the window on the user's screen. Alternatively
+love.window.setPosition can be used to change the position on the fly.
+
+Type: <number>
+
+Default: <nil>
+
+------------------------------------------------------------------------------
+4.7.0.16. y                             *love-window.y* *love-config-window.y*
+
+Determines the position of the window on the user's screen. Alternatively
+love.window.setPosition can be used to change the position on the fly.
+
+Type: <number>
+
+Default: <nil>
 
 ------------------------------------------------------------------------------
 4.8. modules                              *love-modules* *love-config-modules*
 
-filler
+Type: <table>
+
+------------------------------------------------------------------------------
+4.8.0.1. audio                *love-modules.audio* *love-config-modules.audio*
+
+Enable the audio module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.2. event                *love-modules.event* *love-config-modules.event*
+
+Enable the event module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.3. graphics       *love-modules.graphics* *love-config-modules.graphics*
+
+Enable the graphics module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.4. image                *love-modules.image* *love-config-modules.image*
+
+Enable the image module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.5. joystick       *love-modules.joystick* *love-config-modules.joystick*
+
+Enable the joystick module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.6. keyboard       *love-modules.keyboard* *love-config-modules.keyboard*
+
+Enable the keyboard module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.7. math                   *love-modules.math* *love-config-modules.math*
+
+Enable the math module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.8. mouse                *love-modules.mouse* *love-config-modules.mouse*
+
+Enable the mouse module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.9. physics          *love-modules.physics* *love-config-modules.physics*
+
+Enable the physics module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.10. sound               *love-modules.sound* *love-config-modules.sound*
+
+Enable the sound module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.11. system            *love-modules.system* *love-config-modules.system*
+
+Enable the system module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.12. timer               *love-modules.timer* *love-config-modules.timer*
+
+Enable the timer module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.13. touch               *love-modules.touch* *love-config-modules.touch*
+
+Enable the touch module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.14. video               *love-modules.video* *love-config-modules.video*
+
+Enable the video module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.15. window            *love-modules.window* *love-config-modules.window*
+
+Enable the window module.
+
+Type: <boolean>
+
+Default: <true>
+
+------------------------------------------------------------------------------
+4.8.0.16. thread            *love-modules.thread* *love-config-modules.thread*
+
+Enable the thread module.
+
+Type: <boolean>
+
+Default: <true>

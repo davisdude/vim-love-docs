@@ -152,7 +152,8 @@ local function wrap( text, tabs, offset, initialLength )
 	local f = getWidthOnce( #tabs + ( initialLength or 0 ) )
 	text = '\n' .. text:gsub( '\n\n', '\n \n' ) .. '\n'
 	text:gsub( '%f[^\n](.-)[\n]', function( word )
-		local str = word:match( '^(.-)%s' ) or ''
+		local str, word = ( ' ' .. word ):match( '^%s*(.-)(%s.*)$' )
+		str, word = str or '', word or ''
 		local len = #str + f()
 		word:gsub( '%s(%S+)', function( sub )
 			len = len + 1 + #sub
@@ -164,6 +165,7 @@ local function wrap( text, tabs, offset, initialLength )
 				str = str .. ' ' .. sub
 			end
 		end )
+		str = str:gsub( '%s\n', '\n' )
 		table.insert( rows, str )
 	end )
 	return table.concat( rows, '\n' )
@@ -350,15 +352,29 @@ Made by Davis Claiborne under the zlib license. See LICENSE.md for more info. ]]
 	tab = { 'config', { docName:sub( 1, -2 ) .. '-config', docName:sub( 1, -2 ) .. '-flags' }, function() return wrap( api.config.description ) end, false }
 	local name = docName:sub( 1, -2 ) .. '-'
 	for i, v in ipairs( api.config ) do
+		local new = {}
 		table.insert( tab, { v.name, { name .. v.name, name .. 'config-' .. v.name }, function()
-			return 'filler'
-			-- Handle defaults
-			-- - Handle nested (modules, etc)
+			local str = wrap( v.description )
+			if v.type then str = 'Type: <' .. v.type .. '>' end
+			if v.default then str = str .. '\n\nDefault: <' .. v.default .. '>' end
+			if v.table then
+				local stack = {}
+				for ii, vv in ipairs( v.table ) do
+					local n = v.name .. '.' .. vv.name
+					table.insert( stack, { vv.name, { name .. n, name .. 'config-' .. n }, function() 
+						local str = wrap( vv.description )
+						str = str .. '\n\nType: <' .. vv.type .. '>'
+						str = str .. '\n\nDefault: <' .. vv.default .. '>'
+						return str
+					end, false } )
+				end
+				table.insert( new, stack )
+			end
+			return str
 		end, false } )
+		table.insert( tab, new )
 	end
 	addContent( tab )
-
-
 
 	-- Look through text and replace functions (love.graphics, etc.), Types, and enums with *name*
 
