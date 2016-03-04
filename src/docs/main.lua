@@ -203,8 +203,8 @@ local function generateVariants( tab )
 	for i, v in ipairs( tab ) do
 		str = str .. i .. ':\n' .. ( ' ' ):rep( 8 )
 		str = str .. ( v.description and '- Description: ' ..wrap( v.description, '', ( ' ' ):rep( 10 ), #'        - Description: ' ) .. '\n' .. ( ' ' ):rep( 8 ) or '' )
-			..  makeVariant( 'arguments', v, 'None' ) 
-			.. ( ' ' ):rep( 4 ) .. makeVariant( 'returns', v, 'Nothing' )
+		          .. makeVariant( 'arguments', v, 'None' ) .. ( ' ' ):rep( 4 )
+		          .. makeVariant( 'returns', v, 'Nothing' )
 	end
 	str = str:sub( 1, -6 )
 
