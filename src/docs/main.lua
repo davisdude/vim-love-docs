@@ -91,6 +91,7 @@ local function newSection( name, ref )
 		for i = 2, #rows do
 			str = str .. rightAlign( rows[i] ) .. '\n'
 		end
+		str = str:sub( 1, -2 )
 	else
 		str = rightAlign( name, str )
 	end
@@ -134,18 +135,30 @@ local function addContent( ... )
 	end
 end
 
+local function getWidthOnce( w )
+	return setmetatable( {
+		coroutine.create( function()
+			coroutine.yield( w )
+			while true do coroutine.yield( 0 ) end
+		end )
+	}, { __call = function( tab ) return select( 2, coroutine.resume( tab[1] ) ) end } )
+end
+
 local function wrap( text, tabs, offset )
 	tabs = tabs or ''
-	offset = offset or tabs
+	offset = offset or ''
 	local rows = {}
+	local f = getWidthOnce( #tabs )
 	text = '\n' .. text:gsub( '\n\n', '\n \n' ) .. '\n'
 	text:gsub( '%f[^\n](.-)[\n]', function( word )
-		local str = word:match( '^(.-)%s' )
+		local str = word:match( '^(.-)%s' ) or ''
+		local len = #str + f()
 		word:gsub( '%s(%S+)', function( sub )
-			local len = #str + #offset + #tabs
-			if len + #sub > maxWidth then
+			len = len + 1 + #sub
+			if len > maxWidth then
 				table.insert( rows, str )
 				str = tabs .. offset .. sub
+				len = #str
 			else
 				str = str .. ' ' .. sub
 			end
@@ -175,7 +188,7 @@ local function makeVariant( index, tab, fail )
 	local str = '- ' .. index:gsub( '(.)(.*)', function( a, b ) return a:upper() .. b .. ':' end )
 	if tab[index] then
 		for i, v in ipairs( tab[index] ) do
-			str = str .. '\n' .. ( ' ' ):rep( 12 ).. wrap( '- ' .. v.name .. ': <' .. v.type .. '> ' .. v.description, ( ' ' ):rep( 2 ), ( ' ' ):rep( 12 ) )
+			str = str .. '\n' .. ( ' ' ):rep( 12 ).. wrap( '- ' .. v.name .. ': <' .. v.type .. '> ' .. v.description, ( ' ' ):rep( 12 ), ( ' ' ):rep( 2 ) )
 		end
 		str = str .. '\n' .. ( ' ' ):rep( 4 )
 	else
@@ -317,7 +330,25 @@ Made by Davis Claiborne under the zlib license. See LICENSE.md for more info. ]]
 	addContent( tab )
 
 	-- Callbacks
+	tab = { 'callbacks', docName:sub( 1, -2 ) .. '-callbacks', function() return 'All LOVE callbacks.' end, false }
+	createFunctions( tab, api.callbacks )
+	addContent( tab )
+
 	-- Config flags
+	tab = { 'config', { docName:sub( 1, -2 ) .. '-config', docName:sub( 1, -2 ) .. '-flags' }, function() return wrap( api.config.description ) end, false }
+	local name = docName:sub( 1, -2 ) .. '-'
+	for i, v in ipairs( api.config ) do
+		table.insert( tab, { v.name, { name .. v.name, name .. 'config-' .. v.name }, function()
+			return 'filler'
+			-- Handle defaults
+			-- - Handle nested (modules, etc)
+		end, false } )
+	end
+	addContent( tab )
+
+
+
+	-- Look through text and replace functions (love.graphics, etc.), Types, and enums with *name*
 
 	printBodies()
 end
