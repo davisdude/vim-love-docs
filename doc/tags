@@ -371,6 +371,7 @@ GearJoint:getRatio	love.txt	/*GearJoint:getRatio*
 GearJoint:setRatio	love.txt	/*GearJoint:setRatio*
 GraphicsFeature-clampzero	love.txt	/*GraphicsFeature-clampzero*
 GraphicsFeature-constants	love.txt	/*GraphicsFeature-constants*
+GraphicsFeature-lighten	love.txt	/*GraphicsFeature-lighten*
 GraphicsFeature-multicanvasformats	love.txt	/*GraphicsFeature-multicanvasformats*
 GraphicsLimit-canvasmsaa	love.txt	/*GraphicsLimit-canvasmsaa*
 GraphicsLimit-constants	love.txt	/*GraphicsLimit-constants*

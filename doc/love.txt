@@ -1053,11 +1053,11 @@ Variants:
               joystick module is disabled) and reduces memory usage
               (slightly).
               
-               Note that you can't disable |love.filesystem|; it's mandatory.
+              Note that you can't disable |love.filesystem|; it's mandatory.
               The same goes for the love module itself. |love.graphics| needs
               |love.window| to be enabled.
 
-            - Table:                                             *love.conf-t*
+                                                                 *love.conf-t*
 
                                                         *love.conf-t.identity*
 identity                This flag determines the name of the save directory
@@ -1471,7 +1471,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - model: <|DistanceModel|> The current distance model. The
+            - model: |DistanceModel| The current distance model. The
               default is 'inverseclamped'.
 
 ------------------------------------------------------------------------------
@@ -1567,39 +1567,39 @@ Variants:
         - Arguments:
             - filename: <string> The filepath to create a |Source|
               from.
-            - type: <||SourceType||> Streaming or static source.
+            - type: ||SourceType|| Streaming or static source.
         - Returns:
-            - source: <|Source|> A new |Source| that can play the
+            - source: |Source| A new |Source| that can play the
               specified audio.
     2:
         - Arguments:
-            - file: <|File|> A |File| pointing to an audio file.
-            - type: <||SourceType||> Streaming or static source.
+            - file: |File| A |File| pointing to an audio file.
+            - type: ||SourceType|| Streaming or static source.
         - Returns:
-            - source: <|Source|> A new |Source| that can play the
+            - source: |Source| A new |Source| that can play the
               specified audio.
     3:
         - Arguments:
-            - decoder: <|Decoder|> The |Decoder| to create a |Source|
+            - decoder: |Decoder| The |Decoder| to create a |Source|
               from.
-            - type: <||SourceType||> Streaming or static source.
+            - type: ||SourceType|| Streaming or static source.
         - Returns:
-            - source: <|Source|> A new |Source| that can play the
+            - source: |Source| A new |Source| that can play the
               specified audio.
     4:
         - Arguments:
-            - soundData: <|SoundData|> The |SoundData| to create a
+            - soundData: |SoundData| The |SoundData| to create a
               |Source| from.
         - Returns:
-            - source: <|Source|> A new |Source| that can play the
+            - source: |Source| A new |Source| that can play the
               specified audio. The ||SourceType|| of the returned audio is
               "static".
     5:
         - Arguments:
-            - fileData: <||FileData||> The ||FileData|| to create a
+            - fileData: ||FileData|| The ||FileData|| to create a
               |Source| from.
         - Returns:
-            - source: <|Source|> A new |Source| that can play the
+            - source: |Source| A new |Source| that can play the
               specified audio.
 
 ------------------------------------------------------------------------------
@@ -1613,7 +1613,7 @@ Variants:
         - Returns: Nothing
     2:
         - Arguments:
-            - source: <|Source|> The source on which to pause the
+            - source: |Source| The source on which to pause the
               playback.
         - Returns: Nothing
 
@@ -1625,7 +1625,7 @@ Plays the specified |Source|.
 Variants:
     1:
         - Arguments:
-            - source: <|Source|> The |Source| to play.
+            - source: |Source| The |Source| to play.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -1639,7 +1639,7 @@ Variants:
         - Returns: Nothing
     2:
         - Arguments:
-            - source: <|Source|> The source on which to resume the
+            - source: |Source| The source on which to resume the
               playback.
         - Returns: Nothing
 
@@ -1654,7 +1654,7 @@ Variants:
         - Returns: Nothing
     2:
         - Arguments:
-            - source: <|Source|> The source to rewind.
+            - source: |Source| The source to rewind.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -1665,7 +1665,7 @@ Sets the distance attenuation model.
 Variants:
     1:
         - Arguments:
-            - model: <|DistanceModel|> The new distance model.
+            - model: |DistanceModel| The new distance model.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -1751,7 +1751,7 @@ Variants:
         - Returns: Nothing
     2:
         - Arguments:
-            - source: <|Source|> The source on which to stop the
+            - source: |Source| The source on which to stop the
               playback.
         - Returns: Nothing
 
@@ -1821,7 +1821,7 @@ Functions:
 Creates an identical copy of the |Source| in the stopped state.
 
 Static |Sources| will use significantly less memory and take much less time
-to be created if |Source|:clone is used to create them instead of
+to be created if |Source:clone| is used to create them instead of
 |love.audio.newSource|, so this method should be preferred when making
 multiple |Sources| which play the same sound.
 
@@ -1832,8 +1832,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - source: <|Source|> The new identical copy of this
-              |Source|.
+            - source: |Source| The new identical copy of this |Source|.
 
 ------------------------------------------------------------------------------
 1.2.2.1.2. getAttenuationDistances            *Source:getAttenuationDistances*
@@ -1863,7 +1862,7 @@ Variants:
 1.2.2.1.4. getCone                                            *Source:getCone*
 
 Gets the |Source|'s directional volume cones. Together with
-|Source|:setDirection, the cone angles allow for the |Source|'s volume to vary
+|Source:setDirection|, the cone angles allow for the |Source|'s volume to vary
 depending on its direction.
 
 Variants:
@@ -1903,7 +1902,7 @@ all.
 Variants:
     1:
         - Arguments:
-            - unit: <|TimeUnit|> The time unit for the return value.
+            - unit: |TimeUnit| The time unit for the return value.
         - Returns:
             - duration: <number> The duration of the |Source|, or -1 if
               it cannot be determined.
@@ -1952,7 +1951,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - sourcetype: <||SourceType||> The type of the source.
+            - sourcetype: ||SourceType|| The type of the source.
 
 ------------------------------------------------------------------------------
 1.2.2.1.11. getVelocity                                   *Source:getVelocity*
@@ -2090,7 +2089,7 @@ Variants:
     1:
         - Arguments:
             - position: <number> The position to seek to.
-            - unit: <|TimeUnit|> The unit of the position value.
+            - unit: |TimeUnit| The unit of the position value.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -2123,7 +2122,7 @@ Variants:
 1.2.2.1.25. setCone                                           *Source:setCone*
 
 Sets the |Source|'s directional volume cones. Together with
-|Source|:setDirection, the cone angles allow for the |Source|'s volume to vary
+|Source:setDirection|, the cone angles allow for the |Source|'s volume to vary
 depending on its direction.
 
 Variants:
@@ -2250,8 +2249,7 @@ Gets the currently playing position of the |Source|.
 Variants:
     1:
         - Arguments:
-            - unit: <|TimeUnit|> The type of unit for the return
-              value.
+            - unit: |TimeUnit| The type of unit for the return value.
         - Returns:
             - position: <number> The currently playing position of the
               |Source|.
@@ -2383,7 +2381,7 @@ Adds an event to the event queue.
 Variants:
     1:
         - Arguments:
-            - e: <|Event|> The name of the event.
+            - e: |Event| The name of the event.
             - a: <mixed> First event argument.
             - b: <mixed> Second event argument.
             - c: <mixed> Third event argument.
@@ -2414,7 +2412,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - e: <|Event|> The type of event.
+            - e: |Event| The type of event.
             - a: <mixed> First event argument.
             - b: <mixed> Second event argument.
             - c: <mixed> Third event argument.
@@ -2834,9 +2832,9 @@ Variants:
     1:
         - Arguments:
             - filename: <string> The filename of the file to read.
-            - mode: <||FileMode||> The mode to open the file in.
+            - mode: ||FileMode|| The mode to open the file in.
         - Returns:
-            - file: <|File|> The new |File| object, or nil if an error
+            - file: |File| The new |File| object, or nil if an error
               occurred.
             - errorstr: <string> The error string if an error occurred.
 
@@ -2850,15 +2848,15 @@ Variants:
         - Arguments:
             - contents: <string> The contents of the file.
             - name: <string> The name of the file.
-            - decoder: <||FileDecoder||> The method to use when
-              decoding the contents.
+            - decoder: ||FileDecoder|| The method to use when decoding
+              the contents.
         - Returns:
-            - data: <||FileData||> Your new ||FileData||.
+            - data: ||FileData|| Your new ||FileData||.
     2:
         - Arguments:
             - filepath: <string> Path to the file.
         - Returns:
-            - data: <||FileData||> The new ||FileData||, or nil if an
+            - data: ||FileData|| The new ||FileData||, or nil if an
               error occurred.
             - err: <string> The error string, if an error occurred.
 
@@ -3059,7 +3057,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - mode: <|BufferMode|> The current buffer mode of the file.
+            - mode: |BufferMode| The current buffer mode of the file.
             - size: <number> The maximum size in bytes of the file's
               buffer.
 
@@ -3085,7 +3083,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - mode: <||FileMode||> The mode this file has been opened
+            - mode: ||FileMode|| The mode this file has been opened
               with.
 
 ------------------------------------------------------------------------------
@@ -3146,7 +3144,7 @@ setting the save directory. This is done either with
 Variants:
     1:
         - Arguments:
-            - mode: <||FileMode||> The mode to open the file in.
+            - mode: ||FileMode|| The mode to open the file in.
         - Returns:
             - success: <boolean> True on success, false otherwise.
 
@@ -3185,7 +3183,7 @@ is reached, depending on the buffer mode.
 Variants:
     1:
         - Arguments:
-            - mode: <|BufferMode|> The buffer mode to use.
+            - mode: |BufferMode| The buffer mode to use.
             - size: <number> The maximum size in bytes of the file's
               buffer.
         - Returns:
@@ -3386,7 +3384,7 @@ Variants:
     1:
         - Description: Draws an arc using the "pie" |ArcType|.
         - Arguments:
-            - drawmode: <|DrawMode|> How to draw the arc.
+            - drawmode: |DrawMode| How to draw the arc.
             - x: <number> The position of the center along x-axis.
             - y: <number> The position of the center along y-axis.
             - radius: <number> Radius of the arc.
@@ -3398,8 +3396,8 @@ Variants:
     2:
         - Description: Draws an arc using the "pie" |ArcType|.
         - Arguments:
-            - drawmode: <|DrawMode|> How to draw the arc.
-            - arctype: <|ArcType|> The type of arc to draw.
+            - drawmode: |DrawMode| How to draw the arc.
+            - arctype: |ArcType| The type of arc to draw.
             - x: <number> The position of the center along x-axis.
             - y: <number> The position of the center along y-axis.
             - radius: <number> Radius of the arc.
@@ -3417,7 +3415,7 @@ Draws a circle.
 Variants:
     1:
         - Arguments:
-            - mode: <|DrawMode|> How to draw the circle.
+            - mode: |DrawMode| How to draw the circle.
             - x: <number> The position of the center along x-axis.
             - y: <number> The position of the center along y-axis.
             - radius: <number> The radius of the circle.
@@ -3524,7 +3522,7 @@ the shearing factors.
 Variants:
     1:
         - Arguments:
-            - drawable: <|Drawable|> A drawable object.
+            - drawable: |Drawable| A drawable object.
             - x: <number> The position to draw the object (x-axis).
             - y: <number> The position to draw the object (y-axis).
             - r: <number> Orientation (radians).
@@ -3540,9 +3538,9 @@ Variants:
         - Returns: Nothing
     2:
         - Arguments:
-            - texture: <||Texture||> A ||Texture|| (|Image| or
-              |Canvas|) to texture the |Quad| with.
-            - quad: <|Quad|> The |Quad| to draw on screen.
+            - texture: ||Texture|| A ||Texture|| (|Image| or |Canvas|)
+              to texture the |Quad| with.
+            - quad: |Quad| The |Quad| to draw on screen.
             - x: <number> The position to draw the object (x-axis).
             - y: <number> The position to draw the object (y-axis).
             - r: <number> Orientation (radians).
@@ -3562,7 +3560,7 @@ Draws an ellipse.
 Variants:
     1:
         - Arguments:
-            - mode: <|DrawMode|> How to draw the ellipse.
+            - mode: |DrawMode| How to draw the ellipse.
             - x: <number> The position of the center along x-axis.
             - y: <number> The position of the center along y-axis.
             - radiusx: <number> The radius of the ellipse along the
@@ -3572,7 +3570,7 @@ Variants:
         - Returns: Nothing
     2:
         - Arguments:
-            - mode: <|DrawMode|> How to draw the ellipse.
+            - mode: |DrawMode| How to draw the ellipse.
             - x: <number> The position of the center along x-axis.
             - y: <number> The position of the center along y-axis.
             - radiusx: <number> The radius of the ellipse along the
@@ -3606,8 +3604,8 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - mode: <|BlendMode|> The current blend mode.
-            - alphamode: <|BlendAlphaMode|> The current blend alpha mode
+            - mode: |BlendMode| The current blend mode.
+            - alphamode: |BlendAlphaMode| The current blend alpha mode
               – it determines how the alpha of drawn objects affects
               blending.
 
@@ -3620,7 +3618,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - canvas: <|Canvas|> The |Canvas| set by setCanvas. Returns
+            - canvas: |Canvas| The |Canvas| set by setCanvas. Returns
               nil if drawing to the real screen.
 
 ------------------------------------------------------------------------------
@@ -3658,7 +3656,7 @@ are active unless |love.graphics.setColorMask| has been used.
 
 The color mask determines whether individual components of the colors of
 drawn objects will affect the color of the screen. They affect
-|love.graphics.clear| and |Canvas|:clear as well.
+|love.graphics.clear| and |Canvas:clear| as well.
 
 Variants:
     1:
@@ -3696,10 +3694,10 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - min: <|FilterMode|> Filter mode used when scaling the
-              image down.
-            - mag: <|FilterMode|> Filter mode used when scaling the
-              image up.
+            - min: |FilterMode| Filter mode used when scaling the image
+              down.
+            - mag: |FilterMode| Filter mode used when scaling the image
+              up.
             - anisotropy: <number> Maximum amount of Anisotropic
               Filtering used.
 
@@ -3724,7 +3722,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - font: <|Font|> The current |Font|, or nil if none is set.
+            - font: |Font| The current |Font|, or nil if none is set.
 
 ------------------------------------------------------------------------------
 1.5.1.17. getHeight                                  *love.graphics.getHeight*
@@ -3746,7 +3744,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - join: <|LineJoin|> The |LineJoin| style.
+            - join: |LineJoin| The |LineJoin| style.
 
 ------------------------------------------------------------------------------
 1.5.1.19. getLineStyle                            *love.graphics.getLineStyle*
@@ -3757,7 +3755,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - style: <|LineStyle|> The current line style.
+            - style: |LineStyle| The current line style.
 
 ------------------------------------------------------------------------------
 1.5.1.20. getLineWidth                            *love.graphics.getLineWidth*
@@ -3779,7 +3777,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - shader: <|Shader|> The current |Shader|.
+            - shader: |Shader| The current |Shader|.
 
 ------------------------------------------------------------------------------
 1.5.1.22. getStats                                    *love.graphics.getStats*
@@ -3796,7 +3794,7 @@ Variants:
             - canvasswitches: <number> The number of times the active
               |Canvas| has been switched so far during the current frame. This
               includes all internal canvas switches – for example, calling
-              |Canvas|:clear if the |Canvas| isn't active will trigger two
+              |Canvas:clear| if the |Canvas| isn't active will trigger two
               canvas switches.
             - texturememory: <number> The estimated total size in bytes
               of video memory used by all loaded |Images|, |Canvases|, and
@@ -4005,12 +4003,12 @@ Variants:
         - Arguments:
             - width: <number> The width of the |Canvas|.
             - height: <number> The height of the |Canvas|.
-            - format: <||CanvasFormat||> The desired texture mode of
-              the |Canvas|.
+            - format: ||CanvasFormat|| The desired texture mode of the
+              |Canvas|.
             - msaa: <number> The desired number of antialiasing
               samples used when drawing to the |Canvas|.
         - Returns:
-            - canvas: <|Canvas|> A new |Canvas| object.
+            - canvas: |Canvas| A new |Canvas| object.
 
 ------------------------------------------------------------------------------
 1.5.1.35. newFont                                      *love.graphics.newFont*
@@ -4023,22 +4021,22 @@ Variants:
             - filename: <string> The filepath to the font file.
             - size: <number> The size of the font in pixels.
         - Returns:
-            - font: <|Font|> A |Font| object which can be used to draw
+            - font: |Font| A |Font| object which can be used to draw
               text on screen.
     2:
         - Arguments:
-            - file: <|File|> A |File| pointing to a font.
+            - file: |File| A |File| pointing to a font.
             - size: <number> The size of the font in pixels.
         - Returns:
-            - font: <|Font|> A |Font| object which can be used to draw
+            - font: |Font| A |Font| object which can be used to draw
               text on screen.
     3:
         - Arguments:
-            - filedata: <||FileData||> The encoded data to decode into
-              a font.
+            - filedata: ||FileData|| The encoded data to decode into a
+              font.
             - size: <number> The size of the font in pixels.
         - Returns:
-            - font: <|Font|> A |Font| object which can be used to draw
+            - font: |Font| A |Font| object which can be used to draw
               text on screen.
     4:
         - Description: This variant uses the default font (Vera Sans) with a
@@ -4046,7 +4044,7 @@ Variants:
         - Arguments:
             - size: <number> The size of the font in pixels.
         - Returns:
-            - font: <|Font|> A |Font| object which can be used to draw
+            - font: |Font| A |Font| object which can be used to draw
               text on screen.
 
 ------------------------------------------------------------------------------
@@ -4054,7 +4052,7 @@ Variants:
 
 Creates a new |Mesh|.
 
-Use |Mesh|:setTexture if the |Mesh| should be textured with an |Image| or
+Use |Mesh:setTexture| if the |Mesh| should be textured with an |Image| or
 |Canvas| when it's drawn.
 
 Variants:
@@ -4064,7 +4062,7 @@ Variants:
             - vertices: <table> The table filled with vertex
               information tables for each vertex as follows:
 
-            - Table:                          *love.graphics.newMesh-vertices*
+                                              *love.graphics.newMesh-vertices*
 
                                           *love.graphics.newMesh-vertices.[1]*
 [1]                     The position of the vertex on the x-axis.
@@ -4094,14 +4092,14 @@ Variants:
                                           *love.graphics.newMesh-vertices.[8]*
 [8]                     The alpha component of the vertex color.
 
-            - mode: <||MeshDrawMode||> How the vertices are used when
+            - mode: ||MeshDrawMode|| How the vertices are used when
               drawing. The default mode "fan" is sufficient for simple convex
               polygons.
-            - usage: <||SpriteBatchUsage||> The expected usage of the
+            - usage: ||SpriteBatchUsage|| The expected usage of the
               |Mesh|. The specified usage mode affects the |Mesh|'s memory
               usage and performance.
         - Returns:
-            - mesh: <|Mesh|> The new |Mesh|.
+            - mesh: |Mesh| The new |Mesh|.
     2:
         - Description: Creates a standard |Mesh| with the specified number of
           vertices.
@@ -4109,14 +4107,14 @@ Variants:
             - vertexcount: <number> The total number of vertices the
               |Mesh| will use. Each vertex is initialized to {0,0, 0,0,
               255,255,255,255}.
-            - mode: <||MeshDrawMode||> How the vertices are used when
+            - mode: ||MeshDrawMode|| How the vertices are used when
               drawing. The default mode "fan" is sufficient for simple convex
               polygons.
-            - usage: <||SpriteBatchUsage||> The expected usage of the
+            - usage: ||SpriteBatchUsage|| The expected usage of the
               |Mesh|. The specified usage mode affects the |Mesh|'s memory
               usage and performance.
         - Returns:
-            - mesh: <|Mesh|> The new |Mesh|.
+            - mesh: |Mesh| The new |Mesh|.
     3:
         - Description: Creates a |Mesh| with custom vertex attributes and the
           specified vertex data.
@@ -4125,7 +4123,7 @@ Variants:
               ...}. Each attribute is a table which specifies a custom vertex
               attribute used for each vertex.
 
-            - Table:                      *love.graphics.newMesh-vertexformat*
+                                          *love.graphics.newMesh-vertexformat*
 
                                 *love.graphics.newMesh-vertexformat.attribute*
 attribute               A table containing the attribute's name, it's data
@@ -4140,7 +4138,7 @@ attribute               A table containing the attribute's name, it's data
               where each vertex is a table in the form of {attributecomponent,
               ...}.
 
-            - Table:                         love.graphics.newMesh-vertices-2*
+                                             love.graphics.newMesh-vertices-2*
 
                            *love.graphics.newMesh-vertices.attributecomponent*
 attributecomponent      The first component of the first vertex attribute in
@@ -4150,14 +4148,14 @@ attributecomponent      The first component of the first vertex attribute in
 ...                     Additional components of all vertex attributes in the
                         vertex.
 
-            - mode: <||MeshDrawMode||> How the vertices are used when
+            - mode: ||MeshDrawMode|| How the vertices are used when
               drawing. The default mode "fan" is sufficient for simple convex
               polygons.
-            - usage: <||SpriteBatchUsage||> The expected usage of the
+            - usage: ||SpriteBatchUsage|| The expected usage of the
               |Mesh|. The specified usage mode affects the |Mesh|'s memory
               usage and performance.
         - Returns:
-            - mesh: <|Mesh|> The new |Mesh|.
+            - mesh: |Mesh| The new |Mesh|.
     4:
         - Description: Creates a |Mesh| with custom vertex attributes and the
           specified number of vertices.
@@ -4166,7 +4164,7 @@ attributecomponent      The first component of the first vertex attribute in
               ...}. Each attribute is a table which specifies a custom vertex
               attribute used for each vertex.
 
-            - Table:                     love.graphics.newMesh-vertexformat-2*
+                                         love.graphics.newMesh-vertexformat-2*
 
                                love.graphics.newMesh-vertexformat.attribute-2*
 attribute               A table containing the attribute's name, it's data
@@ -4178,14 +4176,14 @@ attribute               A table containing the attribute's name, it's data
 
             - vertexcount: <number> The total number of vertices the
               |Mesh| will use.
-            - mode: <||MeshDrawMode||> How the vertices are used when
+            - mode: ||MeshDrawMode|| How the vertices are used when
               drawing. The default mode "fan" is sufficient for simple convex
               polygons.
-            - usage: <||SpriteBatchUsage||> The expected usage of the
+            - usage: ||SpriteBatchUsage|| The expected usage of the
               |Mesh|. The specified usage mode affects the |Mesh|'s memory
               usage and performance.
         - Returns:
-            - mesh: <|Mesh|> The new |Mesh|.
+            - mesh: |Mesh| The new |Mesh|.
 
 ------------------------------------------------------------------------------
 1.5.1.37. newImage                                    *love.graphics.newImage*
@@ -4199,24 +4197,24 @@ Variants:
         - Arguments:
             - filename: <string> The filepath to the image file.
         - Returns:
-            - image: <|Image|> An |Image| object which can be drawn on
+            - image: |Image| An |Image| object which can be drawn on
               screen.
     2:
         - Arguments:
-            - imageData: <||ImageData||> An ||ImageData|| object. The
+            - imageData: ||ImageData|| An ||ImageData|| object. The
               |Image| will use this ||ImageData|| to reload itself when
               |love.window.setMode| is called.
         - Returns:
-            - image: <|Image|> An |Image| object which can be drawn on
+            - image: |Image| An |Image| object which can be drawn on
               screen.
     3:
         - Arguments:
-            - compressedImageData: <|CompressedImageData|> A
+            - compressedImageData: |CompressedImageData| A
               |CompressedImageData| object. The |Image| will use this
               |CompressedImageData| to reload itself when
               |love.window.setMode| is called.
         - Returns:
-            - image: <|Image|> An |Image| object which can be drawn on
+            - image: |Image| An |Image| object which can be drawn on
               screen.
     4:
         - Arguments:
@@ -4224,7 +4222,7 @@ Variants:
               ||FileData|| or ||ImageData|| or |CompressedImageData| object).
             - flags: <table> A table containing the following fields:
 
-            - Table:                            *love.graphics.newImage-flags*
+                                                *love.graphics.newImage-flags*
 
                                          *love.graphics.newImage-flags.linear*
 linear                  True if the image's pixels should be interpreted as
@@ -4243,7 +4241,7 @@ mipmaps                 If true, mipmaps for the image will be automatically
                         be used as this |Image|'s mipmap levels.
 
         - Returns:
-            - image: <|Image|> An |Image| object which can be drawn on
+            - image: |Image| An |Image| object which can be drawn on
               screen.
 
 ------------------------------------------------------------------------------
@@ -4264,7 +4262,7 @@ Variants:
             - extraspacing: <number> Additional spacing (positive or
               negative) to apply to each glyph in the |Font|.
         - Returns:
-            - font: <|Font|> A |Font| object which can be used to draw
+            - font: |Font| A |Font| object which can be used to draw
               text on screen.
 
 ------------------------------------------------------------------------------
@@ -4275,11 +4273,11 @@ Creates a new |ParticleSystem|.
 Variants:
     1:
         - Arguments:
-            - texture: <||Texture||> The |Image| or |Canvas| to use.
+            - texture: ||Texture|| The |Image| or |Canvas| to use.
             - buffer: <number> The max number of particles at the same
               time.
         - Returns:
-            - system: <|ParticleSystem|> A new |ParticleSystem|.
+            - system: |ParticleSystem| A new |ParticleSystem|.
 
 ------------------------------------------------------------------------------
 1.5.1.40. newShader                                  *love.graphics.newShader*
@@ -4302,7 +4300,7 @@ Variants:
             - code: <string> The pixel shader or vertex shader code,
               or a filename pointing to a file with the code.
         - Returns:
-            - shader: <|Shader|> A |Shader| object for use in drawing
+            - shader: |Shader| A |Shader| object for use in drawing
               operations.
     2:
         - Arguments:
@@ -4311,7 +4309,7 @@ Variants:
             - vertexcode: <string> The vertex shader code, or a
               filename pointing to a file with the code.
         - Returns:
-            - shader: <|Shader|> A |Shader| object for use in drawing
+            - shader: |Shader| A |Shader| object for use in drawing
               operations.
 
 ------------------------------------------------------------------------------
@@ -4322,11 +4320,11 @@ Creates a new |Font|.
 Variants:
     1:
         - Arguments:
-            - font: <|Font|> The font to use for the text.
+            - font: |Font| The font to use for the text.
             - textstring: <string> The initial string of text that the
               new |Text| object will contain. May be nil.
         - Returns:
-            - text: <|Text|> The new drawable |Text| object.
+            - text: |Text| The new drawable |Text| object.
 
 ------------------------------------------------------------------------------
 1.5.1.42. newQuad                                      *love.graphics.newQuad*
@@ -4351,7 +4349,7 @@ Variants:
             - sh: <number> The reference height, the height of the
               |Image|.
         - Returns:
-            - quad: <|Quad|> The new |Quad|.
+            - quad: |Quad| The new |Quad|.
 
 ------------------------------------------------------------------------------
 1.5.1.43. newScreenshot                          *love.graphics.newScreenshot*
@@ -4365,7 +4363,7 @@ Variants:
               alpha channel in the ||ImageData||. If false, the screenshot
               will be fully opaque.
         - Returns:
-            - screenshot: <||ImageData||> The image data of the
+            - screenshot: ||ImageData|| The image data of the
               screenshot.
 
 ------------------------------------------------------------------------------
@@ -4376,14 +4374,14 @@ Creates a new |SpriteBatch| object.
 Variants:
     1:
         - Arguments:
-            - texture: <||Texture||> The |Image| or |Canvas| to use
-              for the sprites.
+            - texture: ||Texture|| The |Image| or |Canvas| to use for
+              the sprites.
             - maxsprites: <number> The max number of sprites.
-            - usage: <||SpriteBatchUsage||> The expected usage of the
+            - usage: ||SpriteBatchUsage|| The expected usage of the
               |SpriteBatch|. The specified usage mode affects the
               |SpriteBatch|'s memory usage and performance.
         - Returns:
-            - spriteBatch: <|SpriteBatch|> The new |SpriteBatch|.
+            - spriteBatch: |SpriteBatch| The new |SpriteBatch|.
 
 ------------------------------------------------------------------------------
 1.5.1.45. newVideo                                    *love.graphics.newVideo*
@@ -4401,16 +4399,16 @@ Variants:
               false, it will try without causing an error if the video has no
               audio.
         - Returns:
-            - video: <|Video|> A new |Video|.
+            - video: |Video| A new |Video|.
     2:
         - Arguments:
-            - videostream: <||VideoStream||> A video stream object.
+            - videostream: ||VideoStream|| A video stream object.
             - loadaudio: <boolean> Whether to try to load the video's
               audio into an audio |Source|. If not explicitly set to true or
               false, it will try without causing an error if the video has no
               audio.
         - Returns:
-            - video: <|Video|> A new |Video|.
+            - video: |Video| A new |Video|.
 
 ------------------------------------------------------------------------------
 1.5.1.46. origin                                        *love.graphics.origin*
@@ -4447,7 +4445,7 @@ Variants:
             - points: <table> A table containing multiple point
               positions, in the form of {x, y, ...}.
 
-            - Table:                             *love.graphics.points-points*
+                                                 *love.graphics.points-points*
 
                                                *love.graphics.points-points.x*
 x                       The position of the first point on the x-axis.
@@ -4466,7 +4464,7 @@ y                       The position of the first point on the y-axis.
               the position and color of a point in the form of {x, y, r, g, b,
               a}. The color components are optional.
 
-            - Table:                            love.graphics.points-points-2*
+                                                love.graphics.points-points-2*
 
                                            *love.graphics.points-points.point*
 point                   A table containing the position and color of the
@@ -4495,12 +4493,12 @@ artifacts may occur.
 Variants:
     1:
         - Arguments:
-            - mode: <|DrawMode|> How to draw the polygon.
+            - mode: |DrawMode| How to draw the polygon.
             - ...: <number> The vertices of the polygon.
         - Returns: Nothing
     2:
         - Arguments:
-            - mode: <|DrawMode|> How to draw the polygon.
+            - mode: |DrawMode| How to draw the polygon.
             - vertices: <table> The vertices of the polygon as a
               table.
         - Returns: Nothing
@@ -4567,7 +4565,7 @@ Variants:
               strings to add to the object, in the form of {color1, string1,
               color2, string2, ...}.
 
-            - Table:                         *love.graphics.print-coloredtext*
+                                             *love.graphics.print-coloredtext*
 
                                       *love.graphics.print-coloredtext.color1*
 color1                  A table containing red, green, blue, and optional
@@ -4626,7 +4624,7 @@ Variants:
             - y: <number> The position on the y-axis.
             - limit: <number> Wrap the line after this many horizontal
               pixels.
-            - align: <|AlignMode|> The alignment.
+            - align: |AlignMode| The alignment.
             - r: <number> Orientation (radians).
             - sx: <number> Scale factor (x-axis).
             - sy: <number> Scale factor (y-axis).
@@ -4641,7 +4639,7 @@ Variants:
               strings to add to the object, in the form of {color1, string1,
               color2, string2, ...}.
 
-            - Table:                        *love.graphics.printf-coloredtext*
+                                            *love.graphics.printf-coloredtext*
 
                                      *love.graphics.printf-coloredtext.color1*
 color1                  A table containing red, green, blue, and optional
@@ -4670,7 +4668,7 @@ string2                 A string of text which has a color specified by the
             - y: <number> The position of the new text on the y-axis.
             - wraplimit: <number> The maximum width in pixels of the
               text before it gets automatically wrapped to a new line.
-            - align: <|AlignMode|> The alignment of the text.
+            - align: |AlignMode| The alignment of the text.
             - angle: <number> The orientation of the object in
               radians.
             - sx: <number> Scale factor on the x-axis.
@@ -4702,8 +4700,8 @@ Variants:
     2:
         - Description: Pushes a specific type of state to the stack.
         - Arguments:
-            - stack: <|StackType|> The type of stack to push (e.g.
-              just transformation state, or all |love.graphics| state).
+            - stack: |StackType| The type of stack to push (e.g. just
+              transformation state, or all |love.graphics| state).
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -4714,7 +4712,7 @@ Draws a rectangle.
 Variants:
     1:
         - Arguments:
-            - mode: <|DrawMode|> How to draw the rectangle.
+            - mode: |DrawMode| How to draw the rectangle.
             - x: <number> The position of top-left corner along the
               x-axis.
             - y: <number> The position of top-left corner along the
@@ -4725,7 +4723,7 @@ Variants:
     2:
         - Description: Draws a rectangle with rounded corners.
         - Arguments:
-            - mode: <|DrawMode|> How to draw the rectangle.
+            - mode: |DrawMode| How to draw the rectangle.
             - x: <number> The position of top-left corner along the
               x-axis.
             - y: <number> The position of top-left corner along the
@@ -4831,13 +4829,13 @@ Sets the blending mode.
 Variants:
     1:
         - Arguments:
-            - mode: <|BlendMode|> The blend mode to use.
+            - mode: |BlendMode| The blend mode to use.
         - Returns: Nothing
     2:
         - Arguments:
-            - mode: <|BlendMode|> The blend mode to use.
-            - alphamode: <|BlendAlphaMode|> What to do with the alpha
-              of drawn objects when blending.
+            - mode: |BlendMode| The blend mode to use.
+            - alphamode: |BlendAlphaMode| What to do with the alpha of
+              drawn objects when blending.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -4864,8 +4862,8 @@ Variants:
         - Returns: Nothing
     2:
         - Arguments:
-            - canvas: <|Canvas|> A render target.
-            - ...: <|Canvas|> Additional render targets.
+            - canvas: |Canvas| A render target.
+            - ...: |Canvas| Additional render targets.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -4921,9 +4919,9 @@ This function does not apply retroactively to loaded images.
 Variants:
     1:
         - Arguments:
-            - min: <|FilterMode|> Filter mode used when scaling the
+            - min: |FilterMode| Filter mode used when scaling the
               image down.
-            - mag: <|FilterMode|> Filter mode used when scaling the
+            - mag: |FilterMode| Filter mode used when scaling the
               image up.
             - anisotropy: <number> Maximum amount of Anisotropic
               Filtering used.
@@ -4941,7 +4939,7 @@ in the loading stage and then passed to this function in the drawing stage.
 Variants:
     1:
         - Arguments:
-            - font: <|Font|> The |Font| object to use.
+            - font: |Font| The |Font| object to use.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -4952,7 +4950,7 @@ Sets the line join style.
 Variants:
     1:
         - Arguments:
-            - join: <|LineJoin|> The |LineJoin| to use.
+            - join: |LineJoin| The |LineJoin| to use.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -4963,7 +4961,7 @@ Sets the line style.
 Variants:
     1:
         - Arguments:
-            - style: <|LineStyle|> The |LineStyle| to use.
+            - style: |LineStyle| The |LineStyle| to use.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -4989,19 +4987,19 @@ Variants:
               the font.
             - size: <number> The size of the font.
         - Returns:
-            - font: <|Font|> The new font.
+            - font: |Font| The new font.
     2:
         - Arguments:
-            - file: <|File|> A |File| with the font.
+            - file: |File| A |File| with the font.
             - size: <number> The size of the font.
         - Returns:
-            - font: <|Font|> The new font.
+            - font: |Font| The new font.
     3:
         - Arguments:
-            - data: <|Data|> A |Data| with the font.
+            - data: |Data| A |Data| with the font.
             - size: <number> The size of the font.
         - Returns:
-            - font: <|Font|> The new font.
+            - font: |Font| The new font.
 
 ------------------------------------------------------------------------------
 1.5.1.69. setShader                                  *love.graphics.setShader*
@@ -5018,7 +5016,7 @@ Variants:
         - Returns: Nothing
     2:
         - Arguments:
-            - shader: <|Shader|> The new shader.
+            - shader: |Shader| The new shader.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -5070,7 +5068,7 @@ Each |Canvas| has its own per-pixel stencil values.
 Variants:
     1:
         - Arguments:
-            - comparemode: <|CompareMode|> The type of comparison to
+            - comparemode: |CompareMode| The type of comparison to
               make for each pixel.
             - comparevalue: <number> The value to use when comparing
               with the stencil value of each pixel. Must be between 0 and 255.
@@ -5129,8 +5127,8 @@ Variants:
             - stencilfunction: <function> Function which draws
               geometry. The stencil values of pixels, rather than the color of
               each pixel, will be affected by the geometry.
-            - action: <|StencilAction|> How to modify any stencil
-              values of pixels that are touched by what's drawn in the stencil
+            - action: |StencilAction| How to modify any stencil values
+              of pixels that are touched by what's drawn in the stencil
               function.
             - value: <number> The new stencil value to use for pixels
               if the "replace" stencil action is used. Has no effect with
@@ -5246,9 +5244,9 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - min: <|FilterMode|> Filter mode used when minifying the
+            - min: |FilterMode| Filter mode used when minifying the
               canvas.
-            - mag: <|FilterMode|> Filter mode used when magnifying the
+            - mag: |FilterMode| Filter mode used when magnifying the
               canvas.
             - anisotropy: <number> Maximum amount of anisotropic
               filtering used.
@@ -5262,7 +5260,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - format: <||CanvasFormat||> The format of the |Canvas|.
+            - format: ||CanvasFormat|| The format of the |Canvas|.
 
 ------------------------------------------------------------------------------
 1.5.2.1.4. getHeight                                        *Canvas:getHeight*
@@ -5315,9 +5313,9 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - horizontal: <|WrapMode|> Horizontal wrapping mode of the
+            - horizontal: |WrapMode| Horizontal wrapping mode of the
               |Canvas|.
-            - vertical: <|WrapMode|> Vertical wrapping mode of the
+            - vertical: |WrapMode| Vertical wrapping mode of the
               |Canvas|.
 
 ------------------------------------------------------------------------------
@@ -5345,8 +5343,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - data: <||ImageData||> The image data stored in the
-              |Canvas|.
+            - data: ||ImageData|| The image data stored in the |Canvas|.
     2:
         - Arguments:
             - x: <number> The x-axis of the top-left corner of the
@@ -5358,7 +5355,7 @@ Variants:
             - height: <number> The height of the area within the
               |Canvas| to capture.
         - Returns:
-            - data: <||ImageData||> The new ||ImageData|| made from the
+            - data: ||ImageData|| The new ||ImageData|| made from the
               |Canvas|' contents.
 
 ------------------------------------------------------------------------------
@@ -5381,8 +5378,8 @@ Sets the filter of the |Canvas|.
 Variants:
     1:
         - Arguments:
-            - min: <|FilterMode|> How to scale a canvas down.
-            - mag: <|FilterMode|> How to scale a canvas up.
+            - min: |FilterMode| How to scale a canvas down.
+            - mag: |FilterMode| How to scale a canvas up.
             - anisotropy: <number> Maximum amount of anisotropic
               filtering used.
         - Returns: Nothing
@@ -5400,9 +5397,9 @@ pixels on the opposing side of the framebuffer.
 Variants:
     1:
         - Arguments:
-            - horizontal: <|WrapMode|> Horizontal wrapping mode of the
+            - horizontal: |WrapMode| Horizontal wrapping mode of the
               |Canvas|.
-            - vertical: <|WrapMode|> Vertical wrapping mode of the
+            - vertical: |WrapMode| Vertical wrapping mode of the
               |Canvas|.
         - Returns: Nothing
 
@@ -5483,9 +5480,9 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - min: <|FilterMode|> Filter mode used when minifying the
+            - min: |FilterMode| Filter mode used when minifying the
               font.
-            - mag: <|FilterMode|> Filter mode used when magnifying the
+            - mag: |FilterMode| Filter mode used when magnifying the
               font.
             - anisotropy: <number> Maximum amount of anisotropic
               filtering used.
@@ -5506,7 +5503,7 @@ Variants:
 1.5.2.2.6. getLineHeight                                  *Font:getLineHeight*
 
 Gets the line height. This will be the value previously set by
-|Font|:setLineHeight, or 1.0 by default.
+|Font:setLineHeight|, or 1.0 by default.
 
 Variants:
     1:
@@ -5574,9 +5571,8 @@ to setting a "font stack" in Cascading Style Sheets (CSS).
 Variants:
     1:
         - Arguments:
-            - fallbackfont1: <|Font|> The first fallback |Font| to
-              use.
-            - ...: <|Font|> Additionall fallback |Fonts|.
+            - fallbackfont1: |Font| The first fallback |Font| to use.
+            - ...: |Font| Additionall fallback |Fonts|.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -5587,8 +5583,8 @@ Sets the filter mode for a font.
 Variants:
     1:
         - Arguments:
-            - min: <|FilterMode|> How to scale a font down.
-            - mag: <|FilterMode|> How to scale a font up.
+            - min: |FilterMode| How to scale a font down.
+            - mag: |FilterMode| How to scale a font up.
             - anisotropy: <number> Maximum amount of anisotropic
               filtering used.
         - Returns: Nothing
@@ -5655,7 +5651,7 @@ Variants:
         - Arguments:
             - name: <string> The name of the vertex attribute to
               attach.
-            - mesh: <|Mesh|> The |Mesh| to get the vertex attribute
+            - mesh: |Mesh| The |Mesh| to get the vertex attribute
               from.
         - Returns: Nothing
 
@@ -5668,7 +5664,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - mode: <||MeshDrawMode||> The mode used when drawing the
+            - mode: ||MeshDrawMode|| The mode used when drawing the
               |Mesh|.
 
 ------------------------------------------------------------------------------
@@ -5677,7 +5673,7 @@ Variants:
 Gets the range of vertices used when drawing the |Mesh|.
 
 If the |Mesh|'s draw range has not been set previously with
-|Mesh|:setDrawRange, this function will return nil.
+|Mesh:setDrawRange|, this function will return nil.
 
 Variants:
     1:
@@ -5699,7 +5695,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - texture: <||Texture||> The |Image| or |Canvas| to texture
+            - texture: ||Texture|| The |Image| or |Canvas| to texture
               the |Mesh| with when drawing, or nil if none is set.
 
 ------------------------------------------------------------------------------
@@ -5780,7 +5776,7 @@ Variants:
               a table containing tables for each vertex attribute the |Mesh|
               was created with, in the form of {attribute, ...}.
 
-            - Table:                                  *getVertexFormat-format*
+                                                      *getVertexFormat-format*
 
                                             *getVertexFormat-format.attribute*
 attribute               A table containing the attribute's name, it's data
@@ -5799,7 +5795,7 @@ which the vertices are used when the |Mesh| is drawn. The vertices, vertex
 map, and mesh draw mode work together to determine what exactly is displayed
 on the screen.
 
-If no vertex map has been set previously via |Mesh|:setVertexMap, then this
+If no vertex map has been set previously via |Mesh:setVertexMap|, then this
 function will return nil in LÖVE 0.10.0+, or an empty table in 0.9.2 and
 older.
 
@@ -5848,8 +5844,8 @@ Sets the mode used when drawing the |Mesh|.
 Variants:
     1:
         - Arguments:
-            - mode: <||MeshDrawMode||> The mode to use when drawing
-              the |Mesh|.
+            - mode: ||MeshDrawMode|| The mode to use when drawing the
+              |Mesh|.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -5861,8 +5857,8 @@ If a vertex map is used with the |Mesh|, this method will set a subset of the
 values in the vertex map array to use, instead of a subset of the total
 vertices in the |Mesh|.
 
-For example, if |Mesh|:setVertexMap(1, 2, 3, 1, 3, 4) and
-|Mesh|:setDrawRange(4, 6) are called, vertices 1, 3, and 4 will be drawn.
+For example, if |Mesh:setVertexMap|(1, 2, 3, 1, 3, 4) and
+|Mesh:setDrawRange|(4, 6) are called, vertices 1, 3, and 4 will be drawn.
 
 Variants:
     1:
@@ -5893,8 +5889,8 @@ Variants:
         - Returns: Nothing
     2:
         - Arguments:
-            - texture: <||Texture||> The |Image| or |Canvas| to
-              texture the |Mesh| with when drawing.
+            - texture: ||Texture|| The |Image| or |Canvas| to texture
+              the |Mesh| with when drawing.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -5919,7 +5915,7 @@ Variants:
             - vertex: <table> A table with vertex information, in the
               form of {attributecomponent, ...}.
 
-            - Table:                                        *setVertex-vertex*
+                                                            *setVertex-vertex*
 
                                          *setVertex-vertex.attributecomponent*
 attributecomponent      The first component of the first vertex attribute in
@@ -5955,7 +5951,7 @@ attributecomponent      The first component of the first vertex attribute in
               modify.
             - vertex: <table> A table with vertex information.
 
-            - Table:                                       setVertex-vertex-2*
+                                                           setVertex-vertex-2*
 
                                                         *setVertex-vertex.[1]*
 [1]                     The position of the vertex on the x-axis.
@@ -6012,10 +6008,10 @@ Variants:
 
 Sets if the per-vertex colors are used when rendering instead of the constant
 color (constant color being |love.graphics.setColor| or
-|SpriteBatch|:setColor)
+|SpriteBatch:setColor|)
 
 The per-vertex colors are automatically enabled by default when making a new
-|Mesh| or when doing |Mesh|:setVertex, but only if at least one vertex color
+|Mesh| or when doing |Mesh:setVertex|, but only if at least one vertex color
 is not the default (255,255,255,255).
 
 Variants:
@@ -6041,12 +6037,12 @@ Variants:
         - Arguments:
             - map: <table> A table containing a list of vertex indices
               to use when drawing. Values must be in the range of [1,
-              |Mesh|:getVertexCount()].
+              |Mesh:getVertexCount|()].
         - Returns: Nothing
     2:
         - Arguments:
             - vi1: <number> The index of the first vertex to use when
-              drawing. Must be in the range of [1, |Mesh|:getVertexCount()].
+              drawing. Must be in the range of [1, |Mesh:getVertexCount|()].
             - vi2: <number> The index of the second vertex to use when
               drawing.
             - vi3: <number> The index of the third vertex to use when
@@ -6067,7 +6063,7 @@ Variants:
               where each vertex is a table in the form of {attributecomponent,
               ...}.
 
-            - Table:                                    *setVertices-vertices*
+                                                        *setVertices-vertices*
 
                                      *setVertices-vertices.attributecomponent*
 attributecomponent      The first component of the first vertex attribute in
@@ -6088,7 +6084,7 @@ startvertex             The index of the first vertex to replace.
             - vertices: <table> The table filled with vertex
               information tables for each vertex as follows:
 
-            - Table:                                   setVertices-vertices-2*
+                                                       setVertices-vertices-2*
 
                                                     *setVertices-vertices.[1]*
 [1]                     The position of the vertex on the x-axis.
@@ -6159,19 +6155,19 @@ Gets the original ||ImageData|| or |CompressedData| used to create the
 
 All |Images| keep a reference to the |Data| that was used to create the
 |Image|. The |Data| is used to refresh the |Image| when |love.window.setMode|
-or |Image|:refresh is called.
+or |Image:refresh| is called.
 
 Variants:
     1:
         - Arguments: None
         - Returns:
-            - data: <||ImageData||> The original ||ImageData|| used to
+            - data: ||ImageData|| The original ||ImageData|| used to
               create the |Image|, if the image is not compressed.
     2:
         - Arguments: None
         - Returns:
-            - data: <|CompressedData|> The original |CompressedData|
-              used to create the |Image|, if the image is compressed.
+            - data: |CompressedData| The original |CompressedData| used
+              to create the |Image|, if the image is compressed.
 
 ------------------------------------------------------------------------------
 1.5.2.4.2. getDimensions                                 *Image:getDimensions*
@@ -6194,9 +6190,9 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - min: <|FilterMode|> Filter mode used when minifying the
+            - min: |FilterMode| Filter mode used when minifying the
               image.
-            - mag: <|FilterMode|> Filter mode used when magnifying the
+            - mag: |FilterMode| Filter mode used when magnifying the
               image.
 
 ------------------------------------------------------------------------------
@@ -6230,8 +6226,8 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - mode: <|FilterMode|> The filter mode used in between
-              mipmap levels. nil if mipmap filtering is not enabled.
+            - mode: |FilterMode| The filter mode used in between mipmap
+              levels. nil if mipmap filtering is not enabled.
             - sharpness: <number> Value used to determine whether the
               image should use more or less detailed mipmap levels than normal
               when drawing.
@@ -6259,10 +6255,9 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - horizontal: <|WrapMode|> Horizontal wrapping mode of the
+            - horizontal: |WrapMode| Horizontal wrapping mode of the
               image.
-            - vertical: <|WrapMode|> Vertical wrapping mode of the
-              image.
+            - vertical: |WrapMode| Vertical wrapping mode of the image.
 
 ------------------------------------------------------------------------------
 1.5.2.4.9. refresh                                             *Image:refresh*
@@ -6294,8 +6289,8 @@ Sets the filter mode for an image.
 Variants:
     1:
         - Arguments:
-            - min: <|FilterMode|> How to scale an image down.
-            - mag: <|FilterMode|> How to scale an image up.
+            - min: |FilterMode| How to scale an image down.
+            - mag: |FilterMode| How to scale an image up.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -6312,7 +6307,7 @@ enabled for the mipmap filter to have any effect.
 Variants:
     1:
         - Arguments:
-            - filtermode: <|FilterMode|> The filter mode to use in
+            - filtermode: |FilterMode| The filter mode to use in
               between mipmap levels. "nearest" will often give better
               performance.
             - sharpness: <number> A positive sharpness value makes the
@@ -6338,15 +6333,15 @@ only once, but repeated ones repeat as many times as there is room in the
 If you use a |Quad| that is larger than the image extent and do not use
 repeated tiling, there may be an unwanted visual effect of the image
 stretching all the way to fill the |Quad|. If this is the case, setting
-|Image|:getWrap("repeat", "repeat") for all the images to be repeated, and
+|Image:getWrap|("repeat", "repeat") for all the images to be repeated, and
 using |Quad| of appropriate size will result in the best visual appearance.
 
 Variants:
     1:
         - Arguments:
-            - horizontal: <|WrapMode|> Horizontal wrapping mode of the
+            - horizontal: |WrapMode| Horizontal wrapping mode of the
               image.
-            - vertical: <|WrapMode|> Vertical wrapping mode of the
+            - vertical: |WrapMode| Vertical wrapping mode of the
               image.
         - Returns: Nothing
 
@@ -6442,8 +6437,8 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - particlesystem: <|ParticleSystem|> The new identical copy
-              of this |ParticleSystem|.
+            - particlesystem: |ParticleSystem| The new identical copy of
+              this |ParticleSystem|.
 
 ------------------------------------------------------------------------------
 1.5.2.5.2. emit                                          *ParticleSystem:emit*
@@ -6478,7 +6473,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - distribution: <|AreaSpreadDistribution|> The type of
+            - distribution: |AreaSpreadDistribution| The type of
               distribution for new particles.
             - dx: <number> The maximum spawn distance from the emitter
               along the x-axis for uniform distribution, or the standard
@@ -6556,7 +6551,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - mode: <|ParticleInsertMode|> The mode to use when the
+            - mode: |ParticleInsertMode| The mode to use when the
               |ParticleSystem| adds new particles.
 
 ------------------------------------------------------------------------------
@@ -6751,11 +6746,11 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - texture: <||Texture||> An |Image| or |Canvas| to use for
-              the particle.
+            - texture: ||Texture|| An |Image| or |Canvas| to use for the
+              particle.
 
 ------------------------------------------------------------------------------
-1.5.2.5.25. getTangentialAcceleration                                                                              
+1.5.2.5.25. getTangentialAcceleration                                         
                                     *ParticleSystem:getTangentialAcceleration*
 
 Gets the tangential acceleration (acceleration perpendicular to the
@@ -6822,7 +6817,7 @@ Variants:
 1.5.2.5.30. moveTo                                     *ParticleSystem:moveTo*
 
 Moves the position of the emitter. This results in smoother particle spawning
-behaviour than if |ParticleSystem|:setPosition is used every frame.
+behaviour than if |ParticleSystem:setPosition| is used every frame.
 
 Variants:
     1:
@@ -6862,7 +6857,7 @@ function.
 Variants:
     1:
         - Arguments:
-            - distribution: <|AreaSpreadDistribution|> The type of
+            - distribution: |AreaSpreadDistribution| The type of
               distribution for new particles.
             - dx: <number> The maximum spawn distance from the emitter
               along the x-axis for uniform distribution, or the standard
@@ -6952,7 +6947,7 @@ Sets the mode to use when the |ParticleSystem| adds new particles.
 Variants:
     1:
         - Arguments:
-            - mode: <|ParticleInsertMode|> The mode to use when the
+            - mode: |ParticleInsertMode| The mode to use when the
               |ParticleSystem| adds new particles.
         - Returns: Nothing
 
@@ -7041,8 +7036,8 @@ allowing for the use of animated sprite sheets with |ParticleSystems|.
 Variants:
     1:
         - Arguments:
-            - quad1: <|Quad|> The first |Quad| to use.
-            - quad2: <|Quad|> The second |Quad| to use.
+            - quad1: |Quad| The first |Quad| to use.
+            - quad2: |Quad| The second |Quad| to use.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -7171,12 +7166,12 @@ Sets the |Image| or |Canvas| which is to be emitted.
 Variants:
     1:
         - Arguments:
-            - texture: <||Texture||> An |Image| or |Canvas| to use for
+            - texture: ||Texture|| An |Image| or |Canvas| to use for
               the particle.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
-1.5.2.5.56. setTangentialAcceleration                                                                              
+1.5.2.5.56. setTangentialAcceleration                                         
                                     *ParticleSystem:setTangentialAcceleration*
 
 Sets the tangential acceleration (acceleration perpendicular to the
@@ -7309,8 +7304,7 @@ Variants:
         - Arguments:
             - name: <string> The name of the extern variable.
         - Returns:
-            - type: <|ShaderVariableType|> The base type of the
-              variable.
+            - type: |ShaderVariableType| The base type of the variable.
             - components: <number> The number of components in the
               variable (e.g. 2 for a vec2 or mat2.)
             - arrayelements: <number> The number of elements in the
@@ -7366,18 +7360,18 @@ Variants:
         - Arguments:
             - name: <string> Name of the |Image| to send to the
               shader.
-            - image: <|Image|> |Image| to send to the extern.
-            - ...: <|Image|> Additional images in case the extern is
-              an array.
+            - image: |Image| |Image| to send to the extern.
+            - ...: |Image| Additional images in case the extern is an
+              array.
         - Returns: Nothing
     5:
         - Arguments:
             - name: <string> Name of the |Canvas| to send to the
               shader.
-            - canvas: <|Canvas|> |Canvas| to send to the extern. The
+            - canvas: |Canvas| |Canvas| to send to the extern. The
               shader extern type is |Image|.
-            - ...: <|Canvas|> Additional canvases to send to the
-              extern array.
+            - ...: |Canvas| Additional canvases to send to the extern
+              array.
         - Returns: Nothing
     6:
         - Arguments:
@@ -7394,7 +7388,7 @@ Variants:
 
 Sends one or more colors to a special (extern / uniform) vec3 or vec4
 variable inside the shader. The color components must be in the range of [0,
-255], unlike |Shader|:send. The colors are gamma-corrected if global
+255], unlike |Shader:send|. The colors are gamma-corrected if global
 gamma-correction is enabled.
 
 Variants:
@@ -7468,7 +7462,7 @@ Variants:
             - id: <number> An identifier for the added sprite.
     2:
         - Arguments:
-            - quad: <|Quad|> The |Quad| to add.
+            - quad: |Quad| The |Quad| to add.
             - x: <number> The position to draw the object (x-axis).
             - y: <number> The position to draw the object (y-axis).
             - r: <number> Orientation (radians).
@@ -7491,7 +7485,7 @@ just having per-sprite colors.
 
 Each sprite in a |SpriteBatch| has 4 vertices in the following order:
 top-left, bottom-left, top-right, bottom-right. The index returned by
-|SpriteBatch|:add (and used by |SpriteBatch|:set) can be multiplied by 4 to
+|SpriteBatch:add| (and used by |SpriteBatch:set|) can be multiplied by 4 to
 determine the first vertex in a specific sprite.
 
 Variants:
@@ -7499,7 +7493,7 @@ Variants:
         - Arguments:
             - name: <string> The name of the vertex attribute to
               attach.
-            - mesh: <|Mesh|> The |Mesh| to get the vertex attribute
+            - mesh: |Mesh| The |Mesh| to get the vertex attribute
               from.
         - Returns: Nothing
 
@@ -7541,7 +7535,7 @@ Variants:
 
 Gets the color that will be used for the next add and set operations.
 
-If no color has been set with |SpriteBatch|:setColor or the current
+If no color has been set with |SpriteBatch:setColor| or the current
 |SpriteBatch| color has been cleared, this method will return nil.
 
 Variants:
@@ -7577,7 +7571,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - texture: <||Texture||> The |Image| or |Canvas| for the
+            - texture: ||Texture|| The |Image| or |Canvas| for the
               sprites.
 
 ------------------------------------------------------------------------------
@@ -7605,7 +7599,7 @@ Variants:
         - Arguments:
             - id: <number> The identifier of the sprite that will be
               changed.
-            - quad: <|Quad|> The quad used on the image of the batch.
+            - quad: |Quad| The quad used on the image of the batch.
             - x: <number> The position to draw the object (x-axis).
             - y: <number> The position to draw the object (y-axis).
             - r: <number> Orientation (radians).
@@ -7661,8 +7655,8 @@ Replaces the |Image| or |Canvas| used for the sprites.
 Variants:
     1:
         - Arguments:
-            - texture: <||Texture||> The new |Image| or |Canvas| to
-              use for the sprites.
+            - texture: ||Texture|| The new |Image| or |Canvas| to use
+              for the sprites.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -7714,14 +7708,14 @@ Variants:
             - ky: <number> Shearing / skew factor on the y-axis.
         - Returns:
             - index: <number> An index number that can be used with
-              |Text|:getWidth or |Text|:getHeight.
+              |Text:getWidth| or |Text:getHeight|.
     2:
         - Arguments:
             - coloredtext: <table> A table containing colors and
               strings to use as the new text, in the form of { color1,
               string1, color2, string2, ... }.
 
-            - Table:                                         *add-coloredtext*
+                                                             *add-coloredtext*
 
                                                       *add-coloredtext.color1*
 color1                  A table containing red, green, blue, and optional
@@ -7758,7 +7752,7 @@ string2                 A string of text which has a color specified by the
             - ky: <number> Shearing / skew factor on the y-axis.
         - Returns:
             - index: <number> An index number that can be used with
-              |Text|:getWidth or |Text|:getHeight.
+              |Text:getWidth| or |Text:getHeight|.
 
 ------------------------------------------------------------------------------
 1.5.2.9.2. addf                                                    *Text:addf*
@@ -7772,7 +7766,7 @@ Variants:
             - textstring: <string> The text to add to the object.
             - wraplimit: <number> The maximum width in pixels of the
               text before it gets automatically wrapped to a new line.
-            - align: <|AlignMode|> The alignment of the text.
+            - align: |AlignMode| The alignment of the text.
             - x: <number> The position of the new text on the x-axis.
             - y: <number> The position of the new text on the y-axis.
             - angle: <number> The orientation of the object in
@@ -7785,14 +7779,14 @@ Variants:
             - ky: <number> Shearing / skew factor on the y-axis.
         - Returns:
             - index: <number> An index number that can be used with
-              |Text|:getWidth or |Text|:getHeight.
+              |Text:getWidth| or |Text:getHeight|.
     2:
         - Arguments:
             - coloredtext: <table> A table containing colors and
               strings to use as the new text, in the form of { color1,
               string1, color2, string2, ... }.
 
-            - Table:                                        *addf-coloredtext*
+                                                            *addf-coloredtext*
 
                                                      *addf-coloredtext.color1*
 color1                  A table containing red, green, blue, and optional
@@ -7819,7 +7813,7 @@ string2                 A string of text which has a color specified by the
 
             - wraplimit: <number> The maximum width in pixels of the
               text before it gets automatically wrapped to a new line.
-            - align: <|AlignMode|> The alignment of the text.
+            - align: |AlignMode| The alignment of the text.
             - x: <number> The position of the new text on the x-axis.
             - y: <number> The position of the new text on the y-axis.
             - angle: <number> The orientation of the object in
@@ -7832,7 +7826,7 @@ string2                 A string of text which has a color specified by the
             - ky: <number> Shearing / skew factor on the y-axis.
         - Returns:
             - index: <number> An index number that can be used with
-              |Text|:getWidth or |Text|:getHeight.
+              |Text:getWidth| or |Text:getHeight|.
 
 ------------------------------------------------------------------------------
 1.5.2.9.3. clear                                                  *Text:clear*
@@ -7854,17 +7848,17 @@ Variants:
         - Arguments: None
         - Returns:
             - width: <number> The width of the text. If multiple
-              sub-strings have been added with |Text|:add, the width of the
+              sub-strings have been added with |Text:add|, the width of the
               last sub-string is returned.
             - height: <number> The height of the text. If multiple
-              sub-strings have been added with |Text|:add, the height of the
+              sub-strings have been added with |Text:add|, the height of the
               last sub-string is returned.
     2:
         - Description: Gets the width and height of a specific sub-string
           that was previously added to the |Text| object.
         - Arguments:
-            - index: <number> An index number returned by |Text|:add
-              or |Text|:addf.
+            - index: <number> An index number returned by |Text:add|
+              or |Text:addf|.
         - Returns:
             - width: <number> The width of the sub-string (before
               scaling and other transformations).
@@ -7880,7 +7874,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - font: <|Font|> The font used with this |Text| object.
+            - font: |Font| The font used with this |Text| object.
 
 ------------------------------------------------------------------------------
 1.5.2.9.6. getHeight                                          *Text:getHeight*
@@ -7892,14 +7886,14 @@ Variants:
         - Arguments: None
         - Returns:
             - height: <number> The height of the text. If multiple
-              sub-strings have been added with |Text|:add, the height of the
+              sub-strings have been added with |Text:add|, the height of the
               last sub-string is returned.
     2:
         - Description: Gets the height of a specific sub-string that was
           previously added to the |Text| object.
         - Arguments:
-            - index: <number> An index number returned by |Text|:add
-              or |Text|:addf.
+            - index: <number> An index number returned by |Text:add|
+              or |Text:addf|.
         - Returns:
             - height: <number> The height of the sub-string (before
               scaling and other transformations).
@@ -7914,14 +7908,14 @@ Variants:
         - Arguments: None
         - Returns:
             - width: <number> The width of the text. If multiple
-              sub-strings have been added with |Text|:add, the width of the
+              sub-strings have been added with |Text:add|, the width of the
               last sub-string is returned.
     2:
         - Description: Gets the width of a specific sub-string that was
           previously added to the |Text| object.
         - Arguments:
-            - index: <number> An index number returned by |Text|:add
-              or |Text|:addf.
+            - index: <number> An index number returned by |Text:add|
+              or |Text:addf|.
         - Returns:
             - width: <number> The width of the sub-string (before
               scaling and other transformations).
@@ -7942,7 +7936,7 @@ Variants:
               strings to use as the new text, in the form of { color1,
               string1, color2, string2, ... }.
 
-            - Table:                                         *set-coloredtext*
+                                                             *set-coloredtext*
 
                                                       *set-coloredtext.color1*
 color1                  A table containing red, green, blue, and optional
@@ -7984,7 +7978,7 @@ Variants:
             - textstring: <string> The new string of text to use.
             - wraplimit: <number> The maximum width in pixels of the
               text before it gets automatically wrapped to a new line.
-            - align: <|AlignMode|> The alignment of the text.
+            - align: |AlignMode| The alignment of the text.
         - Returns: Nothing
     2:
         - Arguments:
@@ -7992,7 +7986,7 @@ Variants:
               strings to use as the new text, in the form of { color1,
               string1, color2, string2, ... }.
 
-            - Table:                                        *setf-coloredtext*
+                                                            *setf-coloredtext*
 
                                                      *setf-coloredtext.color1*
 color1                  A table containing red, green, blue, and optional
@@ -8019,7 +8013,7 @@ string2                 A string of text which has a color specified by the
 
             - wraplimit: <number> The maximum width in pixels of the
               text before it gets automatically wrapped to a new line.
-            - align: <|AlignMode|> The alignment of the text.
+            - align: |AlignMode| The alignment of the text.
         - Returns: Nothing
     3:
         - Description: Clears the contents of the |Text| object.
@@ -8034,7 +8028,7 @@ Replaces the |Font| used with the text.
 Variants:
     1:
         - Arguments:
-            - font: <|Font|> The new font to use with this |Text|
+            - font: |Font| The new font to use with this |Text|
               object.
         - Returns: Nothing
 
@@ -8112,9 +8106,9 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - min: <|FilterMode|> The filter mode used when scaling the
+            - min: |FilterMode| The filter mode used when scaling the
               |Video| down.
-            - mag: <|FilterMode|> The filter mode used when scaling the
+            - mag: |FilterMode| The filter mode used when scaling the
               |Video| up.
             - anisotropy: <number> Maximum amount of anisotropic
               filtering used.
@@ -8134,14 +8128,14 @@ Variants:
 1.5.2.11.4. getSource                                        *Video:getSource*
 
 Gets the audio |Source| used for playing back the video's audio. May return
-nil if the video has no audio, or if |Video|:setSource is called with a nil
+nil if the video has no audio, or if |Video:setSource| is called with a nil
 argument.
 
 Variants:
     1:
         - Arguments: None
         - Returns:
-            - source: <|Source|> The audio |Source| used for audio
+            - source: |Source| The audio |Source| used for audio
               playback, or nil if the video has no audio.
 
 ------------------------------------------------------------------------------
@@ -8153,7 +8147,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - stream: <||VideoStream||> The ||VideoStream|| used for
+            - stream: ||VideoStream|| The ||VideoStream|| used for
               decoding and controlling the video.
 
 ------------------------------------------------------------------------------
@@ -8229,10 +8223,10 @@ Sets the scaling filters used when drawing the |Video|.
 Variants:
     1:
         - Arguments:
-            - min: <|FilterMode|> The filter mode used when scaling
-              the |Video| down.
-            - mag: <|FilterMode|> The filter mode used when scaling
-              the |Video| up.
+            - min: |FilterMode| The filter mode used when scaling the
+              |Video| down.
+            - mag: |FilterMode| The filter mode used when scaling the
+              |Video| up.
             - anisotropy: <number> Maximum amount of anisotropic
               filtering used.
         - Returns: Nothing
@@ -8246,7 +8240,7 @@ Sets the audio |Source| used for playing back the video's audio. The audio
 Variants:
     1:
         - Arguments:
-            - source: <|Source|> The audio |Source| used for audio
+            - source: |Source| The audio |Source| used for audio
               playback, or nil to disable audio synchronization.
         - Returns: Nothing
 
@@ -8324,7 +8318,7 @@ closed                  The arc circle's two end-points are connected to each
                         other.
 
 ------------------------------------------------------------------------------
-1.5.3.3. AreaSpreadDistribution                                                 *love-AreaSpreadDistribution*
+1.5.3.3. AreaSpreadDistribution                  *love-AreaSpreadDistribution*
                                         *love.graphics-AreaSpreadDistribution*
 
 Types of particle area spread distribution.
@@ -8557,7 +8551,8 @@ linear                  Scale image with linear interpolation.
 nearest                 Scale image with nearest neighbor interpolation.
 
 ------------------------------------------------------------------------------
-1.5.3.10. GraphicsFeature                        *love-GraphicsFeature* *love.graphics-GraphicsFeature*
+1.5.3.10. GraphicsFeature                               *love-GraphicsFeature*
+                                               *love.graphics-GraphicsFeature*
 
 Graphics features that can be checked for with |love.graphics.getSupported|.
 
@@ -8565,6 +8560,10 @@ Constants:                                         *GraphicsFeature-constants*
 
                                                    *GraphicsFeature-clampzero*
 clampzero               Whether the "clampzero" |WrapMode| is supported.
+
+                                                     *GraphicsFeature-lighten*
+lighten                 Whether the "lighten" and "darken" |BlendModes| are
+                        supported.
 
                                           *GraphicsFeature-multicanvasformats*
 multicanvasformats      Whether multiple |Canvases| with different formats
@@ -8648,7 +8647,7 @@ points                  The vertices are drawn as unconnected points (see
                         |love.graphics.setPointSize|.)
 
 ------------------------------------------------------------------------------
-1.5.3.15. ParticleInsertMode                                                     *love-ParticleInsertMode*
+1.5.3.15. ParticleInsertMode                         *love-ParticleInsertMode*
                                             *love.graphics-ParticleInsertMode*
 
 How newly created particles are added to the |ParticleSystem|.
@@ -8681,7 +8680,7 @@ rough                   Draw rough points.
 smooth                  Draw smooth points.
 
 ------------------------------------------------------------------------------
-1.5.3.17. SpriteBatchUsage                                                       *love-SpriteBatchUsage*
+1.5.3.17. SpriteBatchUsage                             *love-SpriteBatchUsage*
                                               *love.graphics-SpriteBatchUsage*
 
 Usage hints for |SpriteBatches| and |Meshes| to optimize data storage and
@@ -8816,7 +8815,7 @@ Variants:
               |CompressedImageData| or not.
     2:
         - Arguments:
-            - fileData: <||FileData||> A ||FileData|| potentially
+            - fileData: ||FileData|| A ||FileData|| potentially
               containing a compressed image.
         - Returns:
             - compressed: <boolean> Whether the ||FileData|| can be
@@ -8835,14 +8834,14 @@ Variants:
             - filename: <string> The filename of the compressed image
               file.
         - Returns:
-            - compressedImageData: <|CompressedImageData|> The new
+            - compressedImageData: |CompressedImageData| The new
               |CompressedImageData| object.
     2:
         - Arguments:
-            - fileData: <||FileData||> A ||FileData|| containing a
+            - fileData: ||FileData|| A ||FileData|| containing a
               compressed image.
         - Returns:
-            - compressedImageData: <|CompressedImageData|> The new
+            - compressedImageData: |CompressedImageData| The new
               |CompressedImageData| object.
 
 ------------------------------------------------------------------------------
@@ -8856,7 +8855,7 @@ Variants:
             - width: <number> The width of the ||ImageData||.
             - height: <number> The height of the ||ImageData||.
         - Returns:
-            - imageData: <||ImageData||> The new blank ||ImageData||
+            - imageData: ||ImageData|| The new blank ||ImageData||
               object. Each pixel's color values, (including the alpha values!)
               will be set to zero.
     2:
@@ -8865,18 +8864,18 @@ Variants:
             - height: <number> The height of the ||ImageData||.
             - data: <string> The data to load into the ||ImageData||.
         - Returns:
-            - imageData: <||ImageData||> The new ||ImageData|| object.
+            - imageData: ||ImageData|| The new ||ImageData|| object.
     3:
         - Arguments:
             - filename: <string> The filename of the image file.
         - Returns:
-            - imageData: <||ImageData||> The new ||ImageData|| object.
+            - imageData: ||ImageData|| The new ||ImageData|| object.
     4:
         - Arguments:
-            - filedata: <||FileData||> The encoded file data to decode
+            - filedata: ||FileData|| The encoded file data to decode
               into image data.
         - Returns:
-            - imageData: <||ImageData||> The new ||ImageData|| object.
+            - imageData: ||ImageData|| The new ||ImageData|| object.
 
 ------------------------------------------------------------------------------
 1.6.2. types                                                *love.image-types*
@@ -8887,7 +8886,7 @@ The types of image:
     - ImageData                                               |love.ImageData|
 
 ------------------------------------------------------------------------------
-1.6.2.1. CompressedImageData                                                    *love-CompressedImageData*
+1.6.2.1. CompressedImageData                        *love-CompressedImageData*
                                               *love.image-CompressedImageData*
 
 Represents compressed image data designed to stay compressed in RAM.
@@ -8933,7 +8932,7 @@ Variants:
     2:
         - Arguments:
             - level: <number> A mipmap level. Must be in the range of
-              [1, |CompressedImageData|:getMipmapCount()].
+              [1, |CompressedImageData:getMipmapCount|()].
         - Returns:
             - width: <number> The width of the |CompressedImageData|.
             - height: <number> The height of the |CompressedImageData|.
@@ -8947,7 +8946,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - format: <|CompressedImageFormat|> The format of the
+            - format: |CompressedImageFormat| The format of the
               |CompressedImageData|.
 
 ------------------------------------------------------------------------------
@@ -8963,7 +8962,7 @@ Variants:
     2:
         - Arguments:
             - level: <number> A mipmap level. Must be in the range of
-              [1, |CompressedImageData|:getMipmapCount()].
+              [1, |CompressedImageData:getMipmapCount|()].
         - Returns:
             - height: <number> The height of the |CompressedImageData|.
 
@@ -8993,7 +8992,7 @@ Variants:
     2:
         - Arguments:
             - level: <number> A mipmap level. Must be in the range of
-              [1, |CompressedImageData|:getMipmapCount()].
+              [1, |CompressedImageData:getMipmapCount|()].
         - Returns:
             - width: <number> The width of the |CompressedImageData|.
 
@@ -9036,13 +9035,13 @@ Encodes the ||ImageData|| and optionally writes it to the save directory.
 Variants:
     1:
         - Arguments:
-            - format: <||ImageFormat||> The format to encode the image
+            - format: ||ImageFormat|| The format to encode the image
               as.
             - filename: <string> The filename to write the file to. If
               nil, no file will be written but the ||FileData|| will still be
               returned.
         - Returns:
-            - filedata: <||FileData||> The encoded image as a new
+            - filedata: ||FileData|| The encoded image as a new
               ||FileData|| object.
 
 ------------------------------------------------------------------------------
@@ -9127,8 +9126,8 @@ Paste into ||ImageData|| from another source ||ImageData||.
 Variants:
     1:
         - Arguments:
-            - source: <||ImageData||> |Source| ||ImageData|| from
-              which to copy.
+            - source: ||ImageData|| |Source| ||ImageData|| from which
+              to copy.
             - dx: <number> Destination top-left position on x-axis.
             - dy: <number> Destination top-left position on y-axis.
             - sx: <number> |Source| top-left position on x-axis.
@@ -9163,7 +9162,7 @@ Enums within love.image:
     ImageFormat                                             |love.ImageFormat|
 
 ------------------------------------------------------------------------------
-1.6.3.1. CompressedImageFormat                                                  *love-CompressedImageFormat*
+1.6.3.1. CompressedImageFormat                    *love-CompressedImageFormat*
                                             *love.image-CompressedImageFormat*
 
 Compressed image data formats. Here and here are a couple overviews of many
@@ -9428,7 +9427,7 @@ Variants:
 Binds a virtual gamepad input to a button, axis or hat for all |Joysticks| of
 a certain type. For example, if this function is used with a GUID returned by
 a Dualshock 3 controller in OS X, the binding will affect
-|Joystick|:getGamepadAxis and |Joystick|:isGamepadDown for all Dualshock 3
+|Joystick:getGamepadAxis| and |Joystick:isGamepadDown| for all Dualshock 3
 controllers used with the game when run in OS X.
 
 LÖVE includes built-in gamepad bindings for many common controllers. This
@@ -9443,14 +9442,14 @@ Variants:
         - Arguments:
             - guid: <string> The OS-dependent GUID for the type of
               |Joystick| the binding will affect.
-            - button: <|GamepadButton|> The virtual gamepad button to
+            - button: |GamepadButton| The virtual gamepad button to
               bind.
-            - inputtype: <||JoystickInputType||> The type of input to
+            - inputtype: ||JoystickInputType|| The type of input to
               bind the virtual gamepad button to.
             - inputindex: <number> The index of the axis, button, or
               hat to bind the virtual gamepad button to.
-            - hatdirection: <||JoystickHat||> The direction of the
-              hat, if the virtual gamepad button will be bound to a hat. nil
+            - hatdirection: ||JoystickHat|| The direction of the hat,
+              if the virtual gamepad button will be bound to a hat. nil
               otherwise.
         - Returns:
             - success: <boolean> Whether the virtual gamepad button was
@@ -9459,14 +9458,14 @@ Variants:
         - Arguments:
             - guid: <string> The OS-dependent GUID for the type of
               |Joystick| the binding will affect.
-            - button: <|GamepadButton|> The virtual gamepad axis to
+            - button: |GamepadButton| The virtual gamepad axis to
               bind.
-            - inputtype: <||JoystickInputType||> The type of input to
+            - inputtype: ||JoystickInputType|| The type of input to
               bind the virtual gamepad axis to.
             - inputindex: <number> The index of the axis, button, or
               hat to bind the virtual gamepad axis to.
-            - hatdirection: <||JoystickHat||> The direction of the
-              hat, if the virtual gamepad axis will be bound to a hat. nil
+            - hatdirection: ||JoystickHat|| The direction of the hat,
+              if the virtual gamepad axis will be bound to a hat. nil
               otherwise.
         - Returns:
             - success: <boolean> Whether the virtual gamepad button was
@@ -9585,7 +9584,7 @@ recognized as a gamepad or isn't connected, this function will always return
 Variants:
     1:
         - Arguments:
-            - axis: <|GamepadAxis|> The virtual axis to be checked.
+            - axis: |GamepadAxis| The virtual axis to be checked.
         - Returns:
             - direction: <number> Current value of the axis.
 
@@ -9597,26 +9596,26 @@ Gets the button, axis or hat that a virtual gamepad input is bound to.
 Variants:
     1:
         - Arguments:
-            - axis: <|GamepadAxis|> The virtual gamepad axis to get
-              the binding for.
+            - axis: |GamepadAxis| The virtual gamepad axis to get the
+              binding for.
         - Returns:
-            - inputtype: <||JoystickInputType||> The type of input the
+            - inputtype: ||JoystickInputType|| The type of input the
               virtual gamepad axis is bound to.
             - inputindex: <number> The index of the |Joystick|'s button,
               axis or hat that the virtual gamepad axis is bound to.
-            - hatdirection: <||JoystickHat||> The direction of the hat,
-              if the virtual gamepad axis is bound to a hat. nil otherwise.
+            - hatdirection: ||JoystickHat|| The direction of the hat, if
+              the virtual gamepad axis is bound to a hat. nil otherwise.
     2:
         - Arguments:
-            - button: <|GamepadAxis|> The virtual gamepad button to
-              get the binding for.
+            - button: |GamepadAxis| The virtual gamepad button to get
+              the binding for.
         - Returns:
-            - inputtype: <||JoystickInputType||> The type of input the
+            - inputtype: ||JoystickInputType|| The type of input the
               virtual gamepad button is bound to.
             - inputindex: <number> The index of the |Joystick|'s button,
               axis or hat that the virtual gamepad button is bound to.
-            - hatdirection: <||JoystickHat||> The direction of the hat,
-              if the virtual gamepad button is bound to a hat. nil otherwise.
+            - hatdirection: ||JoystickHat|| The direction of the hat, if
+              the virtual gamepad button is bound to a hat. nil otherwise.
 
 ------------------------------------------------------------------------------
 1.7.2.1.8. getHat                                            *Joystick:getHat*
@@ -9628,7 +9627,7 @@ Variants:
         - Arguments:
             - hat: <number> The index of the hat to be checked.
         - Returns:
-            - direction: <||JoystickHat||> The direction the hat is
+            - direction: ||JoystickHat|| The direction the hat is
               pushed.
 
 ------------------------------------------------------------------------------
@@ -9703,7 +9702,7 @@ Variants:
 Checks if a button on the |Joystick| is pressed.
 
 LÖVE 0.9.0 had a bug which required the button indices passed to
-|Joystick|:isDown to be 0-based instead of 1-based, for example button 1 would
+|Joystick:isDown| to be 0-based instead of 1-based, for example button 1 would
 be 0 for this function. It was fixed in 0.9.1.
 
 Variants:
@@ -9719,7 +9718,7 @@ Variants:
 
 Gets whether the |Joystick| is recognized as a gamepad. If this is the case,
 the |Joystick|'s buttons and axes can be used in a standardized manner across
-different operating systems and joystick models via |Joystick|:getGamepadAxis
+different operating systems and joystick models via |Joystick:getGamepadAxis|
 and related functions.
 
 LÖVE automatically recognizes most popular controllers with a similar layout
@@ -9743,7 +9742,7 @@ function will always return false.
 Variants:
     1:
         - Arguments:
-            - ...: <|GamepadButton|> The gamepad button to check.
+            - ...: |GamepadButton| The gamepad button to check.
         - Returns:
             - anyDown: <boolean> True if any supplied button is down,
               false if not.
@@ -9913,7 +9912,7 @@ ru                      Right+Up
 u                       Up
 
 ------------------------------------------------------------------------------
-1.7.3.4. JoystickInputType                                                      *love-JoystickInputType*
+1.7.3.4. JoystickInputType                            *love-JoystickInputType*
                                              *love.joystick-JoystickInputType*
 
 Types of |Joystick| inputs.
@@ -9960,9 +9959,9 @@ physical locations on on all systems.
 Variants:
     1:
         - Arguments:
-            - scancode: <|Scancode|> The scancode to get the key from.
+            - scancode: |Scancode| The scancode to get the key from.
         - Returns:
-            - key: <|KeyConstant|> The key corresponding to the given
+            - key: |KeyConstant| The key corresponding to the given
               scancode, or "unknown" if the scancode doesn't map to a
               |KeyConstant| on the current system.
 
@@ -9982,9 +9981,9 @@ physical locations on on all systems.
 Variants:
     1:
         - Arguments:
-            - key: <|KeyConstant|> The key to get the scancode from.
+            - key: |KeyConstant| The key to get the scancode from.
         - Returns:
-            - scancode: <|Scancode|> The scancode corresponding to the
+            - scancode: |Scancode| The scancode corresponding to the
               given key, or "unknown" if the given key has no known physical
               representation on the current system.
 
@@ -10019,13 +10018,13 @@ Checks whether a certain key is down. Not to be confused with
 Variants:
     1:
         - Arguments:
-            - key: <|KeyConstant|> The key to check.
+            - key: |KeyConstant| The key to check.
         - Returns:
             - down: <boolean> True if the key is down, false if not.
     2:
         - Arguments:
-            - key: <|KeyConstant|> A key to check.
-            - ...: <|KeyConstant|> Additional keys to check.
+            - key: |KeyConstant| A key to check.
+            - ...: |KeyConstant| Additional keys to check.
         - Returns:
             - anyDown: <boolean> True if any supplied key is down, false
               if not.
@@ -10044,8 +10043,8 @@ user's operating system settings are.
 Variants:
     1:
         - Arguments:
-            - scancode: <|Scancode|> A |Scancode| to check.
-            - ...: <|Scancode|> Additional |Scancodes| to check.
+            - scancode: |Scancode| A |Scancode| to check.
+            - ...: |Scancode| Additional |Scancodes| to check.
         - Returns:
             - down: <boolean> True if any supplied |Scancode| is down,
               false if not.
@@ -10075,6 +10074,15 @@ Variants:
         - Arguments:
             - enable: <boolean> Whether text input events should be
               enabled.
+        - Returns: Nothing
+    2:
+        - Arguments:
+            - enable: <boolean> Whether text input events should be
+              enabled.
+            - x: <number> On-screen keyboard x position.
+            - y: <number> On-screen keyboard y position.
+            - w: <number> On-screen keyboard width.
+            - h: <number> On-screen keyboard height.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -10265,9 +10273,6 @@ $                       Dollar key
 
                                                                *KeyConstant-@*
 @                       At sign key
-
-                                                              KeyConstant-?-2*
-?                       Question mark key
 
                                                                *KeyConstant-[*
 [                       Left square bracket key
@@ -11162,25 +11167,25 @@ Variants:
         - Arguments:
             - rawstring: <string> The raw (un-compressed) string to
               compress.
-            - format: <||CompressedDataFormat||> The format to use
-              when compressing the string.
+            - format: ||CompressedDataFormat|| The format to use when
+              compressing the string.
             - level: <number> The level of compression to use, between
               0 and 9. -1 indicates the default level. The meaning of this
               argument depends on the compression format being used.
         - Returns:
-            - compressedData: <|CompressedData|> A new |Data| object
+            - compressedData: |CompressedData| A new |Data| object
               containing the compressed version of the string.
     2:
         - Arguments:
-            - data: <|Data|> A |Data| object containing the raw
+            - data: |Data| A |Data| object containing the raw
               (un-compressed) data to compress.
-            - format: <||CompressedDataFormat||> The format to use
-              when compressing the data.
+            - format: ||CompressedDataFormat|| The format to use when
+              compressing the data.
             - level: <number> The level of compression to use, between
               0 and 9. -1 indicates the default level. The meaning of this
               argument depends on the compression format being used.
         - Returns:
-            - compressedData: <|CompressedData|> A new |Data| object
+            - compressedData: |CompressedData| A new |Data| object
               containing the compressed version of the raw data.
 
 ------------------------------------------------------------------------------
@@ -11192,8 +11197,8 @@ object.
 Variants:
     1:
         - Arguments:
-            - compressedData: <|CompressedData|> The compressed data
-              to decompress.
+            - compressedData: |CompressedData| The compressed data to
+              decompress.
         - Returns:
             - rawstring: <string> A string containing the raw
               decompressed data.
@@ -11201,16 +11206,16 @@ Variants:
         - Arguments:
             - compressedString: <string> A string containing data
               previously compressed with |love.math.compress|.
-            - format: <||CompressedDataFormat||> The format that was
+            - format: ||CompressedDataFormat|| The format that was
               used to compress the given string.
         - Returns:
             - rawstring: <string> A string containing the raw
               decompressed data.
     3:
         - Arguments:
-            - data: <|Data|> A |Data| object containing data
-              previously compressed with |love.math.compress|.
-            - format: <||CompressedDataFormat||> The format that was
+            - data: |Data| A |Data| object containing data previously
+              compressed with |love.math.compress|.
+            - format: ||CompressedDataFormat|| The format that was
               used to compress the given data.
         - Returns:
             - rawstring: <string> A string containing the raw
@@ -11280,9 +11285,9 @@ Variants:
 
 Gets the current state of the random number generator. This returns an opaque
 implementation-dependent string which is only useful for later use with
-|RandomGenerator|:setState.
+|RandomGenerator:setState|.
 
-This is different from |RandomGenerator|:getSeed in that getState gets the
+This is different from |RandomGenerator:getSeed| in that getState gets the
 |RandomGenerator|'s current state, whereas getSeed gets the previously set
 seed number.
 
@@ -11391,7 +11396,7 @@ Variants:
             - vertices: <table> The vertices of the control polygon as
               a table in the form of {x1, y1, x2, y2, x3, y3, ...}.
         - Returns:
-            - curve: <|BezierCurve|> A Bézier curve object.
+            - curve: |BezierCurve| A Bézier curve object.
     2:
         - Arguments:
             - x1: <number> The position of the first vertex of the
@@ -11408,7 +11413,7 @@ Variants:
               control polygon on the y-axis.
             - ...: <number> Additional vertices.
         - Returns:
-            - curve: <|BezierCurve|> A Bézier curve object.
+            - curve: |BezierCurve| A Bézier curve object.
 
 ------------------------------------------------------------------------------
 1.9.1.9. newRandomGenerator                     *love.math.newRandomGenerator*
@@ -11420,7 +11425,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - rng: <|RandomGenerator|> A Random Number Generator object.
+            - rng: |RandomGenerator| A Random Number Generator object.
     2:
         - Arguments:
             - low: <number> The lower 32 bits of the state number to
@@ -11428,13 +11433,13 @@ Variants:
             - high: <number> The higher 32 bits of the state number to
               use for this instance of the object.
         - Returns:
-            - rng: <|RandomGenerator|> A Random Number Generator object.
+            - rng: |RandomGenerator| A Random Number Generator object.
     3:
         - Arguments:
             - seed: <string> A state of a |RandomGenerator| object
-              returned by |RandomGenerator|:getState.
+              returned by |RandomGenerator:getState|.
         - Returns:
-            - rng: <|RandomGenerator|> A Random Number Generator object.
+            - rng: |RandomGenerator| A Random Number Generator object.
 
 ------------------------------------------------------------------------------
 1.9.1.10. noise                                              *love.math.noise*
@@ -11553,9 +11558,9 @@ Variants:
 
 Gets the current state of the random number generator. This returns an opaque
 implementation-dependent string which is only useful for later use with
-|RandomGenerator|:setState.
+|RandomGenerator:setState|.
 
-This is different from |RandomGenerator|:getSeed in that getState gets the
+This is different from |RandomGenerator:getSeed| in that getState gets the
 |RandomGenerator|'s current state, whereas getSeed gets the previously set
 seed number.
 
@@ -11651,7 +11656,7 @@ Evaluate Bézier curve at parameter t. The parameter must be between 0 and 1
 (inclusive).
 
 This function can be used to move objects along paths or tween parameters.
-However it should not be used to render the curve, see |BezierCurve|:render
+However it should not be used to render the curve, see |BezierCurve:render|
 for that purpose.
 
 Variants:
@@ -11713,7 +11718,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - derivative: <|BezierCurve|> The derivative curve.
+            - derivative: |BezierCurve| The derivative curve.
 
 ------------------------------------------------------------------------------
 1.9.2.1.6. getSegment                                 *BezierCurve:getSegment*
@@ -11729,7 +11734,7 @@ Variants:
             - endpoint: <number> The end of the segment. Must be
               between 0 and 1.
         - Returns:
-            - curve: <|BezierCurve|> A |BezierCurve| that corresponds to
+            - curve: |BezierCurve| A |BezierCurve| that corresponds to
               the specified segment.
 
 ------------------------------------------------------------------------------
@@ -11770,7 +11775,7 @@ This function samples the Bézier curve using recursive subdivision. You can
 control the recursion depth using the depth parameter.
 
 If you are just interested to know the position on the curve given a
-parameter, use |BezierCurve|:evalulate.
+parameter, use |BezierCurve:evalulate|.
 
 Variants:
     1:
@@ -11790,7 +11795,7 @@ This function samples the Bézier curve using recursive subdivision. You can
 control the recursion depth using the depth parameter.
 
 If you are just need to know the position on the curve given a parameter, use
-|BezierCurve|:evaluate.
+|BezierCurve:evaluate|.
 
 Variants:
     1:
@@ -11890,7 +11895,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - format: <||CompressedDataFormat||> The format of the
+            - format: ||CompressedDataFormat|| The format of the
               |CompressedData|.
 
 ------------------------------------------------------------------------------
@@ -11938,9 +11943,9 @@ Variants:
 
 Gets the current state of the random number generator. This returns an opaque
 implementation-dependent string which is only useful for later use with
-|RandomGenerator|:setState.
+|RandomGenerator:setState|.
 
-This is different from |RandomGenerator|:getSeed in that getState gets the
+This is different from |RandomGenerator:getSeed| in that getState gets the
 |RandomGenerator|'s current state, whereas getSeed gets the previously set
 seed number.
 
@@ -12024,9 +12029,9 @@ Variants:
 
 Sets the current state of the random number generator. The value used as an
 argument for this function is an opaque implementation-dependent string and
-should only originate from a previous call to |RandomGenerator|:getState.
+should only originate from a previous call to |RandomGenerator:getState|.
 
-This is different from |RandomGenerator|:setSeed in that setState directly
+This is different from |RandomGenerator:setSeed| in that setState directly
 sets the |RandomGenerator|'s current implementation-dependent state, whereas
 setSeed gives it a new seed value.
 
@@ -12038,7 +12043,7 @@ Variants:
         - Arguments:
             - state: <string> The new state of the |RandomGenerator|
               object, represented as a string. This should originate from a
-              previous call to |RandomGenerator|:getState.
+              previous call to |RandomGenerator:getState|.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -12048,7 +12053,7 @@ Enums within love.math:
     CompressedDataFormat                           |love.CompressedDataFormat|
 
 ------------------------------------------------------------------------------
-1.9.3.1. CompressedDataFormat                                                   *love-CompressedDataFormat*
+1.9.3.1. CompressedDataFormat                      *love-CompressedDataFormat*
                                               *love.math-CompressedDataFormat*
 
 Compressed data formats.
@@ -12097,7 +12102,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - cursor: <|Cursor|> The current cursor, or nil if no cursor
+            - cursor: |Cursor| The current cursor, or nil if no cursor
               is set.
 
 ------------------------------------------------------------------------------
@@ -12145,10 +12150,9 @@ moved and when the cursor position updates, even at low framerates.
 Variants:
     1:
         - Arguments:
-            - ctype: <||CursorType||> The type of system cursor to
-              get.
+            - ctype: ||CursorType|| The type of system cursor to get.
         - Returns:
-            - cursor: <|Cursor|> The |Cursor| object representing the
+            - cursor: |Cursor| The |Cursor| object representing the
               system cursor type.
 
 ------------------------------------------------------------------------------
@@ -12247,14 +12251,14 @@ crosshair cursor might have it in the middle.
 Variants:
     1:
         - Arguments:
-            - imageData: <||ImageData||> The ||ImageData|| to use for
+            - imageData: ||ImageData|| The ||ImageData|| to use for
               the the new |Cursor|.
             - hotx: <number> The x-coordinate in the ||ImageData|| of
               the cursor's hot spot.
             - hoty: <number> The y-coordinate in the ||ImageData|| of
               the cursor's hot spot.
         - Returns:
-            - cursor: <|Cursor|> The new |Cursor| object.
+            - cursor: |Cursor| The new |Cursor| object.
     2:
         - Arguments:
             - filepath: <string> Path to the image to use for the new
@@ -12264,17 +12268,17 @@ Variants:
             - hoty: <number> The y-coordinate in the ||ImageData|| of
               the cursor's hot spot.
         - Returns:
-            - cursor: <|Cursor|> The new |Cursor| object.
+            - cursor: |Cursor| The new |Cursor| object.
     3:
         - Arguments:
-            - fileData: <||FileData||> |Data| representing the image
-              to use for the new |Cursor|.
+            - fileData: ||FileData|| |Data| representing the image to
+              use for the new |Cursor|.
             - hotx: <number> The x-coordinate in the ||ImageData|| of
               the cursor's hot spot.
             - hoty: <number> The y-coordinate in the ||ImageData|| of
               the cursor's hot spot.
         - Returns:
-            - cursor: <|Cursor|> The new |Cursor| object.
+            - cursor: |Cursor| The new |Cursor| object.
 
 ------------------------------------------------------------------------------
 1.10.1.12. setCursor                                    *love.mouse.setCursor*
@@ -12289,7 +12293,7 @@ Variants:
         - Returns: Nothing
     2:
         - Arguments:
-            - cursor: <|Cursor|> The |Cursor| object to use as the
+            - cursor: |Cursor| The |Cursor| object to use as the
               current mouse cursor.
         - Returns: Nothing
 
@@ -12410,7 +12414,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - cursortype: <||CursorType||> The type of the |Cursor|.
+            - cursortype: ||CursorType|| The type of the |Cursor|.
 
 ------------------------------------------------------------------------------
 1.10.3. enums                                               *love.mouse-enums*
@@ -12515,8 +12519,8 @@ Returns the two closest points between two fixtures and their distance.
 Variants:
     1:
         - Arguments:
-            - fixture1: <|Fixture|> The first fixture.
-            - fixture2: <|Fixture|> The second fixture.
+            - fixture1: |Fixture| The first fixture.
+            - fixture2: |Fixture| The second fixture.
         - Returns:
             - distance: <number> The distance of the two points.
             - x1: <number> The x-coordinate of the first point.
@@ -12553,17 +12557,17 @@ in the simulation, they collide with everything. Kinematic bodies do not react
 to forces and only collide with dynamic bodies.
 
 The mass of the body gets calculated when a |Fixture| is attached or removed,
-but can be changed at any time with |Body|:setMass or |Body|:resetMassData.
+but can be changed at any time with |Body:setMass| or |Body:resetMassData|.
 
 Variants:
     1:
         - Arguments:
-            - world: <|World|> The world to create the body in.
+            - world: |World| The world to create the body in.
             - x: <number> The x position of the body.
             - y: <number> The y position of the body.
-            - type: <||BodyType||> The type of the body.
+            - type: ||BodyType|| The type of the body.
         - Returns:
-            - body: <|Body|> A new body.
+            - body: |Body| A new body.
 
 ------------------------------------------------------------------------------
 1.11.1.4. newChainShape                           *love.physics.newChainShape*
@@ -12581,7 +12585,7 @@ Variants:
             - y2: <number> The y position of the second point.
             - ...: <number> Additional point positions.
         - Returns:
-            - shape: <|ChainShape|> The new shape.
+            - shape: |ChainShape| The new shape.
     2:
         - Arguments:
             - loop: <boolean> If the chain should loop back to the
@@ -12589,7 +12593,7 @@ Variants:
             - points: <table> A list of points to construct the
               |ChainShape|, in the form of {x1, y1, x2, y2, ...}.
         - Returns:
-            - shape: <|ChainShape|> The new shape.
+            - shape: |ChainShape| The new shape.
 
 ------------------------------------------------------------------------------
 1.11.1.5. newCircleShape                         *love.physics.newCircleShape*
@@ -12601,14 +12605,14 @@ Variants:
         - Arguments:
             - radius: <number> The radius of the circle.
         - Returns:
-            - shape: <|CircleShape|> The new shape.
+            - shape: |CircleShape| The new shape.
     2:
         - Arguments:
             - x: <number> The x offset of the circle.
             - y: <number> The y offset of the circle.
             - radius: <number> The radius of the circle.
         - Returns:
-            - shape: <|CircleShape|> The new shape.
+            - shape: |CircleShape| The new shape.
 
 ------------------------------------------------------------------------------
 1.11.1.6. newDistanceJoint                     *love.physics.newDistanceJoint*
@@ -12624,8 +12628,8 @@ the points define the length of the distance joint.
 Variants:
     1:
         - Arguments:
-            - body1: <|Body|> The first body to attach to the joint.
-            - body2: <|Body|> The second body to attach to the joint.
+            - body1: |Body| The first body to attach to the joint.
+            - body2: |Body| The second body to attach to the joint.
             - x1: <number> The x position of the first anchor point.
             - y1: <number> The y position of the first anchor point.
             - x2: <number> The x position of the second anchor point.
@@ -12633,7 +12637,7 @@ Variants:
             - collideConnected: <boolean> Specifies whether the two
               bodies should collide with each other.
         - Returns:
-            - joint: <|DistanceJoint|> The new distance joint.
+            - joint: |DistanceJoint| The new distance joint.
 
 ------------------------------------------------------------------------------
 1.11.1.7. newEdgeShape                             *love.physics.newEdgeShape*
@@ -12648,7 +12652,7 @@ Variants:
             - x2: <number> The x position of the second point.
             - y2: <number> The y position of the second point.
         - Returns:
-            - shape: <|EdgeShape|> The new shape.
+            - shape: |EdgeShape| The new shape.
 
 ------------------------------------------------------------------------------
 1.11.1.8. newFixture                                 *love.physics.newFixture*
@@ -12658,11 +12662,11 @@ Creates and attaches a |Fixture| to a body.
 Variants:
     1:
         - Arguments:
-            - body: <|Body|> The body which gets the fixture attached.
-            - shape: <|Shape|> The shape of the fixture.
+            - body: |Body| The body which gets the fixture attached.
+            - shape: |Shape| The shape of the fixture.
             - density: <number> The density of the fixture.
         - Returns:
-            - fixture: <|Fixture|> The new fixture.
+            - fixture: |Fixture| The new fixture.
 
 ------------------------------------------------------------------------------
 1.11.1.9. newFrictionJoint                     *love.physics.newFrictionJoint*
@@ -12673,14 +12677,14 @@ friction to a body.
 Variants:
     1:
         - Arguments:
-            - body1: <|Body|> The first body to attach to the joint.
-            - body2: <|Body|> The second body to attach to the joint.
+            - body1: |Body| The first body to attach to the joint.
+            - body2: |Body| The second body to attach to the joint.
             - x: <number> The x position of the anchor point.
             - y: <number> The y position of the anchor point.
             - collideConnected: <boolean> Specifies whether the two
               bodies should collide with eachother.
         - Returns:
-            - joint: <|FrictionJoint|> The new |FrictionJoint|.
+            - joint: |FrictionJoint| The new |FrictionJoint|.
 
 ------------------------------------------------------------------------------
 1.11.1.10. newGearJoint                            *love.physics.newGearJoint*
@@ -12701,15 +12705,15 @@ created.
 Variants:
     1:
         - Arguments:
-            - joint1: <|Joint|> The first joint to connect with a gear
+            - joint1: |Joint| The first joint to connect with a gear
               joint.
-            - joint2: <|Joint|> The second joint to connect with a
-              gear joint.
+            - joint2: |Joint| The second joint to connect with a gear
+              joint.
             - ratio: <number> The gear ratio.
             - collideConnected: <boolean> Specifies whether the two
               bodies should collide with each other.
         - Returns:
-            - joint: <|Joint|> The new gear joint.
+            - joint: |Joint| The new gear joint.
 
 ------------------------------------------------------------------------------
 1.11.1.11. newMotorJoint                          *love.physics.newMotorJoint*
@@ -12724,22 +12728,22 @@ to reach the target offsets.
 Variants:
     1:
         - Arguments:
-            - body1: <|Body|> The first body to attach to the joint.
-            - body2: <|Body|> The second body to attach to the joint.
+            - body1: |Body| The first body to attach to the joint.
+            - body2: |Body| The second body to attach to the joint.
             - correctionFactor: <number> The joint's initial position
               correction factor, in the range of [0, 1].
         - Returns:
-            - joint: <|MotorJoint|> The new |MotorJoint|.
+            - joint: |MotorJoint| The new |MotorJoint|.
     2:
         - Arguments:
-            - body1: <|Body|> The first body to attach to the joint.
-            - body2: <|Body|> The second body to attach to the joint.
+            - body1: |Body| The first body to attach to the joint.
+            - body2: |Body| The second body to attach to the joint.
             - correctionFactor: <number> The joint's initial position
               correction factor, in the range of [0, 1].
             - collideConnected: <boolean> Specifies whether the two
               bodies should collide with each other.
         - Returns:
-            - joint: <|MotorJoint|> The new |MotorJoint|.
+            - joint: |MotorJoint| The new |MotorJoint|.
 
 ------------------------------------------------------------------------------
 1.11.1.12. newMouseJoint                          *love.physics.newMouseJoint*
@@ -12757,11 +12761,11 @@ by the physics engine.
 Variants:
     1:
         - Arguments:
-            - body: <|Body|> The body to attach to the mouse.
+            - body: |Body| The body to attach to the mouse.
             - x: <number> The x position of the connecting point.
             - y: <number> The y position of the connecting point.
         - Returns:
-            - joint: <|Joint|> The new mouse joint.
+            - joint: |Joint| The new mouse joint.
 
 ------------------------------------------------------------------------------
 1.11.1.13. newPolygonShape                      *love.physics.newPolygonShape*
@@ -12780,13 +12784,13 @@ Variants:
             - ...: <number> You can continue passing more point
               positions to create the |PolygonShape|.
         - Returns:
-            - shape: <|PolygonShape|> A new |PolygonShape|.
+            - shape: |PolygonShape| A new |PolygonShape|.
     2:
         - Arguments:
             - vertices: <table> A list of vertices to construct the
               polygon, in the form of {x1, y1, x2, y2, x3, y3, ...}.
         - Returns:
-            - shape: <|PolygonShape|> A new |PolygonShape|.
+            - shape: |PolygonShape| A new |PolygonShape|.
 
 ------------------------------------------------------------------------------
 1.11.1.14. newPrismaticJoint                  *love.physics.newPrismaticJoint*
@@ -12801,9 +12805,9 @@ substituted for angle and torque.
 Variants:
     1:
         - Arguments:
-            - body1: <|Body|> The first body to connect with a
-              prismatic joint.
-            - body2: <|Body|> The second body to connect with a
+            - body1: |Body| The first body to connect with a prismatic
+              joint.
+            - body2: |Body| The second body to connect with a
               prismatic joint.
             - x: <number> The x coordinate of the anchor point.
             - y: <number> The y coordinate of the anchor point.
@@ -12812,12 +12816,12 @@ Variants:
             - collideConnected: <boolean> Specifies whether the two
               bodies should collide with each other.
         - Returns:
-            - joint: <|PrismaticJoint|> The new prismatic joint.
+            - joint: |PrismaticJoint| The new prismatic joint.
     2:
         - Arguments:
-            - body1: <|Body|> The first body to connect with a
-              prismatic joint.
-            - body2: <|Body|> The second body to connect with a
+            - body1: |Body| The first body to connect with a prismatic
+              joint.
+            - body2: |Body| The second body to connect with a
               prismatic joint.
             - x1: <number> The x coordinate of the first anchor point.
             - y1: <number> The y coordinate of the first anchor point.
@@ -12830,7 +12834,7 @@ Variants:
             - collideConnected: <boolean> Specifies whether the two
               bodies should collide with each other.
         - Returns:
-            - joint: <|PrismaticJoint|> The new prismatic joint.
+            - joint: |PrismaticJoint| The new prismatic joint.
 
 ------------------------------------------------------------------------------
 1.11.1.15. newPulleyJoint                        *love.physics.newPulleyJoint*
@@ -12850,9 +12854,9 @@ lengths each side can attain.
 Variants:
     1:
         - Arguments:
-            - body1: <|Body|> The first body to connect with a pulley
+            - body1: |Body| The first body to connect with a pulley
               joint.
-            - body2: <|Body|> The second body to connect with a pulley
+            - body2: |Body| The second body to connect with a pulley
               joint.
             - gx1: <number> The x coordinate of the first body's
               ground anchor.
@@ -12874,7 +12878,7 @@ Variants:
             - collideConnected: <boolean> Specifies whether the two
               bodies should collide with each other.
         - Returns:
-            - joint: <|Joint|> The new pulley joint.
+            - joint: |Joint| The new pulley joint.
 
 ------------------------------------------------------------------------------
 1.11.1.16. newRectangleShape                  *love.physics.newRectangleShape*
@@ -12890,7 +12894,7 @@ Variants:
             - width: <number> The width of the rectangle.
             - height: <number> The height of the rectangle.
         - Returns:
-            - shape: <|PolygonShape|> A new |PolygonShape|.
+            - shape: |PolygonShape| A new |PolygonShape|.
     2:
         - Arguments:
             - x: <number> The offset along the x-axis.
@@ -12899,7 +12903,7 @@ Variants:
             - height: <number> The height of the rectangle.
             - angle: <number> The initial angle of the rectangle.
         - Returns:
-            - shape: <|PolygonShape|> A new |PolygonShape|.
+            - shape: |PolygonShape| A new |PolygonShape|.
 
 ------------------------------------------------------------------------------
 1.11.1.17. newRevoluteJoint                    *love.physics.newRevoluteJoint*
@@ -12911,16 +12915,16 @@ This joint connects two bodies to a point around which they can pivot.
 Variants:
     1:
         - Arguments:
-            - body1: <|Body|> The first body to connect with a
-              Revolute |Joint|.
-            - body2: <|Body|> The second body to connect with a
-              Revolute |Joint|.
+            - body1: |Body| The first body to connect with a Revolute
+              |Joint|.
+            - body2: |Body| The second body to connect with a Revolute
+              |Joint|.
             - x: <number> The x position of the connecting point.
             - y: <number> The y position of the connecting point.
             - collideConnected: <number> Specifies whether the two
               bodies should collide with each other.
         - Returns:
-            - joint: <|Joint|> The new revolute joint.
+            - joint: |Joint| The new revolute joint.
 
 ------------------------------------------------------------------------------
 1.11.1.18. newRopeJoint                            *love.physics.newRopeJoint*
@@ -12931,8 +12935,8 @@ distance between these bodies.
 Variants:
     1:
         - Arguments:
-            - body1: <|Body|> The first body to attach to the joint.
-            - body2: <|Body|> The second body to attach to the joint.
+            - body1: |Body| The first body to attach to the joint.
+            - body2: |Body| The second body to attach to the joint.
             - x1: <number> The x position of the first anchor point.
             - y1: <number> The y position of the first anchor point.
             - x2: <number> The x position of the second anchor point.
@@ -12941,7 +12945,7 @@ Variants:
             - collideConnected: <boolean> Specifies whether the two
               bodies should collide with each other.
         - Returns:
-            - joint: <|RopeJoint|> The new |RopeJoint|.
+            - joint: |RopeJoint| The new |RopeJoint|.
 
 ------------------------------------------------------------------------------
 1.11.1.19. newWeldJoint                            *love.physics.newWeldJoint*
@@ -12952,14 +12956,14 @@ two bodies together.
 Variants:
     1:
         - Arguments:
-            - body1: <|Body|> The first body to attach to the joint.
-            - body2: <|Body|> The second body to attach to the joint.
+            - body1: |Body| The first body to attach to the joint.
+            - body2: |Body| The second body to attach to the joint.
             - x: <number> The x position of the anchor point.
             - y: <number> The y position of the anchor point.
             - collideConnected: <boolean> Specifies whether the two
               bodies should collide with each other.
         - Returns:
-            - joint: <|WeldJoint|> The new |WeldJoint|.
+            - joint: |WeldJoint| The new |WeldJoint|.
 
 ------------------------------------------------------------------------------
 1.11.1.20. newWheelJoint                          *love.physics.newWheelJoint*
@@ -12969,8 +12973,8 @@ Creates a wheel joint.
 Variants:
     1:
         - Arguments:
-            - body1: <|Body|> The first body.
-            - body2: <|Body|> The second body.
+            - body1: |Body| The first body.
+            - body2: |Body| The second body.
             - x: <number> The x position of the anchor point.
             - y: <number> The y position of the anchor point.
             - ax: <number> The x position of the axis unit vector.
@@ -12978,7 +12982,7 @@ Variants:
             - collideConnected: <boolean> Specifies whether the two
               bodies should collide with each other.
         - Returns:
-            - joint: <|WheelJoint|> The new |WheelJoint|.
+            - joint: |WheelJoint| The new |WheelJoint|.
 
 ------------------------------------------------------------------------------
 1.11.1.21. newWorld                                    *love.physics.newWorld*
@@ -12993,7 +12997,7 @@ Variants:
             - sleep: <boolean> Whether the bodies in this world are
               allowed to sleep.
         - Returns:
-            - world: <|World|> A brave new |World|.
+            - world: |World| A brave new |World|.
 
 ------------------------------------------------------------------------------
 1.11.1.22. setMeter                                    *love.physics.setMeter*
@@ -13129,7 +13133,7 @@ addition to the body momentum.
 A body with with a larger mass will react less. The reaction does not depend
 on the timestep, and is equivalent to applying a force continuously for 1
 second. Impulses are best used to give a single push to a body. For a
-continuous push to a body it is better to use |Body|:applyForce.
+continuous push to a body it is better to use |Body:applyForce|.
 
 Variants:
     1:
@@ -13149,7 +13153,7 @@ the force acts continuously over the entire timestep, a short timestep will
 only push the body for a short time. Thus forces are best used for many
 timesteps to give a continuous push to a body (like gravity). For a single
 push that is independent of timestep, it is better to use
-|Body|:applyLinearImpulse.
+|Body:applyLinearImpulse|.
 
 If the position to apply the force is not given, it will act on the center of
 mass of the body. The part of the force not directed towards the center of
@@ -13184,7 +13188,7 @@ An impulse pushes a body in a direction. A body with with a larger mass will
 react less. The reaction does not depend on the timestep, and is equivalent to
 applying a force continuously for 1 second. Impulses are best used to give a
 single push to a body. For a continuous push to a body it is better to use
-|Body|:applyForce.
+|Body:applyForce|.
 
 If the position to apply the impulse is not given, it will act on the center
 of mass of the body. The part of the impulse not directed towards the center
@@ -13284,12 +13288,12 @@ Get the angular velocity of the |Body|.
 
 The angular velocity is the rate of change of angle over time.
 
-It is changed in |World|:update by applying torques, off centre
+It is changed in |World:update| by applying torques, off centre
 forces/impulses, and angular damping. It can be set directly with
-|Body|:setAngularVelocity.
+|Body:setAngularVelocity|.
 
 If you need the rate of change of position over time, use
-|Body|:getLinearVelocity.
+|Body:getLinearVelocity|.
 
 Variants:
     1:
@@ -13337,8 +13341,8 @@ Variants:
 Gets the rotational inertia of the body.
 
 The rotational inertia is how hard is it to make the body spin. It is set
-with the 4th argument to |Body|:setMass, or automatically with
-|Body|:setMassFromShapes.
+with the 4th argument to |Body:setMass|, or automatically with
+|Body:setMassFromShapes|.
 
 Variants:
     1:
@@ -13385,13 +13389,13 @@ Gets the linear velocity of the |Body| from its center of mass.
 The linear velocity is the rate of change of position over time.
 
 If you need the rate of change of angle over time, use
-|Body|:getAngularVelocity. If you need to get the linear velocity of a point
+|Body:getAngularVelocity|. If you need to get the linear velocity of a point
 different from the center of mass:
 
-|Body|:getLinearVelocityFromLocalPoint allows you to specify the point in
+|Body:getLinearVelocityFromLocalPoint| allows you to specify the point in
 local coordinates.
 
-|Body|:getLinearVelocityFromWorldPoint allows you to specify the point in
+|Body:getLinearVelocityFromWorldPoint| allows you to specify the point in
 world coordinates.
 
 Variants:
@@ -13402,7 +13406,7 @@ Variants:
             - y: <number> The y component of the velocity vector.
 
 ------------------------------------------------------------------------------
-1.11.2.1.16. getLinearVelocityFromLocalPoint                                                                              
+1.11.2.1.16. getLinearVelocityFromLocalPoint                                  
                                         *Body:getLinearVelocityFromLocalPoint*
 
 Get the linear velocity of a point on the body.
@@ -13411,7 +13415,7 @@ The linear velocity for a point on the body is the velocity of the body
 center of mass plus the velocity at that point from the body spinning.
 
 The point on the body must given in local coordinates. Use
-|Body|:getLinearVelocityFromWorldPoint to specify this with world coordinates.
+|Body:getLinearVelocityFromWorldPoint| to specify this with world coordinates.
 
 Variants:
     1:
@@ -13423,7 +13427,7 @@ Variants:
             - vy: <number> The y component of velocity at point (x,y).
 
 ------------------------------------------------------------------------------
-1.11.2.1.17. getLinearVelocityFromWorldPoint                                                                              
+1.11.2.1.17. getLinearVelocityFromWorldPoint                                  
                                         *Body:getLinearVelocityFromWorldPoint*
 
 Get the linear velocity of a point on the body.
@@ -13432,7 +13436,7 @@ The linear velocity for a point on the body is the velocity of the body
 center of mass plus the velocity at that point from the body spinning.
 
 The point on the body must given in world coordinates. Use
-|Body|:getLinearVelocityFromLocalPoint to specify this with local coordinates.
+|Body:getLinearVelocityFromLocalPoint| to specify this with local coordinates.
 
 Variants:
     1:
@@ -13448,7 +13452,7 @@ Variants:
 
 Get the center of mass position in local coordinates.
 
-Use |Body|:getWorldCenter to get the center of mass in world coordinates.
+Use |Body:getWorldCenter| to get the center of mass in world coordinates.
 
 Variants:
     1:
@@ -13537,7 +13541,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - type: <||BodyType||> The body type.
+            - type: ||BodyType|| The body type.
 
 ------------------------------------------------------------------------------
 1.11.2.1.25. getUserData                                    *Body:getUserData*
@@ -13561,14 +13565,14 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - world: <|World|> The world the body lives in.
+            - world: |World| The world the body lives in.
 
 ------------------------------------------------------------------------------
 1.11.2.1.27. getWorldCenter                              *Body:getWorldCenter*
 
 Get the center of mass position in world coordinates.
 
-Use |Body|:getLocalCenter to get the center of mass in local coordinates.
+Use |Body:getLocalCenter| to get the center of mass in local coordinates.
 
 Variants:
     1:
@@ -13790,7 +13794,7 @@ Variants:
 
 Sets the angular damping of a |Body|.
 
-See |Body|:getAngularDamping for a definition of angular damping.
+See |Body:getAngularDamping| for a definition of angular damping.
 
 Angular damping can take any value from 0 to infinity. It is recommended to
 stay between 0 and 0.1, though. Other values will look unrealistic.
@@ -13809,7 +13813,7 @@ Sets the angular velocity of a |Body|.
 The angular velocity is the rate of change of angle over time.
 
 This function will not accumulate anything; any impulses previously applied
-since the last call to |World|:update will be lost.
+since the last call to |World:update| will be lost.
 
 Variants:
     1:
@@ -13884,7 +13888,7 @@ Variants:
 
 Set the inertia of a body.
 
-This value can also be set by the fourth argument of |Body|:setMass.
+This value can also be set by the fourth argument of |Body:setMass|.
 
 Variants:
     1:
@@ -13898,7 +13902,7 @@ Variants:
 
 Sets the linear damping of a |Body|
 
-See |Body|:getLinearDamping for a definition of linear damping.
+See |Body:getLinearDamping| for a definition of linear damping.
 
 Linear damping can take any value from 0 to infinity. It is recommended to
 stay between 0 and 0.1, though. Other values will make the objects look
@@ -13916,7 +13920,7 @@ Variants:
 Sets a new linear velocity for the |Body|.
 
 This function will not accumulate anything; any impulses previously applied
-since the last call to |World|:update will be lost.
+since the last call to |World:update| will be lost.
 
 Variants:
     1:
@@ -13987,7 +13991,7 @@ Sets a new body type.
 Variants:
     1:
         - Arguments:
-            - type: <||BodyType||> The new type.
+            - type: ||BodyType|| The new type.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -14261,8 +14265,8 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - fixtureA: <|Fixture|> The first |Fixture|.
-            - fixtureB: <|Fixture|> The second |Fixture|.
+            - fixtureA: |Fixture| The first |Fixture|.
+            - fixtureB: |Fixture| The second |Fixture|.
 
 ------------------------------------------------------------------------------
 1.11.2.4.2. getFriction                                  *Contact:getFriction*
@@ -14597,7 +14601,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - body: <|Body|> The parent body.
+            - body: |Body| The parent body.
 
 ------------------------------------------------------------------------------
 1.11.2.7.3. getBoundingBox                            *Fixture:getBoundingBox*
@@ -14738,7 +14742,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - shape: <|Shape|> The fixture's shape.
+            - shape: |Shape| The fixture's shape.
 
 ------------------------------------------------------------------------------
 1.11.2.7.13. getUserData                                 *Fixture:getUserData*
@@ -14833,7 +14837,7 @@ Variants:
 ------------------------------------------------------------------------------
 1.11.2.7.18. setDensity                                   *Fixture:setDensity*
 
-Sets the density of the fixture. Call |Body|:resetMassData if this needs to
+Sets the density of the fixture. Call |Body:resetMassData| if this needs to
 take effect immediately.
 
 Variants:
@@ -15084,8 +15088,8 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - joint1: <|Joint|> The first connected |Joint|.
-            - joint2: <|Joint|> The second connected |Joint|.
+            - joint1: |Joint| The first connected |Joint|.
+            - joint2: |Joint| The second connected |Joint|.
 
 ------------------------------------------------------------------------------
 1.11.2.9.2. getRatio                                      *GearJoint:getRatio*
@@ -15182,8 +15186,8 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - bodyA: <|Body|> The first |Body|.
-            - bodyB: <|Body|> The second |Body|.
+            - bodyA: |Body| The first |Body|.
+            - bodyB: |Body| The second |Body|.
 
 ------------------------------------------------------------------------------
 1.11.2.10.4. getCollideConnected                   *Joint:getCollideConnected*
@@ -15230,8 +15234,8 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - type: <||JointType||> A string with the name of the
-              |Joint| type.
+            - type: ||JointType|| A string with the name of the |Joint|
+              type.
 
 ------------------------------------------------------------------------------
 1.11.2.10.8. getUserData                                   *Joint:getUserData*
@@ -16299,7 +16303,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - type: <||ShapeType||> The type of the |Shape|.
+            - type: ||ShapeType|| The type of the |Shape|.
 
 ------------------------------------------------------------------------------
 1.11.2.18.6. rayCast                                           *Shape:rayCast*
@@ -16807,7 +16811,7 @@ Variants:
 
 Returns if the world is updating its state.
 
-This will return true inside the callbacks from |World|:setCallbacks.
+This will return true inside the callbacks from |World:setCallbacks|.
 
 Variants:
     1:
@@ -17040,7 +17044,7 @@ rope                    A |RopeJoint|.
 ------------------------------------------------------------------------------
 1.11.3.3. ShapeType                  *love-ShapeType* *love.physics-ShapeType*
 
-The different types of |Shapes|, as returned by |Shape|:getType.
+The different types of |Shapes|, as returned by |Shape:getType|.
 
 Constants:                                               *ShapeType-constants*
 
@@ -17080,11 +17084,11 @@ Attempts to find a decoder for the encoded sound data in the specified file.
 Variants:
     1:
         - Arguments:
-            - file: <|File|> The file with encoded sound data.
+            - file: |File| The file with encoded sound data.
             - buffer: <number> The size of each decoded chunk, in
               bytes.
         - Returns:
-            - decoder: <|Decoder|> A new |Decoder| object.
+            - decoder: |Decoder| A new |Decoder| object.
     2:
         - Arguments:
             - filename: <string> The filename of the file with encoded
@@ -17092,7 +17096,7 @@ Variants:
             - buffer: <number> The size of each decoded chunk, in
               bytes.
         - Returns:
-            - decoder: <|Decoder|> A new |Decoder| object.
+            - decoder: |Decoder| A new |Decoder| object.
 
 ------------------------------------------------------------------------------
 1.12.1.2. newSoundData                               *love.sound.newSoundData*
@@ -17109,17 +17113,17 @@ Variants:
         - Arguments:
             - filename: <string> The filename of the file to load.
         - Returns:
-            - soundData: <|SoundData|> A new |SoundData| object.
+            - soundData: |SoundData| A new |SoundData| object.
     2:
         - Arguments:
-            - file: <|File|> A |File| pointing to an audio file.
+            - file: |File| A |File| pointing to an audio file.
         - Returns:
-            - soundData: <|SoundData|> A new |SoundData| object.
+            - soundData: |SoundData| A new |SoundData| object.
     3:
         - Arguments:
-            - data: <|Data|> The encoded data to decode into audio.
+            - data: |Data| The encoded data to decode into audio.
         - Returns:
-            - soundData: <|SoundData|> A new |SoundData| object.
+            - soundData: |SoundData| A new |SoundData| object.
     4:
         - Arguments:
             - samples: <number> Total number of samples.
@@ -17127,7 +17131,7 @@ Variants:
             - bits: <number> Bits per sample (8 or 16).
             - channels: <number> Either 1 for mono or 2 for stereo.
         - Returns:
-            - soundData: <|SoundData|> A new |SoundData| object.
+            - soundData: |SoundData| A new |SoundData| object.
 
 ------------------------------------------------------------------------------
 1.12.2. types                                               *love.sound-types*
@@ -17366,7 +17370,7 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - state: <|PowerState|> The basic state of the power supply.
+            - state: |PowerState| The basic state of the power supply.
             - percent: <number> Percentage of battery life left, between
               0 and 100. nil if the value can't be determined or there's no
               battery.
@@ -17500,7 +17504,7 @@ Variants:
             - name: <string> The name of the channel you want to
               create or retrieve.
         - Returns:
-            - channel: <|Channel|> A named channel object which can be
+            - channel: |Channel| A named channel object which can be
               further manipulated.
 
 ------------------------------------------------------------------------------
@@ -17509,13 +17513,13 @@ Variants:
 Create a new unnamed thread channel.
 
 One use for them is to pass new unnamed channels to other threads via
-|Channel|:push
+|Channel:push|
 
 Variants:
     1:
         - Arguments: None
         - Returns:
-            - channel: <|Channel|> A unnamed channel object which can be
+            - channel: |Channel| A unnamed channel object which can be
               further manipulated.
 
 ------------------------------------------------------------------------------
@@ -17529,14 +17533,14 @@ Variants:
             - filename: <string> The name of the Lua |File| to use as
               source.
         - Returns:
-            - thread: <|Thread|> A new |Thread| that has yet to be
+            - thread: |Thread| A new |Thread| that has yet to be
               started.
     2:
         - Arguments:
-            - fileData: <||FileData||> The ||FileData|| containing the
+            - fileData: ||FileData|| The ||FileData|| containing the
               Lua code to use as the source.
         - Returns:
-            - thread: <|Thread|> A new |Thread| that has yet to be
+            - thread: |Thread| A new |Thread| that has yet to be
               started.
     3:
         - Arguments:
@@ -17544,7 +17548,7 @@ Variants:
               use as the source. It needs to either be at least 1024
               characters long, or contain at least one newline.
         - Returns:
-            - thread: <|Thread|> A new |Thread| that has yet to be
+            - thread: |Thread| A new |Thread| that has yet to be
               started.
 
 ------------------------------------------------------------------------------
@@ -17624,7 +17628,7 @@ Variants:
 
 Returns whether the thread is currently running.
 
-|Threads| which are not running can be (re)started with |Thread|:start.
+|Threads| which are not running can be (re)started with |Thread:start|.
 
 Variants:
     1:
@@ -17956,13 +17960,13 @@ Variants:
             - filename: <string> The file path to the Ogg Theora video
               file.
         - Returns:
-            - videostream: <||VideoStream||> A new ||VideoStream||.
+            - videostream: ||VideoStream|| A new ||VideoStream||.
     2:
         - Arguments:
-            - file: <|File|> The |File| object containing the Ogg
-              Theora video.
+            - file: |File| The |File| object containing the Ogg Theora
+              video.
         - Returns:
-            - videostream: <||VideoStream||> A new ||VideoStream||.
+            - videostream: ||VideoStream|| A new ||VideoStream||.
 
 ------------------------------------------------------------------------------
 1.17.2. types                                               *love.video-types*
@@ -18076,8 +18080,7 @@ Variants:
         - Returns:
             - fullscreen: <boolean> True if the window is fullscreen,
               false otherwise.
-            - fstype: <|FullscreenType|> The type of fullscreen mode
-              used.
+            - fstype: |FullscreenType| The type of fullscreen mode used.
 
 ------------------------------------------------------------------------------
 1.18.1.5. getFullscreenModes                  *love.window.getFullscreenModes*
@@ -18102,8 +18105,8 @@ Variants:
     1:
         - Arguments: None
         - Returns:
-            - imagedata: <||ImageData||> The window icon imagedata, or
-              nil of no icon has been set with |love.window.setIcon|.
+            - imagedata: ||ImageData|| The window icon imagedata, or nil
+              of no icon has been set with |love.window.setIcon|.
 
 ------------------------------------------------------------------------------
 1.18.1.7. getMode                                        *love.window.getMode*
@@ -18118,7 +18121,7 @@ Variants:
             - height: <number> Window height.
             - flags: <table> Table containing the window properties.
 
-            - Table:                               *love.window.getMode-flags*
+                                                   *love.window.getMode-flags*
 
                                         *love.window.getMode-flags.fullscreen*
 fullscreen              Fullscreen (true), or windowed (false).
@@ -18375,8 +18378,8 @@ Variants:
         - Arguments:
             - fullscreen: <boolean> Whether to enter or exit
               fullscreen mode.
-            - fstype: <|FullscreenType|> The type of fullscreen mode
-              to use.
+            - fstype: |FullscreenType| The type of fullscreen mode to
+              use.
         - Returns:
             - success: <boolean> True if successful, false otherwise.
 
@@ -18389,7 +18392,7 @@ support very large icon images.
 Variants:
     1:
         - Arguments:
-            - imagedata: <||ImageData||> The window icon image.
+            - imagedata: ||ImageData|| The window icon image.
         - Returns:
             - success: <boolean> Whether the icon has been set
               successfully.
@@ -18403,7 +18406,7 @@ If width or height is 0, setMode will use the width and height of the
 desktop.
 
 Changing the display mode may have side effects: for example, canvases will
-be cleared and values sent to shaders with |Shader|:send will be erased. Make
+be cleared and values sent to shaders with |Shader:send| will be erased. Make
 sure to save the contents of canvases beforehand or re-draw to them afterward
 if you need to.
 
@@ -18414,7 +18417,7 @@ Variants:
             - height: <number> Display height.
             - flags: <table> The flags table with the options:
 
-            - Table:                               *love.window.setMode-flags*
+                                                   *love.window.setMode-flags*
 
                                         *love.window.setMode-flags.fullscreen*
 fullscreen              Fullscreen (true), or windowed (false).
@@ -18506,7 +18509,7 @@ Variants:
         - Arguments:
             - title: <string> The title of the message box.
             - message: <string> The text inside the message box.
-            - type: <|MessageBoxType|> The type of the message box.
+            - type: |MessageBoxType| The type of the message box.
             - attachtowindow: <boolean> Whether the message box should
               be attached to the love window or free-floating.
         - Returns:
@@ -18521,7 +18524,7 @@ Variants:
               and escapebutton, which should be the index of the default
               button to use when the user presses 'enter' or 'escape',
               respectively.
-            - type: <|MessageBoxType|> The type of the message box.
+            - type: |MessageBoxType| The type of the message box.
             - attachtowindow: <boolean> Whether the message box should
               be attached to the love window or free-floating.
         - Returns:
@@ -18670,8 +18673,8 @@ window.
 Variants:
     1:
         - Arguments:
-            - file: <|File|> The unopened |File| object representing
-              the file that was dropped.
+            - file: |File| The unopened |File| object representing the
+              file that was dropped.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -18694,8 +18697,8 @@ Called when a |Joystick|'s virtual gamepad axis is moved.
 Variants:
     1:
         - Arguments:
-            - joystick: <|Joystick|> The joystick object.
-            - axis: <|GamepadAxis|> The virtual gamepad axis.
+            - joystick: |Joystick| The joystick object.
+            - axis: |GamepadAxis| The virtual gamepad axis.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -18706,8 +18709,8 @@ Called when a |Joystick|'s virtual gamepad button is pressed.
 Variants:
     1:
         - Arguments:
-            - joystick: <|Joystick|> The joystick object.
-            - button: <|GamepadButton|> The virtual gamepad button.
+            - joystick: |Joystick| The joystick object.
+            - button: |GamepadButton| The virtual gamepad button.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -18718,8 +18721,8 @@ Called when a |Joystick|'s virtual gamepad button is released.
 Variants:
     1:
         - Arguments:
-            - joystick: <|Joystick|> The joystick object.
-            - button: <|GamepadButton|> The virtual gamepad button.
+            - joystick: |Joystick| The joystick object.
+            - button: |GamepadButton| The virtual gamepad button.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -18733,7 +18736,7 @@ was already connected when the game started up.
 Variants:
     1:
         - Arguments:
-            - joystick: <|Joystick|> The newly connected |Joystick|
+            - joystick: |Joystick| The newly connected |Joystick|
               object.
         - Returns: Nothing
 
@@ -18745,7 +18748,7 @@ Called when a joystick axis moves.
 Variants:
     1:
         - Arguments:
-            - joystick: <|Joystick|> The joystick object.
+            - joystick: |Joystick| The joystick object.
             - axis: <number> The axis number.
             - value: <number> The new axis value.
         - Returns: Nothing
@@ -18758,9 +18761,9 @@ Called when a joystick hat direction changes.
 Variants:
     1:
         - Arguments:
-            - joystick: <|Joystick|> The joystick object.
+            - joystick: |Joystick| The joystick object.
             - hat: <number> The hat number.
-            - direction: <||JoystickHat||> The new hat direction.
+            - direction: ||JoystickHat|| The new hat direction.
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
@@ -18795,7 +18798,7 @@ Called when a |Joystick| is disconnected.
 Variants:
     1:
         - Arguments:
-            - joystick: <|Joystick|> The now-disconnected |Joystick|
+            - joystick: |Joystick| The now-disconnected |Joystick|
               object.
         - Returns: Nothing
 
@@ -18807,8 +18810,8 @@ Callback function triggered when a key is pressed.
 Variants:
     1:
         - Arguments:
-            - key: <|KeyConstant|> Character of the pressed key.
-            - scancode: <|Scancode|> The scancode representing the
+            - key: |KeyConstant| Character of the pressed key.
+            - scancode: |Scancode| The scancode representing the
               pressed key.
             - isrepeat: <boolean> Whether this keypress event is a
               repeat. The delay between key repeats depends on the user's
@@ -18823,12 +18826,12 @@ Callback function triggered when a keyboard key is released.
 Variants:
     1:
         - Arguments:
-            - key: <|KeyConstant|> Character of the released key.
+            - key: |KeyConstant| Character of the released key.
         - Returns: Nothing
     2:
         - Arguments:
-            - key: <|KeyConstant|> Character of the released key.
-            - scancode: <|Scancode|> The scancode representing the
+            - key: |KeyConstant| Character of the released key.
+            - scancode: |Scancode| The scancode representing the
               released key.
         - Returns: Nothing
 
@@ -19003,7 +19006,7 @@ Callback function triggered when a |Thread| encounters an error.
 Variants:
     1:
         - Arguments:
-            - thread: <|Thread|> The thread which produced the error.
+            - thread: |Thread| The thread which produced the error.
             - errorstr: <string> The error message.
         - Returns: Nothing
 

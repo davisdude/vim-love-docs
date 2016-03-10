@@ -35,7 +35,7 @@ local function rightAlign( ... ) -- If last argument is true, right align to ...
 end
 
 local function replaceTextWithRef( pre, text )
-	local custPunc = '%.%?,;<>!'
+	local custPunc = '%.%?,;<>!:'
 	return text:gsub( '%f[%w' .. custPunc .. ']([' .. custPunc .. ']*)(' .. pre .. '.-)([' .. custPunc .. ']*)%f[^%w' .. custPunc .. ']', function( first, word, post )
 		return first .. '|' .. word .. '|' .. post
 	end  ) .. ''
@@ -142,20 +142,20 @@ local function newSection( name, ref )
 		local currentWidth = #first
 		local currentStr = ''
 		str:gsub( '(*.-*)', function( sub )
-			currentWidth = currentWidth + #sub
+			currentWidth = currentWidth + #sub + 1
 			if currentWidth > maxWidth then
-				table.insert( rows, rightAlign( currentStr ) )
+				table.insert( rows, currentStr )
 				currentStr = sub
 			else
 				currentStr = currentStr .. ' ' .. sub
 			end
 		end )
-		table.insert( rows, rightAlign( currentStr ) )
+		table.insert( rows, currentStr )
 	else
 		rows = { str }
 	end
 	str = rightAlign( name, rows[1] )
-	str = str .. ( #rows > 1 and '\n' or '' ) .. table.concat( rows, '\n', 2 )
+	for i = 2, #rows do str = str .. '\n' .. rightAlign( '', rows[i] ) end
 	return '\n' .. header .. '\n' .. str .. '\n'
 end
 
@@ -232,10 +232,11 @@ local function makeVariant( index, tab, fail, parentName )
 	local str = '- ' .. index:gsub( '(.)(.*)', function( a, b ) return a:upper() .. b .. ':' end )
 	if tab[index] then
 		for i, v in ipairs( tab[index] ) do
-			str = str .. '\n' .. ( ' ' ):rep( 12 ).. wrap( '- ' .. v.name .. ': <' .. v.type .. '> ' .. v.description, ( ' ' ):rep( 12 ), ( ' ' ):rep( 2 ), 8 + #( '- ' .. index ) )
+			local vtype = v.type:sub( 1, 1 ):match( '%u' ) and v.type or '<' .. v.type .. '>'
+			str = str .. '\n' .. ( ' ' ):rep( 12 ).. wrap( '- ' .. v.name .. ': ' .. vtype .. ' ' .. v.description, ( ' ' ):rep( 12 ), ( ' ' ):rep( 2 ), 8 + #( '- ' .. index ) )
 			if v.table then
 				local tag = preventDuplicateTags( '*' .. parentName .. '-' .. v.name .. '*' )
-				str = str .. '\n\n' .. rightAlign( ( ' ' ):rep( 12 ) .. '- Table: ', tag ) .. '\n'
+				str = str .. '\n\n' .. rightAlign( '', tag ) .. '\n'
 				str = str .. recursiveTable( v, parentName .. '-' .. v.name )
 			end
 		end

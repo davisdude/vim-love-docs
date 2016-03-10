@@ -13,22 +13,20 @@ Installing
 
 The file included should work fine until the next update of LOVE.
 
-The bat and sh files assume you have `love` and `vim` mapped to the most recent version of LOVE and vim.exe (or gvim.exe) or set in your environment path variable. If you're on Windows, add the directory path to LOVE to the `path` environment variable. If you're on Linux, you should know how to do that.
+Running
+---
 
-There is also a working portion that is not yet complete. This will allow you to type `help love.graphics.draw` (for example) to get the wiki entry from that. 
-Currently implemented:
-- Modules
-- Tag file
-- Make args and returns that are enums point to enums
-- Enums
+In order to generate the files, navigate to the [src](src) directory to choose which form to generate and run The `.bat` or `.sh` file depending on the machine you're running. These assume you have the following mappings:
 
-To-Do:
-- Callbacks
-- Config flags
+- `git`: Mapped to Git client.
+- `love`: Mapped to the LÖVE executable.
+- `vim`: Mapped to `vim.exe` (or `gvim.exe`).
+
+The current version was generated from [0fc706b0eac8cef779deffb81a881fa615fb9b58](https://github.com/love2d-community/love-api/commit/0fc706b0eac8cef779deffb81a881fa615fb9b58) from https://github.com/love2d-community/love-api.
 
 Screenshots
 ---
 
 ![](src/pics/screen1.png)
-![](src/pics/screen3.png)
 ![](src/pics/screen2.png)
+![](src/pics/screen3.png)
