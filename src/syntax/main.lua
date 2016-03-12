@@ -79,8 +79,8 @@ local function extractData( tab, index )
 end
 extractData( api )
 
-print( 'highlight lovefunction guifg=#ff60e2' )
-print( 'highlight lovetype guifg=#ff60e2' )
-print( 'highlight loveconf guifg=#ff60e2' )
+print( 'highlight lovefunction guifg=#ff60e2 ctermfg=206' )
+print( 'highlight lovetype guifg=#ff60e2 ctermfg=206' )
+print( 'highlight loveconf guifg=#ff60e2 ctermfg=206' )
 
 love.event.quit()

@@ -67,6 +67,6 @@ syntax match lovefunction "\<love\.\%(timer\.\%(getAverageDelta\|getDelta\|getFP
 syntax match lovefunction "\<love\.\%(touch\.\%(getPosition\|getPressure\|getTouches\)\)\>"
 syntax match lovefunction "\<love\.\%(video\.\%(newVideoStream\)\)\>"
 syntax match lovefunction "\<love\.\%(window\.\%(close\|fromPixels\|getDisplayName\|getFullscreen\|getFullscreenModes\|getIcon\|getMode\|getPixelScale\|getPosition\|getTitle\|hasFocus\|hasMouseFocus\|isCreated\|isDisplaySleepEnabled\|isVisible\|maximize\|minimize\|requestAttention\|setDisplaySleepEnabled\|setFullscreen\|setIcon\|setMode\|setPosition\|setTitle\|showMessageBox\|toPixels\)\)\>"
-highlight lovefunction guifg=#ff60e2
-highlight lovetype guifg=#ff60e2
-highlight loveconf guifg=#ff60e2
+highlight lovefunction guifg=#ff60e2 ctermfg=206
+highlight lovetype guifg=#ff60e2 ctermfg=206
+highlight loveconf guifg=#ff60e2 ctermfg=206
