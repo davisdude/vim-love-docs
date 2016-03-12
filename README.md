@@ -11,12 +11,12 @@ Installing
 - Other: Put the folders (other than [src](src)) into their corresponding directories in `vimfiles`. 
 
 
-The file included should work fine until the next update of LOVE.
+The file included should work fine until the next update of LÖVE.
 
 Running
 ---
 
-In order to generate the files, navigate to the [src](src) directory to choose which form to generate and run The `.bat` or `.sh` file depending on the machine you're running. These assume you have the following mappings:
+In order to generate the files, navigate to the [src](src) directory to choose which form to generate and run the `.bat` or `.sh` file depending on the machine you're using. These assume you have the following mappings:
 
 - `git`: Mapped to Git client.
 - `love`: Mapped to the LÖVE executable.
