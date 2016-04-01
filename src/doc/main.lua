@@ -173,7 +173,7 @@ local function addContent( ... )
 				v[2] = type( v[2] ) == 'table' and v[2] or { v[2] }
 				increment()
 				local tabs = ( ' ' ):rep( 2 * select( 2, index:gsub( '(%.)', '' ) ) )
-				local ref = ( v[4] and function( str ) return str end or function( str ) return str:gsub( '%.', '-' ) end )( '|' 
+				local ref = ( v[4] and function( str ) return str end or function( str ) return str:gsub( '%.', '-' ) end )( '|'
 					.. ( #v[2][1] + contentWidth + 3 <= maxWidth and v[2][1] or v[2][1]:sub( 1, maxWidth - contentWidth - 3 ) .. '-' ) .. '|' )
 				local name = ' ' .. v[1]
 
@@ -182,7 +182,7 @@ local function addContent( ... )
 					name = name:sub( 1, contentWidth - #tabs - #index - 2 ) .. '-'
 				end
 				print( rightAlign( tabs, index, name, ref, contentWidth, true ):gsub( '([%d%.%s]+%w+%s)(%s*)(%s|.*)', function( a, b, c )
-					return a .. ( '.' ):rep( #b ) .. c 
+					return a .. ( '.' ):rep( #b ) .. c
 				end ) .. '' )
 				table.insert( bodies, { newSection( index .. ' ' .. v[1], v[2] ), ( v[3] or function() end )( v[1], v[2] ) } )
 			else
@@ -410,7 +410,7 @@ In your |vimrc| you can set the variable `g:lovedocs_colors` to any valid color 
 
 Generated from
 
-####https://github.com/love2d-community/love-api 
+####https://github.com/love2d-community/love-api
 
 using
 

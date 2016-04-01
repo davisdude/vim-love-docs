@@ -52,6 +52,11 @@ The current version was generated from [3c0133f5a6c4857e3fe853622ccf65c80d782b98
 Screenshots
 ---
 
+Plugins:
+- [gruvbox](https://github.com/morhetz/gruvbox)
+- [Rainbow](https://github.com/luochen1990/rainbow)
+- [vim-love-docs](https://github.com/davisdude/vim-love-docs)
+
 ![](src/pics/screen1.png)
 ![](src/pics/screen2.png)
 ![](src/pics/screen3.png)

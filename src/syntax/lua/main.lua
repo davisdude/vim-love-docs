@@ -28,7 +28,7 @@ local function extractData( tab, index )
 					callbackstr = callbackstr .. vv.name .. '\\|'
 				end
 			end
-			if func then 
+			if func then
 				-- We don't want to be able to have underscores after the word
 				funcstr = funcstr:sub( 1, -3 ) .. '\\)\\)\\|\\%('
 			end
@@ -36,7 +36,7 @@ local function extractData( tab, index )
 				-- We don't want to be able to have underscores after the word or highlight the . or :
 				typestr = typestr:sub( 1, -3 ) .. '\\)\\|\\%('
 			end
-			if callback then 
+			if callback then
 				-- We don't want to be able to have underscores after the word
 				callbackstr = callbackstr:sub( 1, -3 ) .. '\\)\\|\\%('
 			end
