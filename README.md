@@ -18,6 +18,8 @@ The help files follow the pattern `love-NAME`. For instance:
 
 Functions:
 - `love-love.graphics.newImage`
+- `love-love.window.setMode-flags`
+- `love-love.window.setMode-flags-fullscreen`
 
 Types:
 - `love-File` or `love-filesystem-File`
@@ -31,6 +33,7 @@ Enums:
 For sub-sections, they are hyphenated, such as `love-audio-functions`, `love-audio`, `love-audio-types`.
 
 __Plugin:__
+
 In your `vimrc` you can set the variable `g:lovedocs_colors` to any valid color (see `help highlight-args`). Defaults to `'guifg=#ff60e2 ctermfg=206'`.
 
 The file included should work fine until the next update of LÖVE.
@@ -44,7 +47,7 @@ In order to generate the files, navigate to the [src](src) directory to choose w
 - `love`: Mapped to the LÖVE executable.
 - `vim`: Mapped to `vim.exe` (or `gvim.exe`).
 
-The current version was generated from [https://github.com/love2d-community/love-api/commit/2056d8097dee3d9d19cde1d39d25f6a3f8b89e12](https://github.com/love2d-community/love-api/commit/0fc706b0eac8cef779deffb81a881fa615fb9b58) from https://github.com/love2d-community/love-api.
+The current version was generated from [https://github.com/love2d-community/love-api/commit/2056d8097dee3d9d19cde1d39d25f6a3f8b89e12](https://github.com/love2d-community/love-api/commit/3c0133f5a6c4857e3fe853622ccf65c80d782b98) from https://github.com/love2d-community/love-api.
 
 Screenshots
 ---

@@ -217,7 +217,7 @@ local function recursiveTable( tab, parentStr )
 	local str = ''
 	if tab.table then
 		for _, v in ipairs( tab.table ) do
-			local n = parentStr .. '.' .. v.name
+			local n = parentStr .. '-' .. v.name
 			str = str .. formatLikeVim( v.name, replaceTextWithRef( parentStr .. '%.', v.description ), { n } ) .. '\n'
 			str = str .. recursiveTable( v, n )
 		end

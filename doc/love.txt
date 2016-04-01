@@ -1069,7 +1069,7 @@ Variants:
 
                                                             *love-love.conf-t*
 
-                                                   *love-love.conf-t.identity*
+                                                   *love-love.conf-t-identity*
 identity                This flag determines the name of the save directory
                         for your game. Note that you can only specify the
                         name, not the location where it will be created:
@@ -1080,7 +1080,7 @@ identity                This flag determines the name of the save directory
                         used to set the save directory outside of the config
                         file.
 
-                                                    *love-love.conf-t.version*
+                                                    *love-love.conf-t-version*
 version                 t.version should be a string, representing the
                         version of LÖVE for which your game was made. It
                         should be formatted as "X.Y.Z" where X is the major
@@ -1089,27 +1089,27 @@ version                 t.version should be a string, representing the
                         compatible. Its default is the version of LÖVE
                         running.
 
-                                                    *love-love.conf-t.console*
+                                                    *love-love.conf-t-console*
 console                 Determines wether a console should be opened
                         alongside the game window (Windows only) or not. Note:
                         On OSX you can get console output by running LÖVE
                         through the terminal.
 
-                                      *love-love.conf-t.accelerometerjoystick*
+                                      *love-love.conf-t-accelerometerjoystick*
 accelerometerjoystick   Sets whether the device accelerometer on iOS and
                         Android should be exposed as a 3-axis |Joystick|.
                         Disabling the accelerometer when it's not used may
                         reduce CPU usage.
 
-                                            *love-love.conf-t.externalstorage*
+                                            *love-love.conf-t-externalstorage*
 externalstorage         Sets whether files are saved in external storage
                         (true) or internal storage (false) on Android.
 
-                                               *love-love.conf-t.gammacorrect*
+                                               *love-love.conf-t-gammacorrect*
 gammacorrect            Determines whether gamma-correct rendering is
                         enabled, when the system supports it.
 
-                                                     *love-love.conf-t.window*
+                                                     *love-love.conf-t-window*
 window                  It is possible to defer window creation until
                         |love.window.setMode| is first called in your code. To
                         do so, set t.window = nil in |love.conf| (or t.screen
@@ -1125,77 +1125,77 @@ window                  It is possible to defer window creation until
                         default values) if care is not taken to use the
                         correct table for the LÖVE version being used.
 
-                                               *love-love.conf-t.window.title*
+                                               *love-love.conf-t-window-title*
 title                   Sets the title of the window the game is in.
                         Alternatively |love.window.setTitle| can be used to
                         change the window title outside of the config file.
 
-                                                *love-love.conf-t.window.icon*
+                                                *love-love.conf-t-window-icon*
 icon                    A filepath to an image to use as the window's icon.
                         Not all operating systems support very large icon
                         images. The icon can also be changed with
                         |love.window.setIcon|.
 
-                                               *love-love.conf-t.window.width*
+                                               *love-love.conf-t-window-width*
 width                   Sets the window's dimensions. If these flags are set
                         to 0 LÖVE automatically uses the user's desktop
                         dimensions.
 
-                                              *love-love.conf-t.window.height*
+                                              *love-love.conf-t-window-height*
 height                  Sets the window's dimensions. If these flags are set
                         to 0 LÖVE automatically uses the user's desktop
                         dimensions.
 
-                                          *love-love.conf-t.window.borderless*
+                                          *love-love.conf-t-window-borderless*
 borderless              Removes all border visuals from the window. Note that
                         the effects may wary between operating systems.
 
-                                           *love-love.conf-t.window.resizable*
+                                           *love-love.conf-t-window-resizable*
 resizable               If set to true this allows the user to resize the
                         game's window.
 
-                                            *love-love.conf-t.window.minwidth*
+                                            *love-love.conf-t-window-minwidth*
 minwidth                Sets the minimum width and height for the game's
                         window if it can be resized by the user. If you set
                         lower values to window.width and window.height LÖVE
                         will always favor the minimum dimensions set via
                         window.minwidth and window.minheight.
 
-                                           *love-love.conf-t.window.minheight*
+                                           *love-love.conf-t-window-minheight*
 minheight               Sets the minimum width and height for the game's
                         window if it can be resized by the user. If you set
                         lower values to window.width and window.height LÖVE
                         will always favor the minimum dimensions set via
                         window.minwidth and window.minheight.
 
-                                          *love-love.conf-t.window.fullscreen*
+                                          *love-love.conf-t-window-fullscreen*
 fullscreen              Wether to run the game in fullscreen (true) or
                         windowed (false) mode. The fullscreen can also be
                         toggled via |love.window.setFullscreen| or
                         |love.window.setMode|.
 
-                                      *love-love.conf-t.window.fullscreentype*
+                                      *love-love.conf-t-window-fullscreentype*
 fullscreentype          Specifies the type of fullscreen mode to use (normal
                         or desktop). Generally the desktop is recommended, as
                         it is less restrictive than normal mode on some
                         operating systems.
 
-                                               *love-love.conf-t.window.vsync*
+                                               *love-love.conf-t-window-vsync*
 vsync                   Enables or deactivates vertical synchronization.
                         Vsync tries to keep the game at a steady framerate and
                         can prevent issues like screen tearing. It is
                         recommended to keep vsync activated if you don't know
                         about the possible implications of turning it off.
 
-                                                *love-love.conf-t.window.msaa*
+                                                *love-love.conf-t-window-msaa*
 msaa                    The number of samples to use with multi-sampled
                         antialiasing.
 
-                                             *love-love.conf-t.window.display*
+                                             *love-love.conf-t-window-display*
 display                 The index of the display to show the window in, if
                         multiple monitors are available.
 
-                                             *love-love.conf-t.window.highdpi*
+                                             *love-love.conf-t-window-highdpi*
 highdpi                 See |love.window.getPixelScale|,
                         |love.window.toPixels|, and |love.window.fromPixels|.
                         It is recommended to keep this option disabled if you
@@ -1203,65 +1203,65 @@ highdpi                 See |love.window.getPixelScale|,
                         Retina display, because code will need tweaking to
                         make sure things look correct.
 
-                                                   *love-love.conf-t.window.x*
+                                                   *love-love.conf-t-window-x*
 x                       Determines the position of the window on the user's
                         screen. Alternatively |love.window.setPosition| can be
                         used to change the position on the fly.
 
-                                                   *love-love.conf-t.window.y*
+                                                   *love-love.conf-t-window-y*
 y                       Determines the position of the window on the user's
                         screen. Alternatively |love.window.setPosition| can be
                         used to change the position on the fly.
 
-                                                    *love-love.conf-t.modules*
+                                                    *love-love.conf-t-modules*
 modules                 Module options.
 
-                                              *love-love.conf-t.modules.audio*
+                                              *love-love.conf-t-modules-audio*
 audio                   Enable the audio module.
 
-                                              *love-love.conf-t.modules.event*
+                                              *love-love.conf-t-modules-event*
 event                   Enable the event module.
 
-                                           *love-love.conf-t.modules.graphics*
+                                           *love-love.conf-t-modules-graphics*
 graphics                Enable the graphics module.
 
-                                              *love-love.conf-t.modules.image*
+                                              *love-love.conf-t-modules-image*
 image                   Enable the image module.
 
-                                           *love-love.conf-t.modules.joystick*
+                                           *love-love.conf-t-modules-joystick*
 joystick                Enable the joystick module.
 
-                                           *love-love.conf-t.modules.keyboard*
+                                           *love-love.conf-t-modules-keyboard*
 keyboard                Enable the keyboard module.
 
-                                               *love-love.conf-t.modules.math*
+                                               *love-love.conf-t-modules-math*
 math                    Enable the math module.
 
-                                              *love-love.conf-t.modules.mouse*
+                                              *love-love.conf-t-modules-mouse*
 mouse                   Enable the mouse module.
 
-                                            *love-love.conf-t.modules.physics*
+                                            *love-love.conf-t-modules-physics*
 physics                 Enable the physics module.
 
-                                              *love-love.conf-t.modules.sound*
+                                              *love-love.conf-t-modules-sound*
 sound                   Enable the sound module.
 
-                                             *love-love.conf-t.modules.system*
+                                             *love-love.conf-t-modules-system*
 system                  Enable the system module.
 
-                                              *love-love.conf-t.modules.timer*
+                                              *love-love.conf-t-modules-timer*
 timer                   Enable the timer module.
 
-                                              *love-love.conf-t.modules.touch*
+                                              *love-love.conf-t-modules-touch*
 touch                   Enable the touch module.
 
-                                              *love-love.conf-t.modules.video*
+                                              *love-love.conf-t-modules-video*
 video                   Enable the video module.
 
-                                             *love-love.conf-t.modules.window*
+                                             *love-love.conf-t-modules-window*
 window                  Enable the window module.
 
-                                             *love-love.conf-t.modules.thread*
+                                             *love-love.conf-t-modules-thread*
 thread                  Enable the thread module.
 
         - Returns: Nothing
@@ -4075,32 +4075,32 @@ Variants:
 
                                          *love-love.graphics.newMesh-vertices*
 
-                                     *love-love.graphics.newMesh-vertices.[1]*
+                                     *love-love.graphics.newMesh-vertices-[1]*
 [1]                     The position of the vertex on the x-axis.
 
-                                     *love-love.graphics.newMesh-vertices.[2]*
+                                     *love-love.graphics.newMesh-vertices-[2]*
 [2]                     The position of the vertex on the y-axis.
 
-                                     *love-love.graphics.newMesh-vertices.[3]*
+                                     *love-love.graphics.newMesh-vertices-[3]*
 [3]                     The u texture coordinate of the vertex. ||Texture||
                         coordinates are normally in the range of [0, 1], but
                         can be greater or less (see |WrapMode|.)
 
-                                     *love-love.graphics.newMesh-vertices.[4]*
+                                     *love-love.graphics.newMesh-vertices-[4]*
 [4]                     The v texture coordinate of the vertex. ||Texture||
                         coordinates are normally in the range of [0, 1], but
                         can be greater or less (see |WrapMode|.)
 
-                                     *love-love.graphics.newMesh-vertices.[5]*
+                                     *love-love.graphics.newMesh-vertices-[5]*
 [5]                     The red component of the vertex color.
 
-                                     *love-love.graphics.newMesh-vertices.[6]*
+                                     *love-love.graphics.newMesh-vertices-[6]*
 [6]                     The green component of the vertex color.
 
-                                     *love-love.graphics.newMesh-vertices.[7]*
+                                     *love-love.graphics.newMesh-vertices-[7]*
 [7]                     The blue component of the vertex color.
 
-                                     *love-love.graphics.newMesh-vertices.[8]*
+                                     *love-love.graphics.newMesh-vertices-[8]*
 [8]                     The alpha component of the vertex color.
 
             - mode: ||MeshDrawMode|| How the vertices are used when
@@ -4136,12 +4136,12 @@ Variants:
 
                                      *love-love.graphics.newMesh-vertexformat*
 
-                           *love-love.graphics.newMesh-vertexformat.attribute*
+                           *love-love.graphics.newMesh-vertexformat-attribute*
 attribute               A table containing the attribute's name, it's data
                         type, and the number of components in the attribute,
                         in the form of {name, datatype, components}.
 
-                                 *love-love.graphics.newMesh-vertexformat....*
+                                 *love-love.graphics.newMesh-vertexformat-...*
 ...                     Additional vertex attribute format tables.
 
             - vertices: <table> The table filled with vertex
@@ -4151,11 +4151,11 @@ attribute               A table containing the attribute's name, it's data
 
                                         love-love.graphics.newMesh-vertices-2*
 
-                      *love-love.graphics.newMesh-vertices.attributecomponent*
+                      *love-love.graphics.newMesh-vertices-attributecomponent*
 attributecomponent      The first component of the first vertex attribute in
                         the vertex.
 
-                                     *love-love.graphics.newMesh-vertices....*
+                                     *love-love.graphics.newMesh-vertices-...*
 ...                     Additional components of all vertex attributes in the
                         vertex.
 
@@ -4177,12 +4177,12 @@ attributecomponent      The first component of the first vertex attribute in
 
                                     love-love.graphics.newMesh-vertexformat-2*
 
-                          love-love.graphics.newMesh-vertexformat.attribute-2*
+                          love-love.graphics.newMesh-vertexformat-attribute-2*
 attribute               A table containing the attribute's name, it's data
                         type, and the number of components in the attribute,
                         in the form of {name, datatype, components}.
 
-                                love-love.graphics.newMesh-vertexformat....-2*
+                                love-love.graphics.newMesh-vertexformat-...-2*
 ...                     Additional vertex attribute format tables.
 
             - vertexcount: <number> The total number of vertices the
@@ -4235,13 +4235,13 @@ Variants:
 
                                            *love-love.graphics.newImage-flags*
 
-                                    *love-love.graphics.newImage-flags.linear*
+                                    *love-love.graphics.newImage-flags-linear*
 linear                  True if the image's pixels should be interpreted as
                         being linear RGB rather than sRGB-encoded, if
                         gamma-correct rendering is enabled. Has no effect
                         otherwise.
 
-                                   *love-love.graphics.newImage-flags.mipmaps*
+                                   *love-love.graphics.newImage-flags-mipmaps*
 mipmaps                 If true, mipmaps for the image will be automatically
                         generated (or taken from the images's file if
                         possible, if the image originated from a
@@ -4458,13 +4458,13 @@ Variants:
 
                                             *love-love.graphics.points-points*
 
-                                          *love-love.graphics.points-points.x*
+                                          *love-love.graphics.points-points-x*
 x                       The position of the first point on the x-axis.
 
-                                          *love-love.graphics.points-points.y*
+                                          *love-love.graphics.points-points-y*
 y                       The position of the first point on the y-axis.
 
-                                        *love-love.graphics.points-points....*
+                                        *love-love.graphics.points-points-...*
 ...                     The x and y coordinates of additional points.
 
         - Returns: Nothing
@@ -4477,12 +4477,12 @@ y                       The position of the first point on the y-axis.
 
                                            love-love.graphics.points-points-2*
 
-                                      *love-love.graphics.points-points.point*
+                                      *love-love.graphics.points-points-point*
 point                   A table containing the position and color of the
                         first point, in the form of {x, y, r, g, b, a}. The
                         color components are optional.
 
-                                       love-love.graphics.points-points....-2*
+                                       love-love.graphics.points-points-...-2*
 ...                     Additional tables containing the position and color
                         of more points, in the form of {x, y, r, g, b, a}. The
                         color components are optional.
@@ -4578,27 +4578,27 @@ Variants:
 
                                         *love-love.graphics.print-coloredtext*
 
-                                 *love-love.graphics.print-coloredtext.color1*
+                                 *love-love.graphics.print-coloredtext-color1*
 color1                  A table containing red, green, blue, and optional
                         alpha components to use as a color for the next string
                         in the table, in the form of {red, green, blue,
                         alpha}.
 
-                                *love-love.graphics.print-coloredtext.string1*
+                                *love-love.graphics.print-coloredtext-string1*
 string1                 A string of text which has a color specified by the
                         previous color.
 
-                                 *love-love.graphics.print-coloredtext.color2*
+                                 *love-love.graphics.print-coloredtext-color2*
 color2                  A table containing red, green, blue, and optional
                         alpha components to use as a color for the next string
                         in the table, in the form of {red, green, blue,
                         alpha}.
 
-                                *love-love.graphics.print-coloredtext.string2*
+                                *love-love.graphics.print-coloredtext-string2*
 string2                 A string of text which has a color specified by the
                         previous color.
 
-                                    *love-love.graphics.print-coloredtext....*
+                                    *love-love.graphics.print-coloredtext-...*
 ...                     Additional colors and strings.
 
             - x: <number> The position of the new text on the x-axis.
@@ -4652,27 +4652,27 @@ Variants:
 
                                        *love-love.graphics.printf-coloredtext*
 
-                                *love-love.graphics.printf-coloredtext.color1*
+                                *love-love.graphics.printf-coloredtext-color1*
 color1                  A table containing red, green, blue, and optional
                         alpha components to use as a color for the next string
                         in the table, in the form of {red, green, blue,
                         alpha}.
 
-                               *love-love.graphics.printf-coloredtext.string1*
+                               *love-love.graphics.printf-coloredtext-string1*
 string1                 A string of text which has a color specified by the
                         previous color.
 
-                                *love-love.graphics.printf-coloredtext.color2*
+                                *love-love.graphics.printf-coloredtext-color2*
 color2                  A table containing red, green, blue, and optional
                         alpha components to use as a color for the next string
                         in the table, in the form of {red, green, blue,
                         alpha}.
 
-                               *love-love.graphics.printf-coloredtext.string2*
+                               *love-love.graphics.printf-coloredtext-string2*
 string2                 A string of text which has a color specified by the
                         previous color.
 
-                                   *love-love.graphics.printf-coloredtext....*
+                                   *love-love.graphics.printf-coloredtext-...*
 ...                     Additional colors and strings.
 
             - x: <number> The position of the new text on the x-axis.
@@ -5783,12 +5783,12 @@ Variants:
 
                                                       *getVertexFormat-format*
 
-                                            *getVertexFormat-format.attribute*
+                                            *getVertexFormat-format-attribute*
 attribute               A table containing the attribute's name, it's data
                         type, and the number of components in the attribute,
                         in the form of {name, datatype, components}.
 
-                                                  *getVertexFormat-format....*
+                                                  *getVertexFormat-format-...*
 ...                     Additional vertex attributes in the |Mesh|.
 
 
@@ -5922,11 +5922,11 @@ Variants:
 
                                                             *setVertex-vertex*
 
-                                         *setVertex-vertex.attributecomponent*
+                                         *setVertex-vertex-attributecomponent*
 attributecomponent      The first component of the first vertex attribute in
                         the specified vertex.
 
-                                                        *setVertex-vertex....*
+                                                        *setVertex-vertex-...*
 ...                     Additional components of all vertex attributes in the
                         specified vertex.
 
@@ -5958,28 +5958,28 @@ attributecomponent      The first component of the first vertex attribute in
 
                                                            setVertex-vertex-2*
 
-                                                        *setVertex-vertex.[1]*
+                                                        *setVertex-vertex-[1]*
 [1]                     The position of the vertex on the x-axis.
 
-                                                        *setVertex-vertex.[2]*
+                                                        *setVertex-vertex-[2]*
 [2]                     The position of the vertex on the y-axis.
 
-                                                        *setVertex-vertex.[3]*
+                                                        *setVertex-vertex-[3]*
 [3]                     The horizontal component of the texture coordinate.
 
-                                                        *setVertex-vertex.[4]*
+                                                        *setVertex-vertex-[4]*
 [4]                     The vertical component of the texture coordinate.
 
-                                                        *setVertex-vertex.[5]*
+                                                        *setVertex-vertex-[5]*
 [5]                     The red component of the vertex's color.
 
-                                                        *setVertex-vertex.[6]*
+                                                        *setVertex-vertex-[6]*
 [6]                     The green component of the vertex's color.
 
-                                                        *setVertex-vertex.[7]*
+                                                        *setVertex-vertex-[7]*
 [7]                     The blue component of the vertex's color.
 
-                                                        *setVertex-vertex.[8]*
+                                                        *setVertex-vertex-[8]*
 [8]                     The alpha component of the vertex's color.
 
         - Returns: Nothing
@@ -6070,15 +6070,15 @@ Variants:
 
                                                         *setVertices-vertices*
 
-                                     *setVertices-vertices.attributecomponent*
+                                     *setVertices-vertices-attributecomponent*
 attributecomponent      The first component of the first vertex attribute in
                         the vertex.
 
-                                                    *setVertices-vertices....*
+                                                    *setVertices-vertices-...*
 ...                     Additional components of all vertex attributes in the
                         vertex.
 
-                                            *setVertices-vertices.startvertex*
+                                            *setVertices-vertices-startvertex*
 startvertex             The index of the first vertex to replace.
 
         - Returns: Nothing
@@ -6091,32 +6091,32 @@ startvertex             The index of the first vertex to replace.
 
                                                        setVertices-vertices-2*
 
-                                                    *setVertices-vertices.[1]*
+                                                    *setVertices-vertices-[1]*
 [1]                     The position of the vertex on the x-axis.
 
-                                                    *setVertices-vertices.[2]*
+                                                    *setVertices-vertices-[2]*
 [2]                     The position of the vertex on the y-axis.
 
-                                                    *setVertices-vertices.[3]*
+                                                    *setVertices-vertices-[3]*
 [3]                     The horizontal component of the texture coordinate.
                         ||Texture|| coordinates are normally in the range of
                         [0, 1], but can be greater or less (see |WrapMode|).
 
-                                                    *setVertices-vertices.[4]*
+                                                    *setVertices-vertices-[4]*
 [4]                     The vertical component of the texture coordinate.
                         ||Texture|| coordinates are normally in the range of
                         [0, 1], but can be greater or less (see |WrapMode|).
 
-                                                    *setVertices-vertices.[5]*
+                                                    *setVertices-vertices-[5]*
 [5]                     The red color component.
 
-                                                    *setVertices-vertices.[6]*
+                                                    *setVertices-vertices-[6]*
 [6]                     The green color component.
 
-                                                    *setVertices-vertices.[7]*
+                                                    *setVertices-vertices-[7]*
 [7]                     The blue color component.
 
-                                                    *setVertices-vertices.[8]*
+                                                    *setVertices-vertices-[8]*
 [8]                     The alpha color component.
 
         - Returns: Nothing
@@ -7719,27 +7719,27 @@ Variants:
 
                                                              *add-coloredtext*
 
-                                                      *add-coloredtext.color1*
+                                                      *add-coloredtext-color1*
 color1                  A table containing red, green, blue, and optional
                         alpha components to use as a color for the next string
                         in the table, in the form of {red, green, blue,
                         alpha}.
 
-                                                     *add-coloredtext.string1*
+                                                     *add-coloredtext-string1*
 string1                 A string of text which has a color specified by the
                         previous color.
 
-                                                      *add-coloredtext.color2*
+                                                      *add-coloredtext-color2*
 color2                  A table containing red, green, blue, and optional
                         alpha components to use as a color for the next string
                         in the table, in the form of {red, green, blue,
                         alpha}.
 
-                                                     *add-coloredtext.string2*
+                                                     *add-coloredtext-string2*
 string2                 A string of text which has a color specified by the
                         previous color.
 
-                                                         *add-coloredtext....*
+                                                         *add-coloredtext-...*
 ...                     Additional colors and strings.
 
             - x: <number> The position of the new text on the x-axis.
@@ -7790,27 +7790,27 @@ Variants:
 
                                                             *addf-coloredtext*
 
-                                                     *addf-coloredtext.color1*
+                                                     *addf-coloredtext-color1*
 color1                  A table containing red, green, blue, and optional
                         alpha components to use as a color for the next string
                         in the table, in the form of {red, green, blue,
                         alpha}.
 
-                                                    *addf-coloredtext.string1*
+                                                    *addf-coloredtext-string1*
 string1                 A string of text which has a color specified by the
                         previous color.
 
-                                                     *addf-coloredtext.color2*
+                                                     *addf-coloredtext-color2*
 color2                  A table containing red, green, blue, and optional
                         alpha components to use as a color for the next string
                         in the table, in the form of {red, green, blue,
                         alpha}.
 
-                                                    *addf-coloredtext.string2*
+                                                    *addf-coloredtext-string2*
 string2                 A string of text which has a color specified by the
                         previous color.
 
-                                                        *addf-coloredtext....*
+                                                        *addf-coloredtext-...*
 ...                     Additional colors and strings.
 
             - wraplimit: <number> The maximum width in pixels of the
@@ -7940,27 +7940,27 @@ Variants:
 
                                                              *set-coloredtext*
 
-                                                      *set-coloredtext.color1*
+                                                      *set-coloredtext-color1*
 color1                  A table containing red, green, blue, and optional
                         alpha components to use as a color for the next string
                         in the table, in the form of {red, green, blue,
                         alpha}.
 
-                                                     *set-coloredtext.string1*
+                                                     *set-coloredtext-string1*
 string1                 A string of text which has a color specified by the
                         previous color.
 
-                                                      *set-coloredtext.color2*
+                                                      *set-coloredtext-color2*
 color2                  A table containing red, green, blue, and optional
                         alpha components to use as a color for the next string
                         in the table, in the form of {red, green, blue,
                         alpha}.
 
-                                                     *set-coloredtext.string2*
+                                                     *set-coloredtext-string2*
 string2                 A string of text which has a color specified by the
                         previous color.
 
-                                                         *set-coloredtext....*
+                                                         *set-coloredtext-...*
 ...                     Additional colors and strings.
 
         - Returns: Nothing
@@ -7990,27 +7990,27 @@ Variants:
 
                                                             *setf-coloredtext*
 
-                                                     *setf-coloredtext.color1*
+                                                     *setf-coloredtext-color1*
 color1                  A table containing red, green, blue, and optional
                         alpha components to use as a color for the next string
                         in the table, in the form of {red, green, blue,
                         alpha}.
 
-                                                    *setf-coloredtext.string1*
+                                                    *setf-coloredtext-string1*
 string1                 A string of text which has a color specified by the
                         previous color.
 
-                                                     *setf-coloredtext.color2*
+                                                     *setf-coloredtext-color2*
 color2                  A table containing red, green, blue, and optional
                         alpha components to use as a color for the next string
                         in the table, in the form of {red, green, blue,
                         alpha}.
 
-                                                    *setf-coloredtext.string2*
+                                                    *setf-coloredtext-string2*
 string2                 A string of text which has a color specified by the
                         previous color.
 
-                                                        *setf-coloredtext....*
+                                                        *setf-coloredtext-...*
 ...                     Additional colors and strings.
 
             - wraplimit: <number> The maximum width in pixels of the
@@ -18126,57 +18126,57 @@ Variants:
 
                                               *love-love.window.getMode-flags*
 
-                                   *love-love.window.getMode-flags.fullscreen*
+                                   *love-love.window.getMode-flags-fullscreen*
 fullscreen              Fullscreen (true), or windowed (false).
 
-                               *love-love.window.getMode-flags.fullscreentype*
+                               *love-love.window.getMode-flags-fullscreentype*
 fullscreentype          The type of fullscreen mode used.
 
-                                        *love-love.window.getMode-flags.vsync*
+                                        *love-love.window.getMode-flags-vsync*
 vsync                   True if the graphics framerate is synchronized with
                         the monitor's refresh rate, false otherwise.
 
-                                         *love-love.window.getMode-flags.msaa*
+                                         *love-love.window.getMode-flags-msaa*
 msaa                    The number of antialiasing samples used (0 if MSAA is
                         disabled).
 
-                                    *love-love.window.getMode-flags.resizable*
+                                    *love-love.window.getMode-flags-resizable*
 resizable               True if the window is resizable in windowed mode,
                         false otherwise.
 
-                                   *love-love.window.getMode-flags.borderless*
+                                   *love-love.window.getMode-flags-borderless*
 borderless              True if the window is borderless in windowed mode,
                         false otherwise.
 
-                                     *love-love.window.getMode-flags.centered*
+                                     *love-love.window.getMode-flags-centered*
 centered                True if the window is centered in windowed mode,
                         false otherwise.
 
-                                      *love-love.window.getMode-flags.display*
+                                      *love-love.window.getMode-flags-display*
 display                 The index of the display the window is currently in,
                         if multiple monitors are available.
 
-                                     *love-love.window.getMode-flags.minwidth*
+                                     *love-love.window.getMode-flags-minwidth*
 minwidth                The minimum width of the window, if it's resizable.
 
-                                    *love-love.window.getMode-flags.minheight*
+                                    *love-love.window.getMode-flags-minheight*
 minheight               The minimum height of the window, if it's resizable.
 
-                                      *love-love.window.getMode-flags.highdpi*
+                                      *love-love.window.getMode-flags-highdpi*
 highdpi                 True if high-dpi mode should be used on Retina
                         displays in OS X and iOS. Does nothing on non-Retina
                         displays. Added in 0.9.1.
 
-                                  *love-love.window.getMode-flags.refreshrate*
+                                  *love-love.window.getMode-flags-refreshrate*
 refreshrate             The refresh rate of the screen's current display
                         mode, in Hz. May be 0 if the value can't be
                         determined.
 
-                                            *love-love.window.getMode-flags.x*
+                                            *love-love.window.getMode-flags-x*
 x                       The x-coordinate of the window's position in its
                         current display.
 
-                                            *love-love.window.getMode-flags.y*
+                                            *love-love.window.getMode-flags-y*
 y                       The y-coordinate of the window's position in its
                         current display.
 
@@ -18422,52 +18422,52 @@ Variants:
 
                                               *love-love.window.setMode-flags*
 
-                                   *love-love.window.setMode-flags.fullscreen*
+                                   *love-love.window.setMode-flags-fullscreen*
 fullscreen              Fullscreen (true), or windowed (false).
 
-                               *love-love.window.setMode-flags.fullscreentype*
+                               *love-love.window.setMode-flags-fullscreentype*
 fullscreentype          The type of fullscreen to use. This defaults to
                         "normal" in 0.9.2 and older.
 
-                                        *love-love.window.setMode-flags.vsync*
+                                        *love-love.window.setMode-flags-vsync*
 vsync                   True if LÖVE should wait for vsync, false otherwise.
 
-                                         *love-love.window.setMode-flags.msaa*
+                                         *love-love.window.setMode-flags-msaa*
 msaa                    The number of antialiasing samples.
 
-                                    *love-love.window.setMode-flags.resizable*
+                                    *love-love.window.setMode-flags-resizable*
 resizable               True if the window should be resizable in windowed
                         mode, false otherwise.
 
-                                   *love-love.window.setMode-flags.borderless*
+                                   *love-love.window.setMode-flags-borderless*
 borderless              True if the window should be borderless in windowed
                         mode, false otherwise.
 
-                                     *love-love.window.setMode-flags.centered*
+                                     *love-love.window.setMode-flags-centered*
 centered                True if the window should be centered in windowed
                         mode, false otherwise.
 
-                                      *love-love.window.setMode-flags.display*
+                                      *love-love.window.setMode-flags-display*
 display                 The index of the display to show the window in, if
                         multiple monitors are available.
 
-                                     *love-love.window.setMode-flags.minwidth*
+                                     *love-love.window.setMode-flags-minwidth*
 minwidth                The minimum width of the window, if it's resizable.
                         Cannot be less than 1.
 
-                                    *love-love.window.setMode-flags.minheight*
+                                    *love-love.window.setMode-flags-minheight*
 minheight               The minimum height of the window, if it's resizable.
                         Cannot be less than 1.
 
-                                      *love-love.window.setMode-flags.highdpi*
+                                      *love-love.window.setMode-flags-highdpi*
 highdpi                 True if high-dpi mode should be used on Retina
                         displays in OS X. Does nothing on non-Retina displays.
 
-                                            *love-love.window.setMode-flags.x*
+                                            *love-love.window.setMode-flags-x*
 x                       The x-coordinate of the window's position in the
                         specified display.
 
-                                            *love-love.window.setMode-flags.y*
+                                            *love-love.window.setMode-flags-y*
 y                       The y-coordinate of the window's position in the
                         specified display.
 
