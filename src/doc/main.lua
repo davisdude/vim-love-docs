@@ -9,8 +9,7 @@ local maxWidth = 78
 local contentWidth = 46
 local docLen = 24
 local index = '0.'
-local docName = 'love.'
-local lovePrefix = docName:sub( 1, -2 )
+local docName = 'love-'
 
 local function increment()
 	index = index:gsub( '(.-)(%d+)%.$', function( a, b ) return a .. ( b + 1 ) .. '.' end )
@@ -80,7 +79,6 @@ local function wrap( text, tabs, offset, initialLength )
 		end )
 		table.insert( rows, str )
 	end )
-	local inCodeBlock = false
 	return table.concat( rows, '\n' ):gsub( '\n(%s*)(%#*)', function( spaces, formatting ) return '\n' .. spaces .. ( ' ' ):rep( #formatting ) end ) .. ''
 end
 
@@ -205,8 +203,8 @@ local function shallowReturn( element, pre )
 	else
 		for i, v in ipairs( element ) do
 			local name = v.name or v
-			local temp = ( ' ' ):rep( 4 ) ..   '- ' .. name
-			local ref = '|' .. ( pre and pre .. name or lovePrefix .. name ) .. '|'
+			local temp = ( ' ' ):rep( 4 ) .. '- ' .. name
+			local ref = '|' .. docName .. ( pre or '' ) .. name .. '|'
 
 			str = str .. '\n' .. rightAlign( temp, ref )
 		end
@@ -261,12 +259,11 @@ local function generateVariants( tab, parentName )
 end
 
 local function createFunctions( tab, funcs, n )
-	n = n and ( n ~= 'love' and n .. '.' ) or ''
 	local new = {}
 	for i, v in ipairs( funcs ) do
-		local name = docName .. n .. v.name
+		local name = ( n or docName ) .. v.name
 		functions[name] = true
-		table.insert( new, { v.name, docName .. n .. v.name, function()
+		table.insert( new, { v.name, name, function()
 			return wrap( v.description ) .. '\n' .. generateVariants( v.variants, name )
 		end, true } )
 	end
@@ -299,7 +296,15 @@ function love.load( a )
 | |____| |__| |  \  /   | |____ ~
 \______|\____/    \/    \______/~
 ]] ), center{ 'The complete solution for Vim with LOVE.', 'Includes highlighting and documentation.' } ) )
-	print( newSection( 'CONTENT', lovePrefix .. '-content' ) )
+	print( newSection( 'CONTENT', docName .. 'content' ) )
+
+	addContent{ 'plugin', { docName .. 'plugin', 'lovedocs' }, function()
+		return rightAlign( '*g:lovedocs_colors*' ) .. wrap( [[
+
+
+In your |vimrc| you can set the variable `g:lovedocs_colors` to any valid color (see |highlight-args|). Defaults to `'guifg=#ff60e2 ctermfg=206'`.
+]] )
+	end }
 
 	prepend( api.modules, { { name = 'love', description = 'General functions' } } )
 	mixin( api.modules[1], api )
@@ -315,35 +320,36 @@ function love.load( a )
 		end
 	end
 
-	local tab = { 'modules', lovePrefix .. '-modules', function() return 'All LOVE modules and their functions, enums, and types.' end, false }
+	local tab = { 'modules', docName .. 'modules', function() return 'All LOVE modules and their functions, enums, and types.' end, false }
 	for i, v in ipairs( api.modules ) do
 		local new = { v.name, docName .. v.name, function()
 			local str = wrap( v.description ) .. '\n\n'
 			str = str .. '- Types: '
-			str = str .. shallowReturn( v.types, lovePrefix .. '-' )
+			str = str .. shallowReturn( v.types )
 			str = str .. '\n- Enums: '
-			str = str .. shallowReturn( v.enums, lovePrefix .. '-' )
+			str = str .. shallowReturn( v.enums )
 			return str
 		end, true }
 
 		-- Functions
-		table.insert( new, { 'functions', ( v.name ~= 'love' and docName .. v.name or lovePrefix ) .. '-functions', function() return wrap( 'The functions of ' .. v.name .. '.' ) end, true } )
-		createFunctions( new, v.functions, v.name )
+		local n = v.name ~= 'love' and docName or ''
+		table.insert( new, { 'functions', n .. v.name .. '-functions', function() return wrap( 'The functions of ' .. v.name .. '.' ) end, true } )
+		createFunctions( new, v.functions, docName .. ( #n > 0 and ( n:sub( 1, -2 ) .. '.' ) or '' ) .. v.name .. '.' )
 
 		-- Types
 		if v.types then
-			table.insert( new, { 'types', ( v.name ~= 'love' and docName .. v.name or lovePrefix ) .. '-types', function()
+			table.insert( new, { 'types', ( v.name ~= 'love' and docName .. v.name .. '-' or docName ) .. 'types', function()
 				local str = wrap( 'The types of ' .. v.name .. ':' ) .. '\n'
-				return str .. shallowReturn( v.types, lovePrefix .. '.' )
+				return str .. shallowReturn( v.types )
 			end, true } )
 			local stack = {}
-			local n = v.name and ( v.name ~= 'love' and docName ) or ''
+			local n = v.name ~= 'love' and docName or ''
 			for ii, vv in ipairs( v.types ) do
-				table.insert( stack, { vv.name, { lovePrefix .. '-' .. vv.name, ( ( n .. v.name ~= 'love' ) and ( n .. v.name .. '-' .. vv.name ) or '' ) }, function()
+				table.insert( stack, { vv.name, { docName .. vv.name, ( ( n .. v.name ~= 'love' ) and ( n .. v.name .. '-' .. vv.name ) or '' ) }, function()
 					local str = wrap( vv.description )
-					str = str .. '\n\nConstructors: ' .. shallowReturn( vv.constructors, docName .. v.name .. '.' )
-					str = str .. '\n\nSupertypes: ' .. shallowReturn( vv.supertypes, lovePrefix .. '-' )
-					str = str .. '\n\nSubtypes: ' .. shallowReturn( vv.subtypes, lovePrefix .. '-' )
+					str = str .. '\n\nConstructors: ' .. shallowReturn( vv.constructors )
+					str = str .. '\n\nSupertypes: ' .. shallowReturn( vv.supertypes )
+					str = str .. '\n\nSubtypes: ' .. shallowReturn( vv.subtypes )
 					str = str .. '\n\nFunctions: ' .. shallowReturn( vv.functions, vv.name .. ':' )
 					for iii, vvv in ipairs( vv.supertypes or {} ) do
 						str = str .. ( types[vvv].functions and shallowReturn( types[vvv].functions, types[vvv].name .. ':' ) or '' )
@@ -353,7 +359,7 @@ function love.load( a )
 				local temp = {}
 				for iii, vvv in pairs( vv.functions or {} ) do
 					local name = vv.name .. ':' .. vvv.name
-					table.insert( temp, { vvv.name, name, function()
+					table.insert( temp, { vvv.name, docName .. name, function()
 						return wrap( vvv.description ) .. ( vvv.variants and '\n' .. generateVariants( vvv.variants, vvv.name ) or '' )
 					end, false } )
 				end
@@ -364,7 +370,7 @@ function love.load( a )
 
 		-- Enums
 		if v.enums then
-			table.insert( new, { 'enums', ( v.name ~= 'love' and docName .. v.name or lovePrefix ) .. '-enums', function()
+			table.insert( new, { 'enums', ( v.name ~= 'love' and docName .. v.name or docName ) .. '-enums', function()
 				local str = 'Enums within ' .. docName .. v.name .. ':'
 				for ii, vv in ipairs( v.enums ) do
 					str = str .. '\n' .. rightAlign( ( ' ' ):rep( 4 ) .. vv.name, '|' .. docName .. vv.name .. '|' )
@@ -373,12 +379,12 @@ function love.load( a )
 			end, true } )
 			local stack = {}
 			for ii, vv in ipairs( v.enums ) do
-				table.insert( stack, { vv.name, { lovePrefix .. '-' .. vv.name, docName .. v.name .. '-' .. vv.name }, function()
+				table.insert( stack, { vv.name, { docName .. vv.name, docName .. v.name .. '-' .. vv.name }, function()
 					local str = wrap( vv.description ) .. '\n'
-					local tag = preventDuplicateTags( '*' .. vv.name .. '-constants*' )
+					local tag = preventDuplicateTags( '*' .. docName .. vv.name .. '-constants*' )
 					str = str .. '\n' .. rightAlign( 'Constants:', tag ) .. '\n'
 					for iii, vvv in ipairs( vv.constants ) do
-						str = str ..  formatLikeVim( vvv.name, vvv.description, { vv.name .. '-' .. vvv.name } ) .. '\n'
+						str = str ..  formatLikeVim( vvv.name, vvv.description, { docName .. vv.name .. '-' .. vvv.name } ) .. '\n'
 					end
 					return str:sub( 1, -2 )
 				end, false } )
@@ -391,15 +397,15 @@ function love.load( a )
 	addContent( tab )
 
 	-- Callbacks
-	tab = { 'callbacks', lovePrefix .. '-callbacks', function() return 'All LOVE callbacks.' end, false }
-	createFunctions( tab, api.callbacks )
+	tab = { 'callbacks', docName .. 'callbacks', function() return 'All LOVE callbacks.' end, false }
+	createFunctions( tab, api.callbacks, docName .. docName:sub( 1, -2 ) .. '.' )
 	for i = #tab[5], 1, -1 do
 		tab[i + 5] = tab[5][i]
 		tab[5][i] = nil
 	end
 	addContent( tab )
 
-	addContent{ 'About', lovePrefix .. '-' .. 'about', function()
+	addContent{ 'about', docName .. 'about', function()
 		return wrap( ( [[For LOVE (http://love2d.org) version %s.
 
 Generated from
