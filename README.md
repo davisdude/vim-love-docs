@@ -47,7 +47,7 @@ In order to generate the files, navigate to the [src](src) directory to choose w
 - `love`: Mapped to the LÖVE executable.
 - `vim`: Mapped to `vim.exe` (or `gvim.exe`).
 
-The current version was generated from [3c0133f5a6c4857e3fe853622ccf65c80d782b98](https://github.com/love2d-community/love-api/commit/3c0133f5a6c4857e3fe853622ccf65c80d782b98) from https://github.com/love2d-community/love-api.
+The current version was generated from [latest commit](https://github.com/love2d-community/love-api/commit/8c640d693cc63151b15b177171ee4d0c9143d09a) from https://github.com/love2d-community/love-api.
 
 Screenshots
 ---

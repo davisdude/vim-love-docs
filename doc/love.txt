@@ -3800,13 +3800,9 @@ Variants:
         - Arguments: None
         - Returns:
             - drawcalls: <number> The number of draw calls made so far
-              during the current frame. This includes all internal draw calls
-              – for example, drawing smooth lines takes two draw calls.
+              during the current frame.
             - canvasswitches: <number> The number of times the active
-              |Canvas| has been switched so far during the current frame. This
-              includes all internal canvas switches – for example, calling
-              |Canvas:clear| if the |Canvas| isn't active will trigger two
-              canvas switches.
+              |Canvas| has been switched so far during the current frame.
             - texturememory: <number> The estimated total size in bytes
               of video memory used by all loaded |Images|, |Canvases|, and
               |Fonts|.
@@ -6155,7 +6151,7 @@ Functions:
 ------------------------------------------------------------------------------
 2.5.2.4.1. getData                                        *love-Image:getData*
 
-Gets the original ||ImageData|| or |CompressedData| used to create the
+Gets the original ||ImageData|| or |CompressedImageData| used to create the
 |Image|.
 
 All |Images| keep a reference to the |Data| that was used to create the
@@ -6171,8 +6167,9 @@ Variants:
     2:
         - Arguments: None
         - Returns:
-            - data: |CompressedData| The original |CompressedData| used
-              to create the |Image|, if the image is compressed.
+            - data: |CompressedImageData| The original
+              |CompressedImageData| used to create the |Image|, if the image
+              is compressed.
 
 ------------------------------------------------------------------------------
 2.5.2.4.2. getDimensions                            *love-Image:getDimensions*
@@ -6267,8 +6264,8 @@ Variants:
 ------------------------------------------------------------------------------
 2.5.2.4.9. refresh                                        *love-Image:refresh*
 
-Reloads the |Image|'s contents from the ||ImageData|| or |CompressedData|
-used to create the image.
+Reloads the |Image|'s contents from the ||ImageData|| or
+|CompressedImageData| used to create the image.
 
 Variants:
     1:
