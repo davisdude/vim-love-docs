@@ -135,7 +135,6 @@ love-Canvas:getHeight	love.txt	/*love-Canvas:getHeight*
 love-Canvas:getMSAA	love.txt	/*love-Canvas:getMSAA*
 love-Canvas:getWidth	love.txt	/*love-Canvas:getWidth*
 love-Canvas:getWrap	love.txt	/*love-Canvas:getWrap*
-love-Canvas:isActive	love.txt	/*love-Canvas:isActive*
 love-Canvas:newImageData	love.txt	/*love-Canvas:newImageData*
 love-Canvas:renderTo	love.txt	/*love-Canvas:renderTo*
 love-Canvas:setFilter	love.txt	/*love-Canvas:setFilter*
@@ -385,7 +384,7 @@ love-Font:getHeight	love.txt	/*love-Font:getHeight*
 love-Font:getLineHeight	love.txt	/*love-Font:getLineHeight*
 love-Font:getWidth	love.txt	/*love-Font:getWidth*
 love-Font:getWrap	love.txt	/*love-Font:getWrap*
-love-Font:hasGlyph	love.txt	/*love-Font:hasGlyph*
+love-Font:hasGlyphs	love.txt	/*love-Font:hasGlyphs*
 love-Font:setFallbacks	love.txt	/*love-Font:setFallbacks*
 love-Font:setFilter	love.txt	/*love-Font:setFilter*
 love-Font:setLineHeight	love.txt	/*love-Font:setLineHeight*

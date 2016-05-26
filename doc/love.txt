@@ -244,11 +244,10 @@ CONTENT                                                         *love-content*
           2.5.2.1.5. getMSAA ................ |love-Canvas:getMSAA|
           2.5.2.1.6. getWidth ............... |love-Canvas:getWidth|
           2.5.2.1.7. getWrap ................ |love-Canvas:getWrap|
-          2.5.2.1.8. isActive ............... |love-Canvas:isActive|
-          2.5.2.1.9. newImageData ........... |love-Canvas:newImageData|
-          2.5.2.1.10. renderTo .............. |love-Canvas:renderTo|
-          2.5.2.1.11. setFilter ............. |love-Canvas:setFilter|
-          2.5.2.1.12. setWrap ............... |love-Canvas:setWrap|
+          2.5.2.1.8. newImageData ........... |love-Canvas:newImageData|
+          2.5.2.1.9. renderTo ............... |love-Canvas:renderTo|
+          2.5.2.1.10. setFilter ............. |love-Canvas:setFilter|
+          2.5.2.1.11. setWrap ............... |love-Canvas:setWrap|
         2.5.2.2. Font ....................... |love-Font|
           2.5.2.2.1. getAscent .............. |love-Font:getAscent|
           2.5.2.2.2. getBaseline ............ |love-Font:getBaseline|
@@ -258,7 +257,7 @@ CONTENT                                                         *love-content*
           2.5.2.2.6. getLineHeight .......... |love-Font:getLineHeight|
           2.5.2.2.7. getWidth ............... |love-Font:getWidth|
           2.5.2.2.8. getWrap ................ |love-Font:getWrap|
-          2.5.2.2.9. hasGlyph ............... |love-Font:hasGlyph|
+          2.5.2.2.9. hasGlyphs .............. |love-Font:hasGlyphs|
           2.5.2.2.10. setFallbacks .......... |love-Font:setFallbacks|
           2.5.2.2.11. setFilter ............. |love-Font:setFilter|
           2.5.2.2.12. setLineHeight ......... |love-Font:setLineHeight|
@@ -1615,13 +1614,16 @@ Variants:
 ------------------------------------------------------------------------------
 2.2.1.9. pause                                         *love-love.audio.pause*
 
-Pauses all audio
+Pauses currently played |Sources|.
 
 Variants:
     1:
+        - Description: This function will pause all currently active
+          |Sources|.
         - Arguments: None
         - Returns: Nothing
     2:
+        - Description: This function will only pause the specified |Source|.
         - Arguments:
             - source: |Source| The source on which to pause the
               playback.
@@ -1753,13 +1755,15 @@ Variants:
 ------------------------------------------------------------------------------
 2.2.1.19. stop                                          *love-love.audio.stop*
 
-Stops all playing audio.
+Stops currently played sources.
 
 Variants:
     1:
+        - Description: This function will stop all currently active sources.
         - Arguments: None
         - Returns: Nothing
     2:
+        - Description: This function will only stop the specified source.
         - Arguments:
             - source: |Source| The source on which to stop the
               playback.
@@ -5215,7 +5219,6 @@ Functions:
     - getMSAA                                            |love-Canvas:getMSAA|
     - getWidth                                          |love-Canvas:getWidth|
     - getWrap                                            |love-Canvas:getWrap|
-    - isActive                                          |love-Canvas:isActive|
     - newImageData                                  |love-Canvas:newImageData|
     - renderTo                                          |love-Canvas:renderTo|
     - setFilter                                        |love-Canvas:setFilter|
@@ -5319,23 +5322,7 @@ Variants:
               |Canvas|.
 
 ------------------------------------------------------------------------------
-2.5.2.1.8. isActive                                     *love-Canvas:isActive*
-
-Gets whether the graphics module is able to be used. If it is not active,
-|love.graphics| function and method calls will not work correctly and may
-cause the program to crash. The graphics module is inactive if a window is not
-open, or if the app is in the background on iOS. Typically the app's execution
-will be automatically paused by the system, in the latter case.
-
-Variants:
-    1:
-        - Arguments: None
-        - Returns:
-            - active: <boolean> Whether the graphics module is active
-              and able to be used.
-
-------------------------------------------------------------------------------
-2.5.2.1.9. newImageData                             *love-Canvas:newImageData*
+2.5.2.1.8. newImageData                             *love-Canvas:newImageData*
 
 Generates ||ImageData|| from the contents of the |Canvas|.
 
@@ -5359,7 +5346,7 @@ Variants:
               |Canvas|' contents.
 
 ------------------------------------------------------------------------------
-2.5.2.1.10. renderTo                                    *love-Canvas:renderTo*
+2.5.2.1.9. renderTo                                     *love-Canvas:renderTo*
 
 Render to the |Canvas| using a function.
 
@@ -5371,7 +5358,7 @@ Variants:
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
-2.5.2.1.11. setFilter                                  *love-Canvas:setFilter*
+2.5.2.1.10. setFilter                                  *love-Canvas:setFilter*
 
 Sets the filter of the |Canvas|.
 
@@ -5385,7 +5372,7 @@ Variants:
         - Returns: Nothing
 
 ------------------------------------------------------------------------------
-2.5.2.1.12. setWrap                                      *love-Canvas:setWrap*
+2.5.2.1.11. setWrap                                      *love-Canvas:setWrap*
 
 Sets the wrapping properties of a |Canvas|.
 
@@ -5427,7 +5414,7 @@ Functions:
     - getLineHeight                                  |love-Font:getLineHeight|
     - getWidth                                            |love-Font:getWidth|
     - getWrap                                              |love-Font:getWrap|
-    - hasGlyph                                            |love-Font:hasGlyph|
+    - hasGlyphs                                          |love-Font:hasGlyphs|
     - setFallbacks                                    |love-Font:setFallbacks|
     - setFilter                                          |love-Font:setFilter|
     - setLineHeight                                  |love-Font:setLineHeight|
@@ -5543,7 +5530,7 @@ Variants:
               that was wrapped.
 
 ------------------------------------------------------------------------------
-2.5.2.2.9. hasGlyph                                       *love-Font:hasGlyph*
+2.5.2.2.9. hasGlyphs                                     *love-Font:hasGlyphs*
 
 Gets whether the font can render a particular character.
 
