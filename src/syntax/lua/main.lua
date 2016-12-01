@@ -44,6 +44,7 @@ local function extractData( tab, index )
 		if type( v ) == 'table' then extractData( v ) end
 	end
 end
+
 extractData( api )
 
 local function limit( text, pre, post )

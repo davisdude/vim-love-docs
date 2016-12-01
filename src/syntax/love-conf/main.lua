@@ -37,5 +37,6 @@ local function extractData( tab, index )
 		end
 	end
 end
+
 extractData( api )
 love.event.quit()

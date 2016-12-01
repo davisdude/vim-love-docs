@@ -1,427 +1,439 @@
+-- TODO:
+-- Trim ref length for enums (see setTangentialAcceleration)
+-- Consider wrapping function arguments/returns to longest arg instead of by arg
+-- Handle when synopsis is too long (see love.graphics.rectangle-2)
+
 local api = require 'love-api.love_api'
+local name = 'love'
+local lineLength = 78
+api.name = 'love'
+api.description = 'General purpose functions'
+table.insert( api.modules, 1, api )
 
-local bodies = {}
-local functions = {}
-local types = {}
-local enums = {}
-local tags = {}
-local maxWidth = 78
-local contentWidth = 46
-local docLen = 24
-local index = '0.'
-local docName = 'love-'
+api.callbacks.name = 'callbacks'
+api.callbacks.description = 'Callbacks'
+api.callbacks.functions = api.callbacks
+table.insert( api.modules, 2, api.callbacks )
 
-local function increment()
-	index = index:gsub( '(.-)(%d+)%.$', function( a, b ) return a .. ( b + 1 ) .. '.' end )
+-- Header
+print[[
+*love.txt*                          Documentation for the LOVE game framework.
+
+                       _       o__o __      __ ______ ~
+                      | |     / __ \\ \    / //  ____\~
+                      | |    | |  | |\ \  / / | |__   ~
+                      | |    | |  | | \ \/ /  |  __|  ~
+                      | |____| |__| |  \  /   | |____ ~
+                      \______|\____/    \/    \______/~
+
+                   The complete solution for Vim with LOVE.
+                   Includes highlighting and documentation.
+
+
+]]
+
+-- Generate keywords
+local keywords = {}
+for _, module in ipairs( api.modules ) do
+	table.insert( keywords, module.name )
+	for _, type in ipairs( module.types or {} ) do table.insert( keywords, type.name ) end
+	for _, enum in ipairs( module.enums or {} ) do table.insert( keywords, enum.name ) end
 end
 
-local function rightAlign( ... ) -- If last argument is true, right align to ...[# - 1], put ...[#] at end
-	local elements = { ... }
-	local last = ''
-	local width = maxWidth
-	if elements[#elements] == true then
-		table.remove( elements, #elements )
-		width = elements[#elements]
-		table.remove( elements, #elements )
-		last = elements[#elements]
-		elements[#elements] = ' '
-	end
-	local length = width
-	for i = 1, #elements - 1 do
-		length = length - #elements[i]
-	end
-	return ( ( '%s' ):rep( #elements - 1 ) .. '%+' .. length .. 's' ):format( unpack( elements ) ) .. last
-end
-
-local function replaceTextWithRef( pre, text )
-	local custPunc = '%.%?,;<>!:'
-	return text:gsub( '%f[%w' .. custPunc .. ']([' .. custPunc .. ']*)(' .. pre .. '.-)([' .. custPunc .. ']*)%f[^%w' .. custPunc .. ']', function( first, word, post )
-		return first .. '|' .. word .. '|' .. post
-	end  ) .. ''
-end
-
-local function preventDuplicateTags( tag )
-	if tags[tag] then
-		tag = tag:gsub( '^%*(.+)%-?(%d*)%*', function( front, number )
-			number = #number > 0 and number + 1 or 2
-			return front .. '-' .. number .. '*'
-		end )
-	end
-	tags[tag] = true
-	return tag
-end
-
-local function wrap( text, tabs, offset, initialLength )
-	text = replaceTextWithRef( 'love%.', text )
-	for i in pairs( types ) do text = replaceTextWithRef( i, text ) end
-	for i in pairs( enums ) do text = replaceTextWithRef( i, text ) end
-
-	tabs = tabs or ''
-	offset = offset or ''
-	text = text:gsub( '\n\n', '\n \n' ) -- Make new lines show up
-	text = text:gsub( '\n( +)(%S)', function( str, next ) return '\n' .. ( '#' ):rep( #str ) .. next end ) .. '\n'
-	local rows = {}
-	local first = true
-	local currentWidth = 0
-	text:gsub( '(.-\n)', function( line )
-		local len = not first and #tabs + #offset or ( initialLength or 0 )
-		local str = not first and ( ' ' ):rep( len ) or ''
-		first = false
-		line:gsub( '(%S+)%s', function( word )
-			len = len + #word + 1 -- + 1 for space
-			if len > maxWidth then
-				table.insert( rows, str )
-				str = tabs .. offset .. word
-				len = #str
-			else
-				str = str .. ( #str:match( '^(%s*)' ) < #str and ' ' or '' ) .. word
-			end
-		end )
-		table.insert( rows, str )
-	end )
-	return table.concat( rows, '\n' ):gsub( '\n(%s*)(%#*)', function( spaces, formatting ) return '\n' .. spaces .. ( ' ' ):rep( #formatting ) end ) .. ''
-end
-
-local function formatLikeVim( index, text, refTab )
-	local refs = ''
-	for i = 1, #refTab do refs = refs .. preventDuplicateTags( '*' .. refTab[i] .. '* ' ) end
-	refs = refs:sub( 1, -2 )
-	local str = '\n' .. rightAlign( '', refs ) .. '\n'
-	str = str .. index .. ( ' ' ):rep( docLen - #index ) .. wrap( text, ( ' ' ):rep( docLen ), '', docLen )
-	return str
-end
-
-local function getLengthOfLongestLine( str )
-	local length = #str:match( '^([^\n]*)\n?' )
-	local last = #str:match( '\n?([^\n]*)$' )
-	length = length > last and length or last
-	str:gsub( '%f[^\n].-%f[\n]', function( a ) length = #a > length and #a or length end )
-	return length
-end
-
-local function center( text )
-	local str = ''
-	if type( text ) == 'string' then
-		local longest = getLengthOfLongestLine( text )
-		text:gsub( 's*([^\n]+)\n?', function( a )
-			str = str .. ( ' ' ):rep( ( maxWidth - longest ) / 2 ) .. a .. '\n'
-		end )
+local forbiddenPunctuation = ',?!(;'
+local function makeKeyword( word ) return '|' .. word .. '|' end
+local function makeKeywordIfKeyword( text )
+	-- Cut off any following text
+	local text, punctuation = text:match( '^([^' .. forbiddenPunctuation .. '@]*)([.' .. forbiddenPunctuation .. '@]?.*)$' )
+	punctuation = punctuation or ''
+	if text:match( 'love%.%l' ) then
+		text = makeKeyword( text )
 	else
-		for i, v in ipairs( text ) do
-			str = str .. center( v )
-		end
-	end
-	return str
-end
-
-local seps = setmetatable( {
-	'=',
-	'-',
-}, {
-	__index = function( tab ) return tab[2] end
-} )
-
-local function newSection( name, ref )
-	local str = ''
-	local first = name
-
-	ref = type( ref ) == 'table' and ref or { ref }
-	for i = 1, #ref do
-		local tag = preventDuplicateTags( '*' .. ref[i] .. '*' )
-		str = str .. ( #ref[i] > 0 and ( tag .. ' ' ) or '' )
-	end
-	str = str:sub( 1, -2 )
-
-	local header = seps[ ( select( 2, index:gsub( '%.', '' ) ) ) ]:rep( maxWidth )
-
-	-- Wrap refs if they are too long
-	local rows = {}
-	if #first + #str > maxWidth then
-		local currentWidth = #first
-		local currentStr = ''
-		str:gsub( '(*.-*)', function( sub )
-			currentWidth = currentWidth + #sub + 1
-			if currentWidth > maxWidth then
-				table.insert( rows, currentStr )
-				currentStr = sub
-			else
-				currentStr = currentStr .. ' ' .. sub
-			end
-		end )
-		table.insert( rows, currentStr )
-	else
-		rows = { str }
-	end
-	str = rightAlign( name, rows[1] )
-	for i = 2, #rows do str = str .. '\n' .. rightAlign( '', rows[i] ) end
-	return '\n' .. header .. '\n' .. str .. '\n'
-end
-
-local function printBodies()
-	for i, v in ipairs( bodies ) do
-		print( v[1] ) -- Header
-		print( v[2] ) -- Content
-	end
-end
-
-local function addContent( ... )
-	local info = { ... }
-	for i, v in ipairs( info ) do
-		for ii = 1, #v, 4 do -- { name, ref, body, shouldDotRef, ... }
-			if type( v[ii] ) == 'string' then
-				-- Allow for multiple refs
-				v[2] = type( v[2] ) == 'table' and v[2] or { v[2] }
-				increment()
-				local tabs = ( ' ' ):rep( 2 * select( 2, index:gsub( '(%.)', '' ) ) )
-				local ref = ( v[4] and function( str ) return str end or function( str ) return str:gsub( '%.', '-' ) end )( '|'
-					.. ( #v[2][1] + contentWidth + 3 <= maxWidth and v[2][1] or v[2][1]:sub( 1, maxWidth - contentWidth - 3 ) .. '-' ) .. '|' )
-				local name = ' ' .. v[1]
-
-				-- Trim names that are too long
-				if #name + #tabs + #index > contentWidth then
-					name = name:sub( 1, contentWidth - #tabs - #index - 2 ) .. '-'
-				end
-				print( rightAlign( tabs, index, name, ref, contentWidth, true ):gsub( '([%d%.%s]+%w+%s)(%s*)(%s|.*)', function( a, b, c )
-					return a .. ( '.' ):rep( #b ) .. c
-				end ) .. '' )
-				table.insert( bodies, { newSection( index .. ' ' .. v[1], v[2] ), ( v[3] or function() end )( v[1], v[2] ) } )
-			else
-				index = index .. '0.'
-				for subelement = ii, #v do
-					addContent( v[subelement] )
-				end
-				index = index:match( '^(.*%.)%d+%.$' )
+		for _, v in ipairs( keywords ) do
+			if v == text then
+				text = makeKeyword( text )
 				break
-			end
-		end
-	end
-end
-
-local function shallowReturn( element, pre )
-	local str = ''
-	if not element then return 'None'
-	else
-		for i, v in ipairs( element ) do
-			local name = v.name or v
-			local temp = ( ' ' ):rep( 4 ) .. '- ' .. name
-			local ref = '|' .. docName .. ( pre or '' ) .. name .. '|'
-
-			str = str .. '\n' .. rightAlign( temp, ref )
-		end
-		return str
-	end
-end
-
-local function recursiveTable( tab, parentStr )
-	parentStr = parentStr or ''
-	local str = ''
-	if tab.table then
-		for _, v in ipairs( tab.table ) do
-			local n = parentStr .. '-' .. v.name
-			str = str .. formatLikeVim( v.name, replaceTextWithRef( parentStr .. '%.', v.description ), { n } ) .. '\n'
-			str = str .. recursiveTable( v, n )
-		end
-	end
-	return str
-end
-
-local function makeVariant( index, tab, fail, parentName )
-	-- Capitalize first letter
-	local str = '- ' .. index:gsub( '(.)(.*)', function( a, b ) return a:upper() .. b .. ':' end )
-	if tab[index] then
-		for i, v in ipairs( tab[index] ) do
-			local vtype = v.type:sub( 1, 1 ):match( '%u' ) and v.type or '<' .. v.type .. '>'
-			str = str .. '\n' .. ( ' ' ):rep( 12 ).. wrap( '- ' .. v.name .. ': ' .. vtype .. ' ' .. v.description, ( ' ' ):rep( 12 ), ( ' ' ):rep( 2 ), 8 + #( '- ' .. index ) )
-			if v.table then
-				local tag = preventDuplicateTags( '*' .. parentName .. '-' .. v.name .. '*' )
-				str = str .. '\n\n' .. rightAlign( '', tag ) .. '\n'
-				str = str .. recursiveTable( v, parentName .. '-' .. v.name )
-			end
-		end
-		str = str .. '\n' .. ( ' ' ):rep( 4 )
-	else
-		str = str .. ' ' .. fail .. '\n    '
-	end
-	return str
-end
-
-local function generateVariants( tab, parentName )
-	local str = '\nVariants:\n' .. ( ' ' ):rep( 4 )
-	for i, v in ipairs( tab ) do
-		str = str .. i .. ':\n' .. ( ' ' ):rep( 8 )
-		str = str .. ( v.description and '- Description: ' .. wrap( v.description, '', ( ' ' ):rep( 10 ), #'        - Description: ' ) .. '\n' .. ( ' ' ):rep( 8 ) or '' )
-		          .. makeVariant( 'arguments', v, 'None', parentName ) .. ( ' ' ):rep( 4 )
-		          .. makeVariant( 'returns', v, 'Nothing', parentName )
-	end
-	str = str:sub( 1, -6 )
-
-	return str
-end
-
-local function createFunctions( tab, funcs, n )
-	local new = {}
-	for i, v in ipairs( funcs ) do
-		local name = ( n or docName ) .. v.name
-		functions[name] = true
-		table.insert( new, { v.name, name, function()
-			return wrap( v.description ) .. '\n' .. generateVariants( v.variants, name )
-		end, true } )
-	end
-	table.insert( tab, new )
-end
-
-local function prepend( parent, new )
-	for i, v in ipairs( new ) do
-		table.insert( parent, i, v )
-	end
-end
-
-local function mixin( old, new )
-	for i, v in pairs( new ) do
-		old[i] = old[i] or v
-	end
-end
-
-function love.load( a )
-	print( rightAlign( '*love.txt*', '  Documentation for the LOVE game framework.' ),
-	( [[
-
-
-%s
-%s]] ):format( center( [[
- _       o__o __      __ ______ ~
-| |     / __ \\ \    / //  ____\~
-| |    | |  | |\ \  / / | |__   ~
-| |    | |  | | \ \/ /  |  __|  ~
-| |____| |__| |  \  /   | |____ ~
-\______|\____/    \/    \______/~
-]] ), center{ 'The complete solution for Vim with LOVE.', 'Includes highlighting and documentation.' } ) )
-	print( newSection( 'CONTENT', docName .. 'content' ) )
-
-	addContent{ 'plugin', { docName .. 'plugin', 'lovedocs' }, function()
-		return rightAlign( '*g:lovedocs_colors*' ) .. wrap( [[
-
-
-In your |vimrc| you can set the variable `g:lovedocs_colors` to any valid color (see |highlight-args|). Defaults to `'guifg=#ff60e2 ctermfg=206'`.
-]] )
-	end }
-
-	prepend( api.modules, { { name = 'love', description = 'General functions' } } )
-	mixin( api.modules[1], api )
-
-	for i, v in ipairs( api.modules ) do
-		for ii, vv in ipairs( v.types or {} ) do
-			types[vv.name] = vv
-		end
-	end
-	for i, v in ipairs( api.modules ) do
-		for ii, vv in ipairs( v.enums or {} ) do
-			enums[vv.name] = vv
-		end
-	end
-
-	local tab = { 'modules', docName .. 'modules', function() return 'All LOVE modules and their functions, enums, and types.' end, false }
-	for i, v in ipairs( api.modules ) do
-		local new = { v.name, docName .. v.name, function()
-			local str = wrap( v.description ) .. '\n\n'
-			str = str .. '- Types: '
-			str = str .. shallowReturn( v.types )
-			str = str .. '\n- Enums: '
-			str = str .. shallowReturn( v.enums )
-			return str
-		end, true }
-
-		-- Functions
-		local n = v.name ~= 'love' and docName or ''
-		table.insert( new, { 'functions', n .. v.name .. '-functions', function() return wrap( 'The functions of ' .. v.name .. '.' ) end, true } )
-		createFunctions( new, v.functions, docName .. ( #n > 0 and ( n:sub( 1, -2 ) .. '.' ) or '' ) .. v.name .. '.' )
-
-		-- Types
-		if v.types then
-			table.insert( new, { 'types', ( v.name ~= 'love' and docName .. v.name .. '-' or docName ) .. 'types', function()
-				local str = wrap( 'The types of ' .. v.name .. ':' ) .. '\n'
-				return str .. shallowReturn( v.types )
-			end, true } )
-			local stack = {}
-			local n = v.name ~= 'love' and docName or ''
-			for ii, vv in ipairs( v.types ) do
-				table.insert( stack, { vv.name, { docName .. vv.name, ( ( n .. v.name ~= 'love' ) and ( n .. v.name .. '-' .. vv.name ) or '' ) }, function()
-					local str = wrap( vv.description )
-					str = str .. '\n\nConstructors: ' .. shallowReturn( vv.constructors )
-					str = str .. '\n\nSupertypes: ' .. shallowReturn( vv.supertypes )
-					str = str .. '\n\nSubtypes: ' .. shallowReturn( vv.subtypes )
-					str = str .. '\n\nFunctions: ' .. shallowReturn( vv.functions, vv.name .. ':' )
-					for iii, vvv in ipairs( vv.supertypes or {} ) do
-						str = str .. ( types[vvv].functions and shallowReturn( types[vvv].functions, types[vvv].name .. ':' ) or '' )
-					end
-					return str
-				end, false } )
-				local temp = {}
-				for iii, vvv in pairs( vv.functions or {} ) do
-					local name = vv.name .. ':' .. vvv.name
-					table.insert( temp, { vvv.name, docName .. name, function()
-						return wrap( vvv.description ) .. ( vvv.variants and '\n' .. generateVariants( vvv.variants, vvv.name ) or '' )
-					end, false } )
+			elseif text:match( '^' .. v ) then
+				if not text:match( '%-' ) then
+					text = makeKeyword( text )
 				end
-				table.insert( stack, temp )
 			end
-			table.insert( new, stack )
+		end
+	end
+	return text .. punctuation
+end
+
+local function makeType( text )
+	-- Keyword
+	local keyword = makeKeywordIfKeyword( text )
+	if keyword == text then keyword = '<' .. keyword .. '>' end
+	return keyword
+end
+
+local function makeReference( str )
+	return '*love-' .. str .. '*'
+end
+
+local function centerText( before, text, width )
+	return before .. (' '):rep( width / 2 - #before - #text / 2 ) .. text
+end
+
+local function rightText( before, text, width )
+	return before .. (' '):rep( width - #text - #before ) .. text
+end
+
+local function leftText( before, text )
+	return before .. text
+end
+
+local function tab( n )
+	n = n or 1
+	local str = ''
+	for i = 1, n do
+		str = str .. (' '):rep( 4 )
+	end
+	return str
+end
+
+-- Modes are embedded in str
+-- [str str]{mode}
+-- modes:
+-- 	- 'c': center
+-- 	- 'r': right
+-- 	- 't': indent
+-- 		- '[first@s:second]tm': indent
+-- 			- 'first' indicates the prefix for the first line
+-- 			- '@s' indicates fixed-width mode
+-- 			- ':second' indicates the (optional) prefix for all lines after the first line
+-- 			- 'm' indicates the wrap mode. Nothing is left, r and c are right and center
+-- Center must precede right, otherwise results will be messed up.
+-- Indent must be the last part of the string
+local function formattedPrint( str )
+	local output = ''
+	local centerStart, center = str:match( '()@%[(.-)@%]{c}' )
+	local rightStart, right = str:match( '()@%[(.-)@%]{r}' )
+	local tabStart, tab, wrapMode, tabAfter = str:match( '()@%[(.-)@%]{t(.?)}(.*)' )
+
+	local pre, output = str, ''
+	if right then
+		pre = str:sub( 1, rightStart - 1 )
+	end
+	if center then
+		pre = str:sub( 1, centerStart - 1 )
+		output = centerText( pre, center, lineLength )
+	end
+	if not center then output = pre end
+
+	if not tabStart then
+		output = output .. (' '):rep( lineLength - #output - #right ) .. right
+	else
+		if not center and not right then
+			output = str:sub( 1, tabStart - 1 )
 		end
 
-		-- Enums
-		if v.enums then
-			table.insert( new, { 'enums', ( v.name ~= 'love' and docName .. v.name or docName ) .. '-enums', function()
-				local str = 'Enums within ' .. docName .. v.name .. ':'
-				for ii, vv in ipairs( v.enums ) do
-					str = str .. '\n' .. rightAlign( ( ' ' ):rep( 4 ) .. vv.name, '|' .. docName .. vv.name .. '|' )
-				end
-				return str
-			end, true } )
-			local stack = {}
-			for ii, vv in ipairs( v.enums ) do
-				table.insert( stack, { vv.name, { docName .. vv.name, docName .. v.name .. '-' .. vv.name }, function()
-					local str = wrap( vv.description ) .. '\n'
-					local tag = preventDuplicateTags( '*' .. docName .. vv.name .. '-constants*' )
-					str = str .. '\n' .. rightAlign( 'Constants:', tag ) .. '\n'
-					for iii, vvv in ipairs( vv.constants ) do
-						str = str ..  formatLikeVim( vvv.name, vvv.description, { docName .. vv.name .. '-' .. vvv.name } ) .. '\n'
+		local outFunc
+		if wrapMode == 'r' then outFunc = rightText
+		elseif wrapMode == 'c' then outFunc = centerText
+		else outFunc = leftText end
+
+		tabAfter = tabAfter or ''
+		local fixedWidth = tab:match( '@s' )
+		local afterFirstLine = tab:match( '@s:?(.-)$' )
+		local spaceIndicator = afterFirstLine and tab:match( '^(.-)@' ) or tab
+		afterFirstLine = afterFirstLine and afterFirstLine or spaceIndicator
+		local indent = ( fixedWidth and (' '):rep( #output ) or '' ) .. afterFirstLine
+		local width = lineLength - #indent
+		local beforeRight = output .. spaceIndicator
+		output = ''
+		local currentLine = ''
+		
+		-- Add newline and spaces to make breaking easier
+		tabAfter = tabAfter .. '\n'
+		tabAfter:gsub( '(.-)\n', function( line )
+			line = line .. ' '
+			line:gsub( '(%S-)%s+', function( word )
+				word = makeKeywordIfKeyword( word )
+				if #beforeRight + #word > lineLength then
+					while #beforeRight + #word > lineLength do
+						local index = lineLength - #beforeRight - 1
+						local onLine, nextLine = word:sub( 1, index ) .. '-', word:sub( index + 1 )
+						output = output .. beforeRight .. onLine .. '\n'
+						beforeRight = indent
+						word = nextLine
+						currentLine = ''
 					end
-					return str:sub( 1, -2 )
-				end, false } )
+				elseif #beforeRight + #currentLine + #word + 1 > lineLength then
+					output = output .. beforeRight .. outFunc( '', currentLine:sub( 1, -2 ), width - ( not fixedWidth and #beforeRight or 0 ) ) .. '\n'
+					beforeRight = indent
+					currentLine = ''
+				end
+				currentLine = currentLine .. word .. ' '
+			end )
+			output = output .. beforeRight .. outFunc( '', currentLine:sub( 1, -2 ), width - ( not fixedWidth and #beforeRight or 0 ) ) .. '\n'
+			currentLine = ''
+			beforeRight = indent
+		end )
+		output = output:match( '^(.*)\n$' )
+	end
+	return output
+end
+
+local function reference( str )
+	return formattedPrint( str .. '@[' .. makeReference( str ):lower() .. '@]{r}' )
+end
+
+local function increaseIndex( index )
+	local first, last = index:match( '^(.-)(%d+)%.$' )
+	last = tonumber( last ) + 1
+	return first .. last .. '.'
+end
+
+local function increaseIncrement( index )
+	return index .. '0.'
+end
+
+local function decreaseIncrement( index )
+	return index:match( '^(.*%.)%d+%.$' )
+end
+
+local function section() return ('='):rep( lineLength ) end
+local function subSection() return ('-'):rep( lineLength ) end
+
+print( section() )
+print( reference( 'CONTENTS' ) .. '\n' )
+
+local referenceLength = 32
+local preLength = lineLength - referenceLength
+local index = '0.'
+local lines = {}
+
+local function printAspect( aspect, ref )
+	moduleName = moduleName
+	index = increaseIndex( index )
+	local name = aspectName
+
+	if #ref > referenceLength - 3 then ref = ref:sub( 1, referenceLength - 3 ) .. '-' end
+	ref = '|' .. ref .. '|'
+
+	aspect = tab( select( 2, index:gsub( '%.', '' ) ) ) .. index .. ' ' .. aspect
+	if #aspect > preLength - 3 then aspect = aspect:sub( 1, preLength - 3 ) .. '-' end
+	aspect = aspect .. ' ' .. ('.'):rep( preLength - #aspect - 2 ) .. ' '
+
+	return aspect .. ref
+end
+
+local function tableConcat( tab, index, sep )
+	local ret = {}
+	for _, v in ipairs( tab ) do
+		table.insert( ret, v[index] )
+	end
+	return table.concat( ret, sep )
+end
+
+local function getFunctionName( moduleName, name )
+	local needsLove = moduleName ~= 'love' and 'love.' or ''
+	local isCallback = moduleName == 'callbacks'
+	return isCallback and 'love.' .. name or needsLove .. moduleName .. '.' .. name
+end
+
+local function printFunctionTable( func, t, indent )
+	indent = indent or tab()
+	local str = formattedPrint( indent .. t.name .. '@[' .. makeReference( func .. '-' .. t.name ) .. '@]{r}' ) .. '\n\n'
+	indent = indent .. tab()
+	for _, v in ipairs( t.table ) do
+		str = str .. formattedPrint( indent .. v.name .. '@[' .. makeReference( func .. '-' .. t.name .. '-' .. v.name ) .. '@]{r}' ) 
+			.. '\n\n' .. formattedPrint( indent .. tab() .. '@[@s@]{t}' .. v.description ) .. '\n\n'
+
+		if v.table then
+			str = str .. '\n\n' .. printFunctionTable( func .. '-' .. t.name, v, indent .. tab() )
+		end
+	end
+	return str
+end
+
+local function printFunctionVariants( index, func, name )
+	local synopsis = ( func.returns and tableConcat( func.returns, 'name', ', ' ) .. ' = ' or '' ) 
+		.. name 
+		..  '(' .. ( func.arguments and ' ' .. tableConcat( func.arguments, 'name', ', ' ) .. ' ' or '' ) .. ')'
+
+	local variant = formattedPrint( tab() .. index .. ': @[@s@]{t}' .. ( func.description or 'See function description.' ) .. '\n\n' .. synopsis ) .. '\n\n'
+	if func.arguments then
+		variant = variant .. tab( 2 ) .. '- Arguments:\n'
+		for _, arg in ipairs( func.arguments ) do
+			variant = variant .. formattedPrint( tab( 3 ) .. '- ' .. arg.name .. ': @[@s@]{t}' .. makeType( arg.type ) .. ' ' .. arg.description ) .. '\n'
+			
+			if arg.table then
+				variant = variant .. '\n' .. printFunctionTable( name, arg )
 			end
-			table.insert( new, stack )
+		end
+	else
+		variant = variant .. tab( 2 ) .. '- Arguments: None\n'
+	end
+
+	if func.returns then
+		variant = variant .. tab( 2 ) .. '- Returns:\n'
+		for _, ret in ipairs( func.returns ) do
+			variant = variant .. formattedPrint( tab( 3 ) .. '- ' .. ret.name .. ': @[@s@]{t}' .. makeType( ret.type ) .. ' ' .. ret.description ) .. '\n'
+
+			if ret.table then
+				variant = variant .. '\n' .. printFunctionTable( name, ret )
+			end
+		end
+	else
+		variant = variant .. tab( 2 ) .. '- Returns: Nothing\n'
+	end
+
+	return variant
+end
+
+local function printFunction( index, func, name )
+	local str = subSection() 
+		.. '\n' 
+		.. formattedPrint( index .. ' ' .. func.name .. '@[' .. makeReference( name ) .. '@]{r}' ) .. '\n\n'
+		.. formattedPrint( '@[@]{t}' .. func.description )
+		.. '\n\nVariants:\n\n'
+
+	for i, variation in ipairs( func.variants ) do
+		str = str .. printFunctionVariants( i, variation, name ) .. '\n'
+	end
+	return str:match( '^(.*)\n$' )
+end
+
+local function listElements( t, element, index, reference )
+	local str = ''
+	if t[element] then
+		for _, v in ipairs( t[element] ) do
+			str = str .. '\n' .. formattedPrint( tab() .. '- ' .. index( v ) .. '@[' .. reference( v ) .. '@]{r}' )
+		end
+	else
+		str = ' None'
+	end
+	return str .. '\n\n'
+end
+
+-- api.modules = { api.modules[3] }
+local postLines = {}
+local types, enums, typePost, enumPost
+for _, module in ipairs( api.modules ) do
+	print( printAspect( module.name, 'love-' .. module.name ) )
+
+	table.insert( lines, section() )
+	table.insert( lines, formattedPrint( index .. ' ' .. module.name .. '@[@]{tr}*love-' .. module.name .. '*\n' ) )
+	table.insert( lines, formattedPrint( '@[@]{t}' .. module.description .. '\n' ) )
+
+	index = increaseIncrement( index )
+	postLines = {}
+	for _, func in ipairs( module.functions or {} ) do
+		local name = getFunctionName( module.name, func.name )
+		print( printAspect( func.name, 'love-' .. name ) )
+
+		table.insert( postLines, printFunction( index, func, name ) )
+	end
+
+	if module.types then
+		print( printAspect( 'types', 'love-' .. module.name .. '-types' ) )
+		types = '- Types:\n'
+		typePost = ''
+
+		table.insert( postLines, subSection() )
+		table.insert( postLines, formattedPrint( index .. ' types@[' .. makeReference( module.name .. '-types' ) .. '@]{r}' ) .. '\n\nThe types of ' .. module.name .. ':\n' )
+		index = increaseIncrement( index )
+
+		for _, type in ipairs( module.types ) do
+			print( printAspect( type.name, 'love-' .. type.name ) )
+
+			typePost = typePost .. subSection() .. '\n' 
+				.. formattedPrint( index .. ' ' .. type.name .. '@[' .. makeReference( type.name ) .. '@]{r}' ) .. '\n\n'
+				.. formattedPrint( '@[@]{t}' .. type.description ) 
+				.. '\n\nConstructors:' .. listElements( type, 'constructors', 
+					function( v ) return v end,
+					function( v ) return makeKeyword( 'love-' .. getFunctionName( module.name, v ) ) end
+				) .. 'Supertypes:' .. listElements( type, 'supertypes',
+					function( v ) return v end,
+					function( v ) return '|love-' .. v .. '|' end
+				) .. 'Subtypes:' .. listElements( type, 'subtypes',
+					function( v ) return v end,
+					function( v ) return '|love-' .. v .. '|' end
+				) .. 'Functions: ' .. listElements( type, 'functions',
+					function( v ) return v.name end,
+					function( v ) return '|love-' .. type.name .. ':' .. v.name .. '|' end
+				)
+
+			types = types .. formattedPrint( tab() .. '- ' .. type.name .. '@[' .. makeKeyword( 'love-' .. type.name ) .. '@]{r}' ) .. '\n'
+			index = increaseIncrement( index )
+
+			for _, func in ipairs( type.functions or {} ) do
+				print( printAspect( func.name, 'love-' .. type.name .. ':' .. func.name ) )
+
+				typePost = typePost .. printFunction( index, func, type.name .. ':' .. func.name )
+			end
+			index = decreaseIncrement( index )
 		end
 
-		table.insert( tab, new )
+		table.insert( lines, types )
+		table.insert( postLines, types:match( '^[^\n]-\n(.*)$' ) )
+		table.insert( postLines, typePost )
+		index = decreaseIncrement( index )
+	else
+		table.insert( lines, '- Types: None\n' )
 	end
-	addContent( tab )
 
-	-- Callbacks
-	tab = { 'callbacks', docName .. 'callbacks', function() return 'All LOVE callbacks.' end, false }
-	createFunctions( tab, api.callbacks, docName .. docName:sub( 1, -2 ) .. '.' )
-	for i = #tab[5], 1, -1 do
-		tab[i + 5] = tab[5][i]
-		tab[5][i] = nil
+	if module.enums then
+		print( printAspect( 'enums', 'love-' .. module.name .. '-enums' ) )
+		enums = '- Enums:\n'
+		enumPost = ''
+
+		table.insert( postLines, subSection() )
+		table.insert( postLines, formattedPrint( index .. ' enums@[' .. makeReference( module.name .. '-enums' ) .. '@]{r}' ) .. '\n\nThe enums of ' .. module.name .. ':\n' )
+		index = increaseIncrement( index )
+
+		for _, enum in ipairs( module.enums ) do
+			print( printAspect( enum.name, 'love-' .. enum.name ) )
+			enums = enums .. formattedPrint( tab() .. '- ' .. enum.name .. '@[' .. makeKeyword( 'love-' .. enum.name ) .. '@]{r}' ) .. '\n'
+			enumPost = enumPost .. subSection() .. '\n' 
+				.. formattedPrint( index .. ' ' .. enum.name .. '@[' .. makeReference( enum.name ) .. '@]{r}' ) .. '\n\n'
+				.. formattedPrint( '@[@]{t}' .. enum.description ) .. '\n\n'
+
+			for _, const in ipairs( enum.constants ) do
+				enumPost = enumPost .. formattedPrint( const.name .. '@[' .. makeReference( enum.name .. '-' .. const.name ) .. '@]{r}' ) .. '\n\n'
+					.. formattedPrint( '@[' .. tab() .. '@]{t}' .. const.description ) .. '\n\n'
+					.. ( const.notes and formattedPrint( tab() .. 'NOTE: @[@s@]{t}' .. const.notes ) .. '\n\n' or '' )
+			end
+		end
+
+		table.insert( lines, enums )
+		table.insert( postLines, enums:match( '^[^\n]-\n(.*)$' ) )
+		table.insert( postLines, enumPost )
+		index = decreaseIncrement( index )
+	else
+		table.insert( lines, '- Enums: None\n' )
 	end
-	addContent( tab )
 
-	addContent{ 'about', docName .. 'about', function()
-		return wrap( ( [[For LOVE (http://love2d.org) version %s.
+	for i = 1, #postLines do table.insert( lines, postLines[i] ) end
+
+	index = decreaseIncrement( index )
+end
+
+print( printAspect( 'about', 'love-about' ) )
+table.insert( lines, section() )
+table.insert( lines, formattedPrint( index .. ' about@[|love-about|@]{r}' ) .. '\n' )
+table.insert( lines, formattedPrint( ( [[
+@[@]{t}For LOVE (http://love2d.org) version %s.
 
 Generated from
 
-####https://github.com/love2d-community/love-api
+    https://github.com/love2d-community/love-api
 
 using
 
-####https://github.com/davisdude/vim-love-docs
+    https://github.com/davisdude/vim-lovedocs
 
-Made by Davis Claiborne under the zlib license. See LICENSE.md for more info. ]] ):format( api.version ), '', '' )
-	end, true }
+Made by Davis Claiborne under the zlib license. See LICENSE.md for more info.
+]] ):format( api.version ) ) )
 
-	-- Prevent "love" from being wrapped at the end of sentences (see 1.1.1)
-
-	printBodies()
+print()
+for _, line in ipairs( lines ) do
+	print( line )
 end
 
 love.event.quit()
