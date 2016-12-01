@@ -21,12 +21,12 @@ Functions:
 - `love-love.window.setMode-flags`
 - `love-love.window.setMode-flags-fullscreen`
 
-Types:
-- `love-File` or `love-filesystem-File`
+Types and Sub-functions:
+- `love-File`
 - `love-File:isEOF`
 
 Enums:
-- `love-BufferMode` or `love-filesystem-BufferMode`
+- `love-BufferMode`
 - `love-BufferMode-constants`
 - `love-BufferMode-full`
 
@@ -47,7 +47,7 @@ In order to generate the files, navigate to the [src](src) directory to choose w
 - `love`: Mapped to the LÖVE executable.
 - `vim`: Mapped to `vim.exe` (or `gvim.exe`).
 
-The current version was generated from [latest commit](https://github.com/love2d-community/love-api/commit/8c640d693cc63151b15b177171ee4d0c9143d09a) from https://github.com/love2d-community/love-api.
+The current version was generated from [latest commit](https://github.com/love2d-community/love-api/commit/9f864c49818fc1d539184f922c9b6a6002ac55c1) from [love-api](https://github.com/love2d-community/love-api).
 
 Screenshots
 ---
