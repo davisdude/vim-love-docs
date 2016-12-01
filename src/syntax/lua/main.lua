@@ -63,7 +63,7 @@ local function limit( text, pre, post )
 end
 
 limit( '\\%(' .. funcstr:sub( 1, -7 ), 'syntax match lovefunction "\\<love\\.\\%(', '\\)\\>"' )
-limit( '\\%(' .. typestr:sub( 1, -7 ), 'syntax match lovetype "[\\:\\.]\\%(', '\\)\\_[^_a-zA-Z]"ms=s+1,me=e-1' )
+limit( '\\%(' .. typestr:sub( 1, -7 ), 'syntax match lovetype "[\\:\\.]\\%(', '\\)\\>"ms=s+1' )
 limit( '\\%(' .. callbackstr:sub( 1, -7 ), 'syntax match lovecallback "\\<love\\.\\%(', '\\)\\>"' )
 
 print( 'syntax region loveconfregion start="\\<love\\.conf\\>" end="\\<end\\>"me=e-3,he=e-3,re=e-3 skipwhite skipempty contains=ALL' )

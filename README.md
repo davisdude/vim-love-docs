@@ -41,7 +41,7 @@ The file included should work fine until the next update of LÖVE.
 Running
 ---
 
-In order to generate the files, navigate to the [src](src) directory to choose which form to generate and run the `.bat` or `.sh` file depending on the machine you're using. These assume you have the following:
+In order to generate the files, navigate to the [src](src) directory to choose either the .bat or .sh file to do everything, then go to the main directory and copy the output folders to their corresponding folders:
 
 - `git`: Mapped to Git client.
 - `love`: Mapped to the LÖVE executable.
