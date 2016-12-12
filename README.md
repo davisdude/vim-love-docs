@@ -9,8 +9,8 @@ Usage
 __Instalation:__
 
 - Pathogen: Put in `vimfiles/bundles`
-- Vundle: Should work (untested)
-- Other: Put the folders (other than [src](src)) into their corresponding directories in `vimfiles`.
+- Vundle: Clone the repo and run the follow the instructions below to generate the documentation (or download from [vim.org](http://www.vim.org/scripts/script.php?script_id=5298)). Then activate it using `Plugin 'file:///home/gmarik/path/to/plugin'`. See `:h vundle` for more.
+- No manager: Put the generated directories (all *but* [src](src)) into their corresponding directories.
 
 __Help files:__
 
@@ -34,20 +34,18 @@ For sub-sections, they are hyphenated, such as `love-audio-functions`, `love-aud
 
 __Plugin:__
 
-In your `vimrc` you can set the variable `g:lovedocs_colors` to any valid color (see `help highlight-args`). Defaults to `'guifg=#ff60e2 ctermfg=206'`.
-
-The file included should work fine until the next update of LÖVE.
+In your `vimrc` you can set the variable `g:lovedocs_colors` to any valid color (see `help highlight-args`). Defaults to `'guifg=#ff60e2 ctermfg=206'`. This is the color that any LÖVE functions are highlighted.
 
 Running
 ---
 
-In order to generate the files, navigate to the [src](src) directory to choose either the .bat or .sh file to do everything, then go to the main directory and copy the output folders to their corresponding folders:
+In order to generate the files, navigate to the [src](src) directory to choose either `gen.bat` (Windows) or `gen.sh` (Mac/Linux) to generate the syntax and help files. Navigate to the home directory to see the output. 
+
+For these files to work, the following must be mapped as indicated:
 
 - `git`: Mapped to Git client.
 - `love`: Mapped to the LÖVE executable.
 - `vim`: Mapped to `vim.exe` (or `gvim.exe`).
-
-The current version was generated from [latest commit](https://github.com/love2d-community/love-api/commit/9f864c49818fc1d539184f922c9b6a6002ac55c1) from [love-api](https://github.com/love2d-community/love-api).
 
 Screenshots
 ---
