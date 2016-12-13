@@ -9,7 +9,7 @@ Usage
 __Instalation:__
 
 - Pathogen: Put in `vimfiles/bundles`
-- Vundle: Clone the repo and run the follow the instructions below to generate the documentation (or download from [vim.org](http://www.vim.org/scripts/script.php?script_id=5298)). Then activate it using `Plugin 'file:///home/gmarik/path/to/plugin'`. See `:h vundle` for more.
+- Vundle: Clone the repo and follow the instructions below to generate the documentation (or download from [vim.org](http://www.vim.org/scripts/script.php?script_id=5298)). Then activate it using `Plugin 'file:///home/gmarik/path/to/plugin'`. See `:h vundle` for more.
 - No manager: Put the generated directories (all *but* [src](src)) into their corresponding directories.
 
 __Help files:__
