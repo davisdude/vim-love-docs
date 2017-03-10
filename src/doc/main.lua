@@ -1,7 +1,8 @@
 -- TODO:
--- Trim ref length for enums (see setTangentialAcceleration)
--- Consider wrapping function arguments/returns to longest arg instead of by arg
+-- Trim ref length for enums (see love-ParticleSystem:setTangentialAcceleration)
+-- 		(In table of contents and actual reference)
 -- Handle when synopsis is too long (see love.graphics.rectangle-2)
+-- 		(Should not just have parenthesis at end of line; needs >= 1 arg)
 
 local api = require 'love-api.love_api'
 local name = 'love'

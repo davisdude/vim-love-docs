@@ -1,3 +1,7 @@
+-- Generate syntax matching for love.conf
+-- TODO:
+-- 		- 	Allow support for variant love.conf = function()
+--			(may not work because lua function overrides?)
 package.path = package.path .. ';../love-api/love_api.lua;love-api/?.lua'
 local api = require 'love-api/love_api'
 

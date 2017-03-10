@@ -1,3 +1,4 @@
+-- Generate syntax highlighting for LOVE functions
 package.path = package.path .. ';../love-api/love_api.lua;love-api/?.lua'
 local api = require 'love-api/love_api'
 
@@ -47,9 +48,14 @@ end
 
 extractData( api )
 
+-- If syntax matches are too long, they are ignored
+-- If each function gets individual syntax matches, it runs too slowly
+-- Break each group to minimize the number of syntax matches
+-- (2500 is an arbitraty limit that seems to work)
+local textLimit = 2500
 local function limit( text, pre, post )
 	while #text > 0 do
-		local start, stop = text:sub( 1, 2500 ):find( '.*\\%)\\|' )
+		local start, stop = text:sub( 1, textLimit ):find( '.*\\%)\\|' )
 		local current
 		if start then
 			current = text:sub( start, stop - 2 )

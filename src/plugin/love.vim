@@ -5,6 +5,7 @@ if exists( 'g:lovedocs_loaded' )
 endif
 let g:lovedocs_loaded = 1
 
+" Allow custom colors for LOVE functions
 if !exists( 'g:lovedocs_colors' )
 	let g:lovedocs_colors = 'guifg=#ff60e2 ctermfg=206'
 endif
