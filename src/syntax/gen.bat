@@ -1,6 +1,6 @@
 @echo off
-:: Need to run as admin
-cd %~dp0
+:: Push directory, so can be run by another file
+pushd %~dp0
 
 rd /q /s love-api
 git clone https://github.com/love2d-community/love-api
@@ -10,3 +10,5 @@ love lua > ..\..\after\syntax\lua.vim
 love love-conf > ..\..\after\syntax\love-conf.vim
 
 rd /q /s love-api
+
+popd
