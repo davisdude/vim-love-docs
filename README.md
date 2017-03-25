@@ -47,6 +47,8 @@ For these files to work, the following must be mapped as indicated:
 - `love`: Mapped to the LÖVE executable.
 - `vim`: Mapped to `vim.exe` (or `gvim.exe`).
 
+Alternatively, the complete files can be downloaded from [vim.org](http://www.vim.org/scripts/script.php?script_id=5298).
+
 Screenshots
 ---
 
