@@ -1,6 +1,5 @@
 -- Generate syntax highlighting for LOVE functions
-package.path = package.path .. ';../love-api/love_api.lua;love-api/?.lua'
-local api = require 'love-api/love_api'
+local api = require 'love-api.love_api'
 
 local funcstr = ''
 local typestr = ''
