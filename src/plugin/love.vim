@@ -1,3 +1,9 @@
+" Vim plugin for running LOVE
+" https://github.com/davisdude/vim-love-docs
+" Last Change:	2017 March 29
+" Maintainer:	Davis Claiborne <davisclaib@gmail.com>
+" License:		This file is placed under public domain.
+
 let s:save_cpo = &cpo
 
 if exists( 'g:lovedocs_loaded' )
