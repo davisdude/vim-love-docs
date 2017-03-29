@@ -18,7 +18,7 @@ table.insert( api.modules, 2, api.callbacks )
 
 -- Header
 print[[
-*love.txt*                          Documentation for the LOVE game framework.
+*love.txt* *love2d*                 Documentation for the LOVE game framework.
 
                        _       o__o __      __ ______ ~
                       | |     / __ \\ \    / //  ____\~

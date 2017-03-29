@@ -67,11 +67,12 @@ local function limit( text, pre, post )
 	end
 end
 
-limit( '\\%(' .. funcstr:sub( 1, -7 ), 'syntax match lovefunction "\\<love\\.\\%(', '\\)\\>" containedin=ALLBUT,luaString' )
-limit( '\\%(' .. typestr:sub( 1, -7 ), 'syntax match lovetype "[\\:\\.]\\%(', '\\)\\>"ms=s+1 containedin=ALLBUT,luaString' )
-limit( '\\%(' .. callbackstr:sub( 1, -7 ), 'syntax match lovecallback "\\<love\\.\\%(', '\\)\\>" containedin=ALLBUT,luaString' )
+local containedin = 'containedin=ALLBUT,luaString,luaComment'
+limit( '\\%(' .. funcstr:sub( 1, -7 ), 'syntax match lovefunction "\\<love\\.\\%(', '\\)\\>" ' .. containedin )
+limit( '\\%(' .. typestr:sub( 1, -7 ), 'syntax match lovetype "[\\:\\.]\\%(', '\\)\\>"ms=s+1 ' .. containedin )
+limit( '\\%(' .. callbackstr:sub( 1, -7 ), 'syntax match lovecallback "\\<love\\.\\%(', '\\)\\>" ' .. containedin )
 
-print( 'syntax region loveconfregion start="\\<love\\.conf\\>" end="\\<end\\>"me=e-3,he=e-3,re=e-3 skipwhite skipempty containedin=ALLBUT,luaString contains=ALL' )
+print( 'syntax region loveconfregion start="\\<love\\.conf\\>" end="\\<end\\>"me=e-3,he=e-3,re=e-3 skipwhite skipempty ' .. containedin .. ' contains=ALL' )
 
 print( 'execute( "highlight lovefunction " . g:lovedocs_colors )' )
 print( 'execute( "highlight lovetype " . g:lovedocs_colors )' )
