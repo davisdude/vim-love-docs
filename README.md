@@ -1,58 +1,87 @@
-Vim LOVE Docs
-===
+# Vim LOVE Docs
 
 Vim syntax highlighting and helpfile for [LÖVE](http://love2d.org).
 
-Usage
----
+## Building the Plugin
 
-__Instalation:__
+The source can be installed from [vim.org](http://www.vim.org/scripts/script.php?script_id=5298), or can be built, from the source. If you wish to build it from source, follow the steps below:
 
-- Pathogen: Put in `vimfiles/bundles`
-- Vundle: Clone the repo and follow the instructions below to generate the documentation (or download from [vim.org](http://www.vim.org/scripts/script.php?script_id=5298)). Then activate it using `Plugin 'file:///home/gmarik/path/to/plugin'`. See `:h vundle` for more.
-- No manager: Put the generated directories (all *but* [src](src)) into their corresponding directories.
+1. Ensure that the following commands will run from the command line:
 
-__Help files:__
+- `git`
+- `love`
+- `vim`
 
-The help files follow the pattern `love-NAME`. For instance:
+1. Next, run [`gen.bat`](src/gen.bat) (Windows) or [`gen.sh`](src/gen.sh) (Mac/Linux). This should generate the plugin code.
 
-Functions:
-- `love-love.graphics.newImage`
-- `love-love.window.setMode-flags`
-- `love-love.window.setMode-flags-fullscreen`
+## Installing the Plugin
 
-Types and Sub-functions:
-- `love-File`
-- `love-File:isEOF`
+Installation varies depending on the plugin manager, but every method requires you to have the plugin built.
 
-Enums:
-- `love-BufferMode`
-- `love-BufferMode-constants`
-- `love-BufferMode-full`
+### Pathogen:
 
-For sub-sections, they are hyphenated, such as `love-audio-functions`, `love-audio`, `love-audio-types`.
+Move the directory containing the generated plugin code to `vimfiles\bundle` (Windows) or `~/.vim/bundle` (Mac/Linux).
 
-__Plugin:__
+### Vundle:
 
-In your `vimrc` you can set the variable `g:lovedocs_colors` to any valid color (see `help highlight-args`). Defaults to `'guifg=#ff60e2 ctermfg=206'`. This is the color that any LÖVE functions are highlighted.
+There are two ways you can install vim-love-docs with Vundle: either [fork the repo](#forking) or [install it on your system](#install-it-on-your-system).
 
-Running
----
+#### Forking
 
-In order to generate the files, navigate to the [src](src) directory to choose either `gen.bat` (Windows) or `gen.sh` (Mac/Linux) to generate the syntax and help files. Navigate to the home directory to see the output. 
+To fork the repo, follow the instructions [here](https://help.github.com/articles/fork-a-repo/). After you've created a local clone of your fork, [build the plugin](#building-the-plugin) then commit those changes to *your* fork.
 
-For these files to work, the following must be mapped as indicated:
+Then, you may use the plugin just as you use any other plugin with Vundle: `Plugin 'YOURUSERNAME/vim-love-docs'`
 
-- `git`: Mapped to Git client.
-- `love`: Mapped to the LÖVE executable.
-- `vim`: Mapped to `vim.exe` (or `gvim.exe`).
+#### Install it on Your System
 
-Alternatively, the complete files can be downloaded from [vim.org](http://www.vim.org/scripts/script.php?script_id=5298).
+If you don't want to fork the repository, you can still use Vundle by calling `Plugin 'file:///path/to/plugin'`. See `:help vundle` for more.
 
-Screenshots
----
+### No manager:
+
+Move the plugin code to their corresponding directory in `vimfiles\` (Windows) or `~/.vim/` (Mac/Linux). See [here](https://vi.stackexchange.com/questions/613) for methods of how to install a plugin without a plugin manager.
+
+## Usage
+
+This plugin is comprised of two parts: [syntax](#syntax) and the [help file](#help-file).
+
+### Syntax
+
+The syntax portion of the plugin highlights LÖVE functions, such as `love.udpate`, `love.graphics.rectangle`, and more. It also highlights `conf.lua` flags, such as `t.console`, `t.window.width`, etc.
+
+The style of the syntax highlighting can be changed by setting `g:lovedocs_color` in your `.vimrc`. You can set the string to any valid highlighting specification (see `:help highlight-args`). By default, it is set to `g:lovedocs_color = 'guifg=#ff60e2 ctermfg=206'`.
+
+### Help File
+
+The plugin also includes help files for LÖVE, called `love.txt`. This file includes help for all of LÖVE's functions, as well as its types, enums, etc. It is generated from [love-api](https://github.com/love2d-community/love-api), so any discrepancies should be reported there.
+
+The help file can be opened with `:help love.txt`, or by specifying a function, enum, or other identifier. The form for searching differs based on what is being searched, but each follows the same basic format: `:help love-SEARCH`.
+
+#### Functions
+
+Functions are found first by their full name. For instance, if you wanted to see the parameters for `love.window.setMode`, you could search `:help love-love.window.setMode`.
+
+Each function features a brief description of what the function does, as well as the different forms of the function (called `Variants`) available. Each variant includes a function's return values and types (if any), as well as its parameters and their types (if any).
+
+For searching for a specific parameter of a function, search using the full name, followed by a dash, then the parameter name. For instance, if you wanted to read about the `flags` parameter to `love.window.setMode`, you would search `:help love-love.window.setMode-flags`.
+
+Some parameters have named elements as well. You can read about the `fullscreen` attribute for the `flag` parameter for `love.window.setMode` by searching `love-love.window.setMode-flags-fullscreen`.
+
+#### Types
+
+Types are found by their name. For instance, if I wanted to look up the `File` type, I would do so with `:help love-File`. The documentation includes a brief description of what the type handles, as well as a list of constructors, supertypes, subtypes, and functions.
+
+Type functions can also be found with the function name, using self-invocation syntax. For instance, if you wanted to read about the `File` function `isEOF`, you would search `:help love-File:isEOF`.
+
+#### Enums
+
+Searching for enums is similar to searching for types: just use the name. For instance, if you wanted to read about the `BufferMode` enum, you would search `:help love-BufferMode`.
+
+Constants are separated by dashes. If you want to read about `BufferMode`'s constant `full`, you could search `:help love-BufferMode-full`.
+
+## Screenshots
 
 Plugins:
+
 - [gruvbox](https://github.com/morhetz/gruvbox)
 - [Rainbow](https://github.com/luochen1990/rainbow)
 - [vim-love-docs](https://github.com/davisdude/vim-love-docs)
