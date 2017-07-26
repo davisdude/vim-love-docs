@@ -1,14 +1,27 @@
-#!/bin/sh
-cd "$(dirname "$0")"
-set -e
+#!/usr/bin/env sh
 
-cp -rf ./love-api/ ./love-conf/love-api/
-cp -rf ./love-api/ ./lua/love-api/
+# Set the current directory to the location of this script
+pushd "$(dirname "$0")"
 
-mkdir -p ../../after/syntax/
-love lua > ../../after/syntax/lua.vim
-love love-conf > ../../after/syntax/love-conf.vim
+# Quit on errors and unset vars
+set -o errexit
+set -o nounset
 
+# Copy love-api to child directories
+cp -rf love-api love-conf
+cp -rf love-api lua
+
+# Update after/syntax
+rm -rf ../../after/syntax
+mkdir -p ../../after/syntax
+
+# Create syntax files
+${love:-love} lua > ../../after/syntax/lua.vim
+${love:-love} love-conf > ../../after/syntax/love-conf.vim
+
+# Cleanup
 rm -rf love-api
 rm -rf love-conf/love-api
 rm -rf lua/love-api
+
+popd

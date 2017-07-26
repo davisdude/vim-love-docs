@@ -1,8 +1,23 @@
-#!/bin/sh
-cd "$(dirname "$0")"
-set -e
-mkdir -p ../../doc/
-love .> ../../doc/love.txt
-vim -c "helptags ../../doc/" -c "qa!"
+#!/usr/bin/env sh
+
+# Set the current directory to the location of this script
+pushd "$(dirname "$0")"
+
+# Quit on errors and unset vars
+set -o errexit
+set -o nounset
+
+# Update the doc directory
+rm -rf ../../doc
+mkdir ../../doc
+
+# Generate documentation
+${love:-love} . > ../../doc/love.txt
+
+# Generate helptags
+${vim:-vim} -c "helptags ../../doc/" -c "qa!"
+
+# Cleanup
 rm -rf love-api
 
+popd
