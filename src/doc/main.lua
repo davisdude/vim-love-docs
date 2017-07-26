@@ -3,10 +3,11 @@
 -- 		(In table of contents and actual reference)
 -- Handle when synopsis is too long (see love.graphics.rectangle-2)
 -- 		(Should not just have parenthesis at end of line; needs >= 1 arg)
+-- Add more information and tags to enums and types
 
 local api = require 'love-api.love_api'
 local name = 'love'
-local lineLength = 78
+local lineLength = 79
 api.name = 'love'
 api.description = 'General purpose functions'
 table.insert( api.modules, 1, api )
