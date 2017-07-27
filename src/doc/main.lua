@@ -428,7 +428,7 @@ Generated from
 
 using
 
-    https://github.com/davisdude/vim-lovedocs
+    https://github.com/davisdude/vim-love-docs
 
 Made by Davis Claiborne under the MIT license. See LICENSE.md for more info.
 ]] ):format( api.version ) ) )
