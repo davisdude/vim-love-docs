@@ -1,4 +1,5 @@
 -- Generate syntax highlighting for LOVE functions
+
 local api = require 'love-api.love_api'
 
 local funcstr = ''
@@ -78,5 +79,3 @@ print( 'execute( "highlight lovefunction " . g:lovedocs_colors )' )
 print( 'execute( "highlight lovetype " . g:lovedocs_colors )' )
 print( 'execute( "highlight lovecallback " . g:lovedocs_colors )' )
 print( 'execute( "highlight loveconf " . g:lovedocs_colors )' )
-
-love.event.quit()

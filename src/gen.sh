@@ -13,7 +13,7 @@ while read var; do
 done < env.txt
 
 # Assign fallbacks in case the values are invalid
-export love=${love:-love}
+export lua=${lua:-lua}
 export git=${git:-git}
 export vim=${vim:-vim}
 

@@ -16,8 +16,8 @@ rm -rf ../../after/syntax
 mkdir -p ../../after/syntax
 
 # Create syntax files
-${love:-love} lua > ../../after/syntax/lua.vim
-${love:-love} love-conf > ../../after/syntax/love-conf.vim
+${lua:-lua} lua/main.lua > ../../after/syntax/lua.vim
+${lua:-lua} love-conf/main.lua > ../../after/syntax/love-conf.vim
 
 # Cleanup
 rm -rf love-api

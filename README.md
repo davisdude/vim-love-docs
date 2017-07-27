@@ -9,10 +9,10 @@ The source can be installed from [vim.org](http://www.vim.org/scripts/script.php
 1. Ensure that the following commands will run from the command line:
 
 - `git`
-- `love`
+- `lua`
 - `vim`
 
-You may also edit [`src/env.txt`](src/env.txt) to set custom values. For instance, if the location of your LÖVE executable is `C:\Program Files\LOVE\love.exe`, you would modify the line that contains `love="love"` to be `love="C:\Program Files\LOVE\love.exe"`.
+You may also edit [`src/env.txt`](src/env.txt) to set custom values. For instance, if want to use Lua 5.2 instead of 5.3, you may change the line with `lua="lua"` to be `lua="lua5.2"` (assuming this command brings up the Lua 5.2 interpreter on your system).
 
 1. Next, run [`gen.bat`](src/gen.bat) (Windows) or [`gen.sh`](src/gen.sh) (Mac/Linux). This should generate the plugin code.
 

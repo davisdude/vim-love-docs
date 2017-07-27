@@ -12,7 +12,7 @@ rm -rf ../../doc
 mkdir ../../doc
 
 # Generate documentation
-${love:-love} . > ../../doc/love.txt
+${lua:-lua} main.lua  > ../../doc/love.txt
 
 # Generate helptags
 ${vim:-vim} -c "helptags ../../doc/" -c "qa!"

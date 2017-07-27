@@ -8,10 +8,10 @@ rd /q /s ..\..\doc
 mkdir ..\..\doc
 
 REM Generate documentation
-love . > ..\..\doc\love.txt
+%lua% main.lua > ..\..\doc\love.txt
 
 REM Generate helptags
-vim -c "helptags ..\..\doc\" -c "qa!"
+%vim% -c "helptags ..\..\doc\" -c "qa!"
 
 REM Cleanup
 rd /q /s love-api

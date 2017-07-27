@@ -12,8 +12,8 @@ for /F "tokens=*" %%A in ('type "env.txt"') do (
 )
 
 REM Asisgn fallbacks in case the values are invalid
-if [!love!]==[] (
-	set "love=love"
+if [!lua!]==[] (
+	set "lua=lua"
 )
 if [!git!]==[] (
 	set "git=git"

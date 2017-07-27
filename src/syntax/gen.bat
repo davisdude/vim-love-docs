@@ -15,8 +15,8 @@ rd /q /s ..\..\after\syntax
 mkdir ..\..\after\syntax
 
 REM Create syntax files
-love lua > ..\..\after\syntax\lua.vim
-love love-conf > ..\..\after\syntax\love-conf.vim
+!lua! lua\main.lua > ..\..\after\syntax\lua.vim
+!lua! love-conf\main.lua > ..\..\after\syntax\love-conf.vim
 
 REM Cleanup
 rd /q /s love-api

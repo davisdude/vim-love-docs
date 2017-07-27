@@ -437,5 +437,3 @@ print()
 for _, line in ipairs( lines ) do
 	print( line )
 end
-
-love.event.quit()

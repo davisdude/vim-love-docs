@@ -2,6 +2,7 @@
 -- TODO:
 -- 		- 	Allow support for variant love.conf = function()
 --			(may not work because lua function overrides?)
+
 local api = require 'love-api.love_api'
 
 local originalconfstr = 'syntax match loveconf "'
@@ -42,4 +43,3 @@ local function extractData( tab, index )
 end
 
 extractData( api )
-love.event.quit()
