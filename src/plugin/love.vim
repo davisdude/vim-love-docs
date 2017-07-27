@@ -1,8 +1,8 @@
-" Vim plugin for running LOVE
+" Vim plugin for LÖVE syntax highlighting and help file
 " https://github.com/davisdude/vim-love-docs
-" Last Change:	2017 March 29
-" Maintainer:	Davis Claiborne <davisclaib@gmail.com>
-" License:		This file is placed under public domain.
+" Last Change: 2017 July 2017
+" Maintainer:  Davis Claiborne <davisclaib@gmail.com>
+" License:     MIT
 
 let s:save_cpo = &cpo
 

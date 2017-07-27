@@ -430,7 +430,7 @@ using
 
     https://github.com/davisdude/vim-lovedocs
 
-Made by Davis Claiborne under the zlib license. See LICENSE.md for more info.
+Made by Davis Claiborne under the MIT license. See LICENSE.md for more info.
 ]] ):format( api.version ) ) )
 
 print()
