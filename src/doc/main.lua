@@ -418,7 +418,7 @@ end
 
 print( printAspect( 'about', 'love-about' ) )
 table.insert( lines, section() )
-table.insert( lines, formattedPrint( index .. ' about@[|love-about|@]{r}' ) .. '\n' )
+table.insert( lines, formattedPrint( index .. ' about@[*love-about*@]{r}' ) .. '\n' )
 table.insert( lines, formattedPrint( ( [[
 @[@]{t}For LOVE (http://love2d.org) version %s.
 
