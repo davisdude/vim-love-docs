@@ -109,6 +109,32 @@ local function getFormattedSynopses( func, fullName, indentLevel, indentString )
 	return list
 end
 
+-- Specifies how an attribute with types should be formatted
+local function formatTypedAttribute( value, indentLevel, indentString )
+	local indent
+	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
+
+	-- Indents the value name and type
+	local typedAttribute = align.left(
+		formatSpecial( value.name ) .. ': '
+		..  formatAsType( value.type ),
+		indent
+	) .. '\n\n'
+	-- Indents the value description
+	.. align.left( value.description, indentString:rep( indentLevel + 1 ) )
+
+	-- Outputs a table's values
+	if value.table then
+		typedAttribute = typedAttribute .. '\n\n' .. concat( value.table, '\n\n',
+		function( _, nestedValue )
+			return formatTypedAttribute( nestedValue, indentLevel + 1, indentString )
+		end )
+
+	end
+
+	return typedAttribute
+end
+
 -- Formats the arguments/returns of a variant
 local function getTypedAttributes( variant, attribute, indentLevel, indentString )
 	local indent
@@ -123,13 +149,7 @@ local function getTypedAttributes( variant, attribute, indentLevel, indentString
 		typedAttributes = typedAttributes
 		-- Separates all of the attributes
 		.. concat( variant[attribute], '\n\n', function( _, value )
-			-- Indent the value name and type
-			return align.left(
-				formatSpecial( value.name ) .. ': ' ..  formatAsType( value.type ),
-				indentString:rep( indentLevel + 1 )
-			) .. '\n\n'
-			-- Indent the value description
-			.. align.left( value.description, indentString:rep( indentLevel + 2 ) )
+			return formatTypedAttribute( value, indentLevel + 1, indentString )
 		end ) .. '\n'
 	end
 
