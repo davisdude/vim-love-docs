@@ -28,7 +28,7 @@ local function formatAsReference( str )
 	return ('|%s|'):format( str )
 end
 
--- Format arguments and return values
+-- Formats arguments and return values
 -- Don't actually know if there's a specific name for this type of formatting...
 local function formatSpecial( str )
 	return ('`%s`'):format( str )
@@ -78,7 +78,7 @@ local function getSynopsis( variant, fullName )
 	return synopsis
 end
 
--- Assemble a list of a function's synopses
+-- Assembles a list of a function's synopses
 local function getSynopses( func, fullName )
 	local synopses = {}
 
@@ -89,7 +89,7 @@ local function getSynopses( func, fullName )
 	return synopses
 end
 
--- List all of a function's synopses
+-- Lists all of a function's synopses
 local function getFormattedSynopses( func, fullName, indentLevel, indentString )
 	local indent
 	indentString, indent = select( 2, getIndentation( indentLevel, indentString ) )
@@ -116,17 +116,21 @@ local function getTypedAttributes( variant, attribute, indentLevel, indentString
 
 	local typedAttributes = indent .. attribute .. ':\n\n'
 
-	if #( variant[attribute] or {} ) > 0 then
+	-- Handles formatting for functions that don't have any arguments/returns
+	if #( variant[attribute] or {} ) == 0 then
+		typedAttributes = typedAttributes .. indentString:rep( indentLevel + 1 ) .. 'None\n'
+	else
 		typedAttributes = typedAttributes
+		-- Separates all of the attributes
 		.. concat( variant[attribute], '\n\n', function( _, value )
+			-- Indent the value name and type
 			return align.left(
 				formatSpecial( value.name ) .. ': ' ..  formatAsType( value.type ),
 				indentString:rep( indentLevel + 1 )
 			) .. '\n\n'
+			-- Indent the value description
 			.. align.left( value.description, indentString:rep( indentLevel + 2 ) )
 		end ) .. '\n'
-	else
-		typedAttributes = typedAttributes .. indentString:rep( indentLevel + 1 ) .. 'None'
 	end
 
 	return typedAttributes
@@ -137,28 +141,27 @@ local function getFormattedVariant( variant, indentLevel, indentString )
 	local indent
 	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
 
-	local formattedVariant = indent
-	.. ( variant.description or 'See function description' ) .. '\n\n'
+	-- Variant description
+	return indent .. ( variant.description or 'See function description' ) .. '\n\n'
+	-- Variant return values and arguments
 	.. getTypedAttributes( variant, 'returns', indentLevel, indentString ) .. '\n'
 	.. getTypedAttributes( variant, 'arguments', indentLevel, indentString )
-
-	return formattedVariant
 end
 
 -- Formats the contents of all of a function's variants
 local function getFormattedVariants( func, fullName, indentLevel, indentString )
 	indentLevel, indentString = getIndentation( indentLevel, indentString )
 
-	-- Indent level of 0 because it is aligned later as a whole
 	local formattedSynopses = getFormattedSynopses(
 		func, fullName, indentLevel, indentString
 	)
 
 	local formattedVariants = {}
-
 	for index, variant in ipairs( func.variants ) do
 		table.insert( formattedVariants,
+			-- Includes synopsis
 			formattedSynopses[index] .. '\n\n'
+			-- ... and the rest of the variant information
 			.. getFormattedVariant( variant, indentLevel + 1, indentString )
 		)
 	end
@@ -189,10 +192,9 @@ local function getFunctionOverview( func, parentName, indentLevel, indentString 
 		func, fullName, indentLevel + 1, indentString
 	), '\n' ) .. '\n\n'
 
-	-- Include variants
+	-- Variants
 	.. 'Variants:\n\n'
-	.. getFormattedVariants( func, fullName, indentLevel + 1, indentString )
-	.. '\n'
+	.. getFormattedVariants( func, fullName, indentLevel + 1, indentString ) .. '\n'
 
 	return overview
 end
@@ -200,6 +202,8 @@ end
 
 print( getFunctionOverview( api.functions[1], 'love.' ) )
 print( getFunctionOverview( api.modules[1].functions[8], 'love.audio.' ) )
+print( getFunctionOverview( api.types[1].functions[1], 'Data:' ) )
+print( getFunctionOverview( api.callbacks[1], 'love.' ) )
 
 -- Print modeline (spelling/capitalization errors are ugly; use correct file type)
 -- (Concat to prevent vim from interpreting THIS as a modeline and messing up synxtax)
