@@ -21,18 +21,6 @@ local function getIndentation( indentLevel, indentString, defaultIndentLevel )
 
 	return indentLevel, indentString, indent
 end
-
-local function trimFormattedText( str, width, formatFunc )
-	local formattedStr = formatFunc( str )
-
-	-- Allows for the formatting func perform differently based on #str
-	while #formattedStr > width do
-		str = str:sub( 1, -2 )
-		formattedStr = formatFunc( str .. '-' )
-	end
-
-	return formattedStr
-end
 -- }}}
 
 -- Formatting functions {{{
@@ -73,6 +61,47 @@ local function concatAttribute( tab, sep, attr, formatFunc )
 	return concat( tab, sep, function( _, v )
 		return formatFunc( v[attr] )
 	end )
+end
+
+local function trimFormattedText( str, width, formatFunc )
+	local formattedStr = formatFunc( str )
+
+	-- Allows for the formatting func perform differently based on #str
+	while #formattedStr > width do
+		str = str:sub( 1, -2 )
+		formattedStr = formatFunc( str .. '-' )
+	end
+
+	return formattedStr
+end
+
+local function printTableOfContents( tab, namePrefix, tagPrefix, indentLevel, indentString )
+	local indent = select( 3, getIndentation( indentLevel, indentString ) )
+
+	if #( tab or {} ) == 0 then
+		return indent .. 'None'
+	else
+		return concat( tab, '\n', function( _, attr )
+			-- Trims name
+			local name = align.left( trimFormattedText(
+				namePrefix .. attr.name,
+				TOC_NAME_WIDTH_LIMIT - #indent,
+				formatAsReference
+			), indent )
+
+			-- Trims tag
+			local trimmedTag = trimFormattedText(
+				tagPrefix .. attr.name,
+				TOC_REF_WIDTH_LIMIT,
+				formatAsTag
+			)
+
+			-- Left-aligns tag
+			local spacing = (' '):rep( TOC_NAME_WIDTH_LIMIT - #name + 2 )
+
+			return name .. spacing .. trimmedTag
+		end )
+	end
 end
 -- }}}
 
@@ -235,33 +264,8 @@ local function getFunctionOverview( func, parentName, indentLevel, indentString 
 end
 
 -- Lists the functions of a module (or type) in a properly formatted list
-local function listModulesFunctions( functions, parentName, funcSeparator, indentLevel, indentString )
-	local indent = select( 3, getIndentation( indentLevel, indentString ) )
-
-	if #( functions or {} ) == 0 then
-		return indent .. 'None'
-	else
-		return concat( functions, '\n', function( _, func )
-			local name = parentName .. funcSeparator .. func.name
-
-			-- Trims name to fit within specified bounds
-			local output = align.left( trimFormattedText(
-				name,
-				TOC_NAME_WIDTH_LIMIT - #indent,
-				formatAsReference
-			), indent )
-
-			-- Trims tag to fit within specified bounds
-			local trimmedTag = trimFormattedText(
-				TAG_PREFIX .. name,
-				TOC_REF_WIDTH_LIMIT,
-				formatAsTag
-			)
-			local spacing = (' '):rep( TOC_NAME_WIDTH_LIMIT - #output )
-
-			return output .. spacing .. trimmedTag
-		end )
-	end
+local function listModulesFunctions( functions, functionPrefix, indentLevel, indentString )
+	return printTableOfContents( functions, functionPrefix, TAG_PREFIX .. functionPrefix, indentLevel, indentString )
 end
 
 -- Shows all of the functions of a module, then gives the formatted functions
@@ -281,8 +285,7 @@ local function getFormattedModuleFunctions( module, attribute, parentName, funcS
 	-- List of functions
 	.. listModulesFunctions(
 		module[attribute],
-		parentName,
-		funcSeparator,
+		parentName .. funcSeparator,
 		indentLevel + 1,
 		indentString
 	) .. '\n'
