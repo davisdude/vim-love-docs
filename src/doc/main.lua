@@ -36,6 +36,10 @@ end
 -- }}}
 
 -- Formatting functions {{{
+local function subsection()
+	return ('-'):rep( PAGE_WIDTH )
+end
+
 local function formatAsTag( str )
 	return ('*%s*'):format( str )
 end
@@ -255,18 +259,41 @@ local function listModulesFunctions( functions, parentName, funcSeparator, inden
 		return output .. spacing .. trimmedTag
 	end )
 end
+
+-- Shows all of the functions of a module, then gives the formatted functions
+local function formatModuleFunctions( module, attribute, parentName, funcSeparator, indentLevel, indentString )
+	local indent
+	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
+	local functionPrefix = parentName .. funcSeparator
+
+	return subsection() .. '\n'
+
+	-- Tag
+	.. align.right( formatAsTag( TAG_PREFIX .. parentName .. '-' .. attribute ) ) .. '\n'
+
+	-- Very basic description
+	.. align.left( 'The ' .. attribute .. ' of ' .. parentName .. ':', indent ) .. '\n\n'
+
+	-- List of functions
+	.. listModulesFunctions(
+		module[attribute],
+		parentName,
+		funcSeparator,
+		indentLevel + 1,
+		indentString
+	) .. '\n\n'
+
+	-- Function overviews
+	.. concat( module[attribute], '\n', function( _, func )
+		return subsection() .. '\n' .. getFunctionOverview( func, functionPrefix )
+	end )
+end
 -- }}}
 
---print( getFunctionOverview( api.functions[1], 'love.' ) )
---print( getFunctionOverview( api.modules[1].functions[8], 'love.audio.' ) )
---print( getFunctionOverview( api.types[1].functions[1], 'Data:' ) )
---print( getFunctionOverview( api.callbacks[1], 'love.' ) )
-
-local indentLevel = 1
-print( listModulesFunctions( api.functions, 'love', '.', indentLevel ) )
-print( listModulesFunctions( api.modules[3].functions, 'love.filesystem', '.', indentLevel ) )
-print( listModulesFunctions( api.types[1].functions, 'Data', ':', indentLevel ) )
-print( listModulesFunctions( api.callbacks, 'love', '.', indentLevel ) )
+print( formatModuleFunctions( api, 'functions', 'love', '.' ) )
+print( formatModuleFunctions( api.modules[1], 'functions', 'love.audio', '.' ) )
+print( formatModuleFunctions( api.types[1], 'functions', 'Data', ':' ) )
+print( formatModuleFunctions( api, 'callbacks', 'love', '.' ) )
 
 -- Print modeline (spelling/capitalization errors are ugly; use correct file type)
 -- (Concat to prevent vim from interpreting THIS as a modeline and messing up synxtax)
