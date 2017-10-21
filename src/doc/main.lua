@@ -265,7 +265,7 @@ local function listModulesFunctions( functions, parentName, funcSeparator, inden
 end
 
 -- Shows all of the functions of a module, then gives the formatted functions
-local function formatModuleFunctions( module, attribute, parentName, funcSeparator, indentLevel, indentString )
+local function getFormattedModuleFunctions( module, attribute, parentName, funcSeparator, indentLevel, indentString )
 	local indent
 	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
 	local functionPrefix = parentName .. funcSeparator
@@ -294,17 +294,17 @@ local function formatModuleFunctions( module, attribute, parentName, funcSeparat
 end
 -- }}}
 
-print( formatModuleFunctions( api, 'functions', 'love', '.' ) )
+print( getFormattedModuleFunctions( api, 'functions', 'love', '.' ) )
 
 for _, module in ipairs( api.modules ) do
-	print( formatModuleFunctions( module, 'functions', 'love.' .. module.name, '.' ) )
+	print( getFormattedModuleFunctions( module, 'functions', 'love.' .. module.name, '.' ) )
 end
 
 for _, Type in ipairs( api.types ) do
-	print( formatModuleFunctions( Type, 'functions', Type.name, ':' ) )
+	print( getFormattedModuleFunctions( Type, 'functions', Type.name, ':' ) )
 end
 
-print( formatModuleFunctions( api, 'callbacks', 'love', '.' ) )
+print( getFormattedModuleFunctions( api, 'callbacks', 'love', '.' ) )
 
 -- Print modeline (spelling/capitalization errors are ugly; use correct file type)
 -- (Concat to prevent vim from interpreting THIS as a modeline and messing up synxtax)
