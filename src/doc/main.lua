@@ -238,26 +238,30 @@ end
 local function listModulesFunctions( functions, parentName, funcSeparator, indentLevel, indentString )
 	local indent = select( 3, getIndentation( indentLevel, indentString ) )
 
-	return concat( functions, '\n', function( _, func )
-		local name = parentName .. funcSeparator .. func.name
+	if #( functions or {} ) == 0 then
+		return indent .. 'None'
+	else
+		return concat( functions, '\n', function( _, func )
+			local name = parentName .. funcSeparator .. func.name
 
-		-- Trims name to fit within specified bounds
-		local output = align.left( trimFormattedText(
-			name,
-			TOC_NAME_WIDTH_LIMIT - #indent,
-			formatAsReference
-		), indent )
+			-- Trims name to fit within specified bounds
+			local output = align.left( trimFormattedText(
+				name,
+				TOC_NAME_WIDTH_LIMIT - #indent,
+				formatAsReference
+			), indent )
 
-		-- Trims tag to fit within specified bounds
-		local trimmedTag = trimFormattedText(
-			TAG_PREFIX .. name,
-			TOC_REF_WIDTH_LIMIT,
-			formatAsTag
-		)
-		local spacing = (' '):rep( TOC_NAME_WIDTH_LIMIT - #output )
+			-- Trims tag to fit within specified bounds
+			local trimmedTag = trimFormattedText(
+				TAG_PREFIX .. name,
+				TOC_REF_WIDTH_LIMIT,
+				formatAsTag
+			)
+			local spacing = (' '):rep( TOC_NAME_WIDTH_LIMIT - #output )
 
-		return output .. spacing .. trimmedTag
-	end )
+			return output .. spacing .. trimmedTag
+		end )
+	end
 end
 
 -- Shows all of the functions of a module, then gives the formatted functions
@@ -281,18 +285,25 @@ local function formatModuleFunctions( module, attribute, parentName, funcSeparat
 		funcSeparator,
 		indentLevel + 1,
 		indentString
-	) .. '\n\n'
+	) .. '\n'
 
 	-- Function overviews
-	.. concat( module[attribute], '\n', function( _, func )
-		return subsection() .. '\n' .. getFunctionOverview( func, functionPrefix )
+	.. concat( module[attribute] or {}, '', function( _, func )
+		return '\n' .. subsection() .. '\n' .. getFunctionOverview( func, functionPrefix )
 	end )
 end
 -- }}}
 
 print( formatModuleFunctions( api, 'functions', 'love', '.' ) )
-print( formatModuleFunctions( api.modules[1], 'functions', 'love.audio', '.' ) )
-print( formatModuleFunctions( api.types[1], 'functions', 'Data', ':' ) )
+
+for _, module in ipairs( api.modules ) do
+	print( formatModuleFunctions( module, 'functions', 'love.' .. module.name, '.' ) )
+end
+
+for _, Type in ipairs( api.types ) do
+	print( formatModuleFunctions( Type, 'functions', Type.name, ':' ) )
+end
+
 print( formatModuleFunctions( api, 'callbacks', 'love', '.' ) )
 
 -- Print modeline (spelling/capitalization errors are ugly; use correct file type)
