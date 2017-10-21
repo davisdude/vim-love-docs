@@ -7,6 +7,10 @@ local TAG_PREFIX = 'love-'
 
 local PAGE_WIDTH = 79
 align.setDefaultWidth( PAGE_WIDTH )
+
+local TOC_NAME_WIDTH_LIMIT = 40
+-- The 2 is for spacing
+local TOC_REF_WIDTH_LIMIT = PAGE_WIDTH - TOC_NAME_WIDTH_LIMIT - 2
 -- }}}
 
 -- Misc. functions {{{
@@ -16,6 +20,18 @@ local function getIndentation( indentLevel, indentString, defaultIndentLevel )
 	local indent = indentString:rep( indentLevel )
 
 	return indentLevel, indentString, indent
+end
+
+local function trimFormattedText( str, width, formatFunc )
+	local formattedStr = formatFunc( str )
+
+	-- Allows for the formatting func perform differently based on #str
+	while #formattedStr > width do
+		str = str:sub( 1, -2 )
+		formattedStr = formatFunc( str .. '-' )
+	end
+
+	return formattedStr
 end
 -- }}}
 
@@ -213,12 +229,43 @@ local function getFunctionOverview( func, parentName, indentLevel, indentString 
 
 	return overview
 end
+
+-- Lists the functions of a module (or type) in a properly formatted list
+local function listModulesFunctions( functions, parentName, funcSeparator, indentLevel, indentString )
+	local indent = select( 3, getIndentation( indentLevel, indentString ) )
+
+	return concat( functions, '\n', function( _, func )
+		local name = parentName .. funcSeparator .. func.name
+
+		-- Trims name to fit within specified bounds
+		local output = align.left( trimFormattedText(
+			name,
+			TOC_NAME_WIDTH_LIMIT - #indent,
+			formatAsReference
+		), indent )
+
+		-- Trims tag to fit within specified bounds
+		local tag = align.right( trimFormattedText(
+			TAG_PREFIX .. name,
+			TOC_REF_WIDTH_LIMIT,
+			formatAsTag
+		), ' ', PAGE_WIDTH - #output )
+
+		return output .. tag
+	end )
+end
 -- }}}
 
-print( getFunctionOverview( api.functions[1], 'love.' ) )
-print( getFunctionOverview( api.modules[1].functions[8], 'love.audio.' ) )
-print( getFunctionOverview( api.types[1].functions[1], 'Data:' ) )
-print( getFunctionOverview( api.callbacks[1], 'love.' ) )
+--print( getFunctionOverview( api.functions[1], 'love.' ) )
+--print( getFunctionOverview( api.modules[1].functions[8], 'love.audio.' ) )
+--print( getFunctionOverview( api.types[1].functions[1], 'Data:' ) )
+--print( getFunctionOverview( api.callbacks[1], 'love.' ) )
+
+local indentLevel = 1
+print( listModulesFunctions( api.functions, 'love', '.', indentLevel ) )
+print( listModulesFunctions( api.modules[3].functions, 'love.filesystem', '.', indentLevel ) )
+print( listModulesFunctions( api.types[1].functions, 'Data', ':', indentLevel ) )
+print( listModulesFunctions( api.callbacks, 'love', '.', indentLevel ) )
 
 -- Print modeline (spelling/capitalization errors are ugly; use correct file type)
 -- (Concat to prevent vim from interpreting THIS as a modeline and messing up synxtax)
