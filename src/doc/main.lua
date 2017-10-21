@@ -160,13 +160,13 @@ local function getTypedAttributes( variant, attribute, indentLevel, indentString
 
 	-- Handles formatting for functions that don't have any arguments/returns
 	if #( variant[attribute] or {} ) == 0 then
-		typedAttributes = typedAttributes .. indentString:rep( indentLevel + 1 ) .. 'None\n'
+		typedAttributes = typedAttributes .. indentString:rep( indentLevel + 1 ) .. 'None'
 	else
 		typedAttributes = typedAttributes
 		-- Separates all of the attributes
 		.. concat( variant[attribute], '\n\n', function( _, value )
 			return formatTypedAttribute( value, indentLevel + 1, indentString )
-		end ) .. '\n'
+		end )
 	end
 
 	return typedAttributes
@@ -180,8 +180,8 @@ local function getFormattedVariant( variant, indentLevel, indentString )
 	-- Variant description
 	return indent .. ( variant.description or 'See function description' ) .. '\n\n'
 	-- Variant return values and arguments
-	.. getTypedAttributes( variant, 'returns', indentLevel, indentString ) .. '\n'
-	.. getTypedAttributes( variant, 'arguments', indentLevel, indentString )
+	.. getTypedAttributes( variant, 'returns', indentLevel, indentString ) .. '\n\n'
+	.. getTypedAttributes( variant, 'arguments', indentLevel, indentString ) .. '\n'
 end
 
 -- Formats the contents of all of a function's variants
@@ -225,7 +225,7 @@ local function getFunctionOverview( func, parentName, indentLevel, indentString 
 
 	-- Variants
 	.. 'Variants:\n\n'
-	.. getFormattedVariants( func, fullName, indentLevel + 1, indentString ) .. '\n'
+	.. getFormattedVariants( func, fullName, indentLevel + 1, indentString )
 
 	return overview
 end
