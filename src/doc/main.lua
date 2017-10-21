@@ -176,17 +176,12 @@ local function getFormattedVariants( func, fullName, indentLevel, indentString )
 		func, fullName, indentLevel, indentString
 	)
 
-	local formattedVariants = {}
-	for index, variant in ipairs( func.variants ) do
-		table.insert( formattedVariants,
-			-- Includes synopsis
-			formattedSynopses[index] .. '\n\n'
-			-- ... and the rest of the variant information
-			.. getFormattedVariant( variant, indentLevel + 1, indentString )
-		)
-	end
-
-	return table.concat( formattedVariants, '\n' )
+	return concat( func.variants, '\n', function( index, variant )
+		-- Includes synopsis
+		return formattedSynopses[index] .. '\n\n'
+		-- ... and the rest of the variant information
+		.. getFormattedVariant( variant, indentLevel + 1, indentString )
+	end )
 end
 
 -- Compiles all of the information about a function
