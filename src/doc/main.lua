@@ -245,13 +245,14 @@ local function listModulesFunctions( functions, parentName, funcSeparator, inden
 		), indent )
 
 		-- Trims tag to fit within specified bounds
-		local tag = align.right( trimFormattedText(
+		local trimmedTag = trimFormattedText(
 			TAG_PREFIX .. name,
 			TOC_REF_WIDTH_LIMIT,
 			formatAsTag
-		), ' ', PAGE_WIDTH - #output )
+		)
+		local spacing = (' '):rep( TOC_NAME_WIDTH_LIMIT - #output )
 
-		return output .. tag
+		return output .. spacing .. trimmedTag
 	end )
 end
 -- }}}
