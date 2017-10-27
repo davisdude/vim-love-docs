@@ -274,7 +274,7 @@ end
 
 -- Lists the functions of a module (or type) in a properly formatted list
 local function listModulesFunctions( functions, functionPrefix, indentLevel, indentString )
-	return printTableOfContents( functions, functionPrefix, TAG_PREFIX .. functionPrefix, indentLevel, indentString )
+	return printTableOfContents( functions, '', TAG_PREFIX .. functionPrefix, indentLevel, indentString )
 end
 
 local function getFormattedModuleFunctions( tab, functionPrefix, indentLevel, indentString )
@@ -374,10 +374,11 @@ local function getFormattedType( Type, indentLevel, indentString )
 	-- Functions (TOC)
 	.. printBasicTableOfContents(
 		Type, 'functions',
-		Type.name, typePrefix, typePrefix,
+		Type.name, '', typePrefix,
 		indentLevel + 1, indentString
 	)
 
+	-- Function variants
 	if #Type.functions == 0 then
 		return formattedType
 	else
