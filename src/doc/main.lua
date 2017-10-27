@@ -329,37 +329,64 @@ local function getFormattedType( Type, indentLevel, indentString )
 
 	-- Convert constructors, supertypes, and subtypes to regular format
 	Type.constructors = Type.constructors or {}
+	Type.supertypes = Type.supertypes or {}
+	Type.subtypes = Type.subtypes or {}
+	Type.functions = Type.functions or {}
+
 	for i, constructor in ipairs( Type.constructors ) do
 		Type.constructors[i] = { name = constructor }
 	end
-	Type.supertypes = Type.supertypes or {}
 	for i, supertype in ipairs( Type.supertypes ) do
 		Type.supertypes[i] = { name = supertype }
 	end
-	Type.subtypes = Type.subtypes or {}
 	for i, subtype in ipairs( Type.subtypes ) do
 		Type.subtypes[i] = { name = subtype }
 	end
 
-	return subsection() .. '\n'
+	local typePrefix = Type.name .. ':'
+
+	local formattedType = subsection() .. '\n'
 	.. align.right( formatAsTag( TAG_PREFIX .. Type.name ) ) .. '\n'
 	.. align.left( formatAsReference( Type.name ) ) .. '\n\n'
 	.. align.left( Type.description, indent ) .. '\n\n'
 
 	-- Constructors
-	.. indent .. 'Constructors:\n\n'
-	.. printTableOfContents( Type.constructors, '', TAG_PREFIX, indentLevel + 1, indentString ) .. '\n\n'
+	.. printBasicTableOfContents(
+		Type, 'constructors',
+		Type.name, '', '',
+		indentLevel + 1, indentString
+	) .. '\n\n'
 
 	-- Supertypes
-	.. indent .. 'Supertypes:\n\n'
-	.. printTableOfContents( Type.supertypes, '', TAG_PREFIX, indentLevel + 1, indentString ) .. '\n\n'
+	.. printBasicTableOfContents(
+		Type, 'supertypes',
+		Type.name, '', '',
+		indentLevel + 1, indentString
+	) .. '\n\n'
 
 	-- Subtypes
-	.. indent .. 'Subtypes:\n\n'
-	.. printTableOfContents( Type.subtypes, '', TAG_PREFIX, indentLevel + 1, indentString ) .. '\n\n'
+	.. printBasicTableOfContents(
+		Type, 'subtypes',
+		Type.name, '', '',
+		indentLevel + 1, indentString
+	) .. '\n\n'
 
-	-- Functions
-	.. getFormattedModuleFunctions( Type, 'functions', Type.name, ':' )
+	-- Functions (TOC)
+	.. printBasicTableOfContents(
+		Type, 'functions',
+		Type.name, typePrefix, typePrefix,
+		indentLevel + 1, indentString
+	)
+
+	if #Type.functions == 0 then
+		return formattedType
+	else
+		return formattedType .. '\n\n' .. getFormattedModuleFunctions(
+			Type.functions,
+			typePrefix,
+			indentLevel, indentString
+		)
+	end
 end
 
 -- Combines all of a module's formatted types
