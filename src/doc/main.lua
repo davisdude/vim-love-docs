@@ -9,8 +9,8 @@ local PAGE_WIDTH = 79
 align.setDefaultWidth( PAGE_WIDTH )
 
 local TOC_NAME_WIDTH_LIMIT = 40
--- The 2 is for spacing
-local TOC_REF_WIDTH_LIMIT = PAGE_WIDTH - TOC_NAME_WIDTH_LIMIT - 2
+local TOC_NAME_REF_SPACING = 2
+local TOC_REF_WIDTH_LIMIT = PAGE_WIDTH - TOC_NAME_WIDTH_LIMIT - TOC_NAME_REF_SPACING
 -- }}}
 
 -- Misc. functions {{{
@@ -101,7 +101,7 @@ local function printTableOfContents( tab, namePrefix, tagPrefix, indentLevel, in
 			)
 
 			-- Left-aligns tag
-			local spacing = (' '):rep( TOC_NAME_WIDTH_LIMIT - #name + 2 )
+			local spacing = (' '):rep( TOC_NAME_WIDTH_LIMIT - #name + TOC_NAME_REF_SPACING )
 
 			return name .. spacing .. trimmedTag
 		end )
@@ -446,14 +446,18 @@ local function compileModuleInformation( module, namePrefix , funcSeparator, ind
 	local fullName = namePrefix .. module.name
 
 	return  section() .. '\n'
+	-- Tag
 	.. align.right( formatAsTag( TAG_PREFIX .. fullName ) ) .. '\n'
+	-- Name and description
 	.. align.left( formatAsReference( fullName ) ) .. '\n\n'
 	.. align.left( module.description, indent ) .. '\n\n'
+	-- Table of contents
 	.. printTableOfContents( {
 		{ name = 'callbacks' },
 		{ name = 'functions' },
 		{ name = 'types' },
 	}, '', TAG_PREFIX .. fullName .. '-', indentLevel + 1, indentString ) .. '\n\n'
+	-- Callbacks
 	.. compileFormattedModuleFunctions(
 		module,
 		'callbacks',
@@ -462,6 +466,7 @@ local function compileModuleInformation( module, namePrefix , funcSeparator, ind
 		indentLevel,
 		indentString
 	) .. '\n'
+	-- Functions
 	.. compileFormattedModuleFunctions(
 		module,
 		'functions',
@@ -470,6 +475,7 @@ local function compileModuleInformation( module, namePrefix , funcSeparator, ind
 		indentLevel,
 		indentString
 	) .. '\n'
+	-- Types
 	.. compileFormattedModuleTypes( module, fullName, indentLevel, indentString ) .. '\n'
 end
 
