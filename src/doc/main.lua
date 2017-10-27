@@ -309,12 +309,12 @@ local function showFormattedModuleFunctions( module, attribute, parentName, func
 		parentName .. funcSeparator,
 		indentLevel + 1,
 		indentString
-	)
+	) .. '\n'
 
 	if #module[attribute] == 0 then
 		return formattedModuleFunctions
 	else
-		return formattedModuleFunctions .. getFormattedModuleFunctions(
+		return formattedModuleFunctions .. '\n' .. getFormattedModuleFunctions(
 			module[attribute], functionPrefix, indentLevel, indentString
 		)
 	end
