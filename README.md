@@ -66,10 +66,6 @@ Functions are found first by their full name. For instance, if you wanted to see
 
 Each function features a brief description of what the function does, as well as the different forms of the function (called `Variants`) available. Each variant includes a function's return values and types (if any), as well as its parameters and their types (if any).
 
-For searching for a specific parameter of a function, search using the full name, followed by a dash, then the parameter name. For instance, if you wanted to read about the `flags` parameter to `love.window.setMode`, you would search `:help love-love.window.setMode-flags`.
-
-Some parameters have named elements as well. You can read about the `fullscreen` attribute for the `flag` parameter for `love.window.setMode` by searching `love-love.window.setMode-flags-fullscreen`.
-
 #### Types
 
 Types are found by their name. For instance, if I wanted to look up the `File` type, I would do so with `:help love-File`. The documentation includes a brief description of what the type handles, as well as a list of constructors, supertypes, subtypes, and functions.
