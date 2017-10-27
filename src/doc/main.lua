@@ -214,7 +214,7 @@ local function getFormattedVariant( variant, indentLevel, indentString )
 	return indent .. ( variant.description or 'See function description' ) .. '\n\n'
 	-- Variant return values and arguments
 	.. getTypedAttributes( variant, 'returns', indentLevel, indentString ) .. '\n\n'
-	.. getTypedAttributes( variant, 'arguments', indentLevel, indentString ) .. '\n'
+	.. getTypedAttributes( variant, 'arguments', indentLevel, indentString )
 end
 
 -- Formats the contents of all of a function's variants
@@ -251,13 +251,13 @@ local function getFunctionOverview( func, parentName, indentLevel, indentString 
 	.. align.left( func.description, indent ) .. '\n\n'
 
 	-- List of synopses
-	.. 'Synopses:\n\n'
+	.. indent .. 'Synopses:\n\n'
 	.. table.concat( getFormattedSynopses(
 		func, fullName, indentLevel + 1, indentString
 	), '\n' ) .. '\n\n'
 
 	-- Variants
-	.. 'Variants:\n\n'
+	.. indent .. 'Variants:\n\n'
 	.. getFormattedVariants( func, fullName, indentLevel + 1, indentString )
 
 	return overview
@@ -272,9 +272,11 @@ end
 local function getFormattedModuleFunctions( module, attribute, parentName, funcSeparator, indentLevel, indentString )
 	local indent
 	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
-	local functionPrefix = parentName .. funcSeparator
 
-	return subsection() .. '\n'
+	local functionPrefix = parentName .. funcSeparator
+	module[attribute] = module[attribute] or {}
+
+	local formattedModuleFunctions = subsection() .. '\n'
 
 	-- Tag
 	.. align.right( formatAsTag( TAG_PREFIX .. parentName .. '-' .. attribute ) ) .. '\n'
@@ -288,15 +290,104 @@ local function getFormattedModuleFunctions( module, attribute, parentName, funcS
 		parentName .. funcSeparator,
 		indentLevel + 1,
 		indentString
-	) .. '\n'
+	)
 
-	-- Function overviews
-	.. concat( module[attribute] or {}, '', function( _, func )
-		return '\n' .. subsection() .. '\n' .. getFunctionOverview( func, functionPrefix )
-	end )
+	if #module[attribute] == 0 then
+		return formattedModuleFunctions
+	else
+		-- Function overviews
+		return formattedModuleFunctions .. '\n\n'
+		.. concat( module[attribute] or {}, '\n\n', function( _, func )
+			return subsection() .. '\n'
+			.. getFunctionOverview( func, functionPrefix )
+		end )
+	end
 end
 -- }}}
 
+-- Types {{{
+-- Gets all of a type's information
+local function getFormattedType( Type, indentLevel, indentString )
+	local indent
+	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
+
+	-- Convert constructors, supertypes, and subtypes to regular format
+	Type.constructors = Type.constructors or {}
+	for i, constructor in ipairs( Type.constructors ) do
+		Type.constructors[i] = { name = constructor }
+	end
+	Type.supertypes = Type.supertypes or {}
+	for i, supertype in ipairs( Type.supertypes ) do
+		Type.supertypes[i] = { name = supertype }
+	end
+	Type.subtypes = Type.subtypes or {}
+	for i, subtype in ipairs( Type.subtypes ) do
+		Type.subtypes[i] = { name = subtype }
+	end
+
+	return subsection() .. '\n'
+	.. align.right( formatAsTag( TAG_PREFIX .. Type.name ) ) .. '\n'
+	.. align.left( formatAsReference( Type.name ) ) .. '\n\n'
+	.. align.left( Type.description, indent ) .. '\n\n'
+
+	-- Constructors
+	.. indent .. 'Constructors:\n\n'
+	.. printTableOfContents( Type.constructors, '', TAG_PREFIX, indentLevel + 1, indentString ) .. '\n\n'
+
+	-- Supertypes
+	.. indent .. 'Supertypes:\n\n'
+	.. printTableOfContents( Type.supertypes, '', TAG_PREFIX, indentLevel + 1, indentString ) .. '\n\n'
+
+	-- Subtypes
+	.. indent .. 'Subtypes:\n\n'
+	.. printTableOfContents( Type.subtypes, '', TAG_PREFIX, indentLevel + 1, indentString ) .. '\n\n'
+
+	-- Functions
+	.. getFormattedModuleFunctions( Type, 'functions', Type.name, ':' )
+end
+
+-- Combines all of a module's formatted types
+local function getFormattedTypes( types, indentLevel, indentString )
+	indentLevel, indentString = getIndentation( indentLevel, indentString )
+
+	return concat( types, '\n\n', function( _, Type )
+		return getFormattedType( Type, indentLevel, indentString )
+	end )
+end
+
+-- List the types of a module in a properly formatted list
+local function listModulesTypes( types, indentLevel, indentString )
+	return printTableOfContents( types, '', TAG_PREFIX, indentLevel, indentString )
+end
+
+-- Shows all the formatted types of a module, then gives the formatted functions
+local function getFormattedModuleTypes( module, parentName, indentLevel, indentString )
+	local indent
+	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
+
+	module.types = module.types or {}
+
+	local formattedModuleTypes = subsection() .. '\n'
+	.. align.right( formatAsTag( TAG_PREFIX .. parentName .. '-types' ) ) .. '\n'
+	.. align.left( 'The types of ' .. parentName .. ':', indent ) .. '\n\n'
+	.. listModulesTypes( module.types, indentLevel + 1, indentString ) .. '\n'
+
+	if #module.types == 0 then
+		return formattedModuleTypes
+	else
+		return formattedModuleTypes .. '\n'
+		.. getFormattedTypes( module.types, indentLevel, indentString ) .. '\n'
+	end
+end
+-- }}}
+
+print( getFormattedModuleTypes( api, 'love' ) )
+
+for _, module in ipairs( api.modules ) do
+	print( getFormattedModuleTypes( module, 'love.' .. module.name ) )
+end
+
+--[[
 print( getFormattedModuleFunctions( api, 'functions', 'love', '.' ) )
 
 for _, module in ipairs( api.modules ) do
@@ -308,6 +399,7 @@ for _, Type in ipairs( api.types ) do
 end
 
 print( getFormattedModuleFunctions( api, 'callbacks', 'love', '.' ) )
+-- ]]
 
 -- Print modeline (spelling/capitalization errors are ugly; use correct file type)
 -- (Concat to prevent vim from interpreting THIS as a modeline and messing up synxtax)
