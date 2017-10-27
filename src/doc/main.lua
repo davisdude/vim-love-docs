@@ -377,7 +377,7 @@ local function listModulesTypes( types, indentLevel, indentString )
 end
 
 -- Shows all the formatted types of a module, then gives the formatted functions
-local function getFormattedModuleTypes( module, parentName, indentLevel, indentString )
+local function showFormattedModuleTypes( module, parentName, indentLevel, indentString )
 	local indent
 	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
 
@@ -397,24 +397,24 @@ local function getFormattedModuleTypes( module, parentName, indentLevel, indentS
 end
 -- }}}
 
-print( getFormattedModuleTypes( api, 'love' ) )
+print( showFormattedModuleTypes( api, 'love' ) )
 
 for _, module in ipairs( api.modules ) do
-	print( getFormattedModuleTypes( module, 'love.' .. module.name ) )
+	print( showFormattedModuleTypes( module, 'love.' .. module.name ) )
 end
 
 --[[
-print( getFormattedModuleFunctions( api, 'functions', 'love', '.' ) )
+print( showFormattedModuleFunctions( api, 'functions', 'love', '.' ) )
 
 for _, module in ipairs( api.modules ) do
-	print( getFormattedModuleFunctions( module, 'functions', 'love.' .. module.name, '.' ) )
+	print( showFormattedModuleFunctions( module, 'functions', 'love.' .. module.name, '.' ) )
 end
 
 for _, Type in ipairs( api.types ) do
-	print( getFormattedModuleFunctions( Type, 'functions', Type.name, ':' ) )
+	print( showFormattedModuleFunctions( Type, 'functions', Type.name, ':' ) )
 end
 
-print( getFormattedModuleFunctions( api, 'callbacks', 'love', '.' ) )
+print( showFormattedModuleFunctions( api, 'callbacks', 'love', '.' ) )
 -- ]]
 
 -- Print modeline (spelling/capitalization errors are ugly; use correct file type)
