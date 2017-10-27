@@ -294,7 +294,14 @@ local function getFormattedModuleFunctions( tab, functionPrefix, indentLevel, in
 end
 
 -- Shows all of the functions of a module, then gives the formatted functions
-local function showFormattedModuleFunctions( module, attribute, parentName, funcSeparator, indentLevel, indentString )
+local function compileFormattedModuleFunctions(
+		module,
+		attribute,
+		parentName,
+		funcSeparator,
+		indentLevel,
+		indentString
+	)
 	local indent
 	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
 
@@ -411,7 +418,7 @@ local function listModulesTypes( types, indentLevel, indentString )
 end
 
 -- Shows all the formatted types of a module, then gives the formatted functions
-local function showFormattedModuleTypes( module, parentName, indentLevel, indentString )
+local function compileFormattedModuleTypes( module, parentName, indentLevel, indentString )
 	local indent
 	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
 
@@ -431,7 +438,8 @@ local function showFormattedModuleTypes( module, parentName, indentLevel, indent
 end
 -- }}}
 
-local function showModuleInformation( module, namePrefix , funcSeparator, indentLevel, indentString )
+-- Combines all of a module's information
+local function compileModuleInformation( module, namePrefix , funcSeparator, indentLevel, indentString )
 	local indent
 	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
 
@@ -446,7 +454,7 @@ local function showModuleInformation( module, namePrefix , funcSeparator, indent
 		{ name = 'functions' },
 		{ name = 'types' },
 	}, '', TAG_PREFIX .. fullName .. '-', indentLevel + 1, indentString ) .. '\n\n'
-	.. showFormattedModuleFunctions(
+	.. compileFormattedModuleFunctions(
 		module,
 		'callbacks',
 		fullName,
@@ -454,7 +462,7 @@ local function showModuleInformation( module, namePrefix , funcSeparator, indent
 		indentLevel,
 		indentString
 	) .. '\n'
-	.. showFormattedModuleFunctions(
+	.. compileFormattedModuleFunctions(
 		module,
 		'functions',
 		fullName,
@@ -462,18 +470,18 @@ local function showModuleInformation( module, namePrefix , funcSeparator, indent
 		indentLevel,
 		indentString
 	) .. '\n'
-	.. showFormattedModuleTypes( module, fullName, indentLevel, indentString ) .. '\n'
+	.. compileFormattedModuleTypes( module, fullName, indentLevel, indentString ) .. '\n'
 end
 
+-- Gives the love module basic information
 api.name = 'love'
 api.description = 'The LÖVE framework'
-
-print( showModuleInformation( api, '', '.' ) )
+print( compileModuleInformation( api, '', '.' ) )
 
 for _, module in ipairs( api.modules ) do
-	print( showModuleInformation( module, 'love.', '.' ) )
+	print( compileModuleInformation( module, 'love.', '.' ) )
 end
 
--- Print modeline (spelling/capitalization errors are ugly; use correct file type)
--- (Concat to prevent vim from interpreting THIS as a modeline and messing up synxtax)
+-- Prints modeline (spelling/capitalization errors are ugly; use correct file type)
+-- (Uses concat to prevent vim from interpreting THIS as a modeline)
 print( ' vim' .. ':nospell:ft=help:' )
