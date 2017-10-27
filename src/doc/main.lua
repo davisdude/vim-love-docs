@@ -103,6 +103,15 @@ local function printTableOfContents( tab, namePrefix, tagPrefix, indentLevel, in
 		end )
 	end
 end
+
+local function printBasicTableOfContents( tab, attribute, parentName, namePrefix, tagPrefix, indentLevel, indentString )
+	local indent
+	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
+
+	return align.right( formatAsTag( TAG_PREFIX .. parentName .. '-' .. attribute ) ) .. '\n'
+	.. align.left( attribute .. ':', indent ) .. '\n\n'
+	.. printTableOfContents( tab[attribute], namePrefix, TAG_PREFIX .. tagPrefix, indentLevel + 1, indentString )
+end
 -- }}}
 
 -- Functions {{{
@@ -268,8 +277,18 @@ local function listModulesFunctions( functions, functionPrefix, indentLevel, ind
 	return printTableOfContents( functions, functionPrefix, TAG_PREFIX .. functionPrefix, indentLevel, indentString )
 end
 
+local function getFormattedModuleFunctions( tab, functionPrefix, indentLevel, indentString )
+	indentLevel, indentString = getIndentation( indentLevel, indentString )
+
+	-- Function overviews
+	return concat( tab, '\n\n', function( _, func )
+		return subsection() .. '\n'
+		.. getFunctionOverview( func, functionPrefix, indentLevel, indentString )
+	end )
+end
+
 -- Shows all of the functions of a module, then gives the formatted functions
-local function getFormattedModuleFunctions( module, attribute, parentName, funcSeparator, indentLevel, indentString )
+local function showFormattedModuleFunctions( module, attribute, parentName, funcSeparator, indentLevel, indentString )
 	local indent
 	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
 
@@ -295,12 +314,9 @@ local function getFormattedModuleFunctions( module, attribute, parentName, funcS
 	if #module[attribute] == 0 then
 		return formattedModuleFunctions
 	else
-		-- Function overviews
-		return formattedModuleFunctions .. '\n\n'
-		.. concat( module[attribute] or {}, '\n\n', function( _, func )
-			return subsection() .. '\n'
-			.. getFunctionOverview( func, functionPrefix )
-		end )
+		return formattedModuleFunctions .. getFormattedModuleFunctions(
+			module[attribute], functionPrefix, indentLevel, indentString
+		)
 	end
 end
 -- }}}
