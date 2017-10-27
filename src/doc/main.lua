@@ -405,8 +405,6 @@ end
 
 -- Combines all of a module's formatted types
 local function getFormattedTypes( types, indentLevel, indentString )
-	indentLevel, indentString = getIndentation( indentLevel, indentString )
-
 	return concat( types, '\n\n', function( _, Type )
 		return getFormattedType( Type, indentLevel, indentString )
 	end )
@@ -438,6 +436,53 @@ local function compileFormattedModuleTypes( module, parentName, indentLevel, ind
 end
 -- }}}
 
+-- Enums {{{
+local function getFormattedEnum( enum, indentLevel, indentString )
+	local indent
+	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
+
+	-- Add a type to all constants to work with getTypedAttributes
+	for i in ipairs( enum.constants ) do
+		enum.constants[i].type = 'string'
+	end
+
+	return subsection() .. '\n'
+	.. align.right( formatAsTag( TAG_PREFIX .. enum.name ) ) .. '\n'
+	.. align.left( formatAsReference( enum.name ) ) .. '\n\n'
+	.. align.left( enum.description, indent ) .. '\n\n'
+	.. getTypedAttributes( enum, 'constants', indentLevel + 1, indentString )
+end
+
+local function getFormattedEnums( enums, indentLevel, indentString )
+	return concat( enums, '\n\n', function( _, enum )
+		return getFormattedEnum( enum, indentLevel, indentString )
+	end )
+end
+
+local function listModulesEnums( enums, indentLevel, indentString )
+	return printTableOfContents( enums, '', TAG_PREFIX, indentLevel, indentString )
+end
+
+local function compileFormattedModuleEnums( module, parentName, indentLevel, indentString )
+	local indent
+	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
+
+	module.enums = module.enums or {}
+
+	local formattedEnums = subsection() .. '\n'
+	.. align.right( formatAsTag( TAG_PREFIX .. parentName .. '-enums' ) ) .. '\n'
+	.. align.left( 'The enums of ' .. parentName .. ':', indent ) .. '\n\n'
+	.. listModulesEnums( module.enums, indentLevel + 1, indentString ) .. '\n'
+
+	if #module.enums == 0 then
+		return formattedEnums
+	else
+		return formattedEnums .. '\n'
+		.. getFormattedEnums( module.enums, indentLevel, indentString ) .. '\n'
+	end
+end
+-- }}}
+
 -- Combines all of a module's information
 local function compileModuleInformation( module, namePrefix , funcSeparator, indentLevel, indentString )
 	local indent
@@ -454,6 +499,7 @@ local function compileModuleInformation( module, namePrefix , funcSeparator, ind
 	-- Table of contents
 	.. printTableOfContents( {
 		{ name = 'callbacks' },
+		{ name = 'enums' },
 		{ name = 'functions' },
 		{ name = 'types' },
 	}, '', TAG_PREFIX .. fullName .. '-', indentLevel + 1, indentString ) .. '\n\n'
@@ -466,6 +512,8 @@ local function compileModuleInformation( module, namePrefix , funcSeparator, ind
 		indentLevel,
 		indentString
 	) .. '\n'
+	-- Enums
+	.. compileFormattedModuleEnums( module, fullName, indentLevel, indentString ) .. '\n'
 	-- Functions
 	.. compileFormattedModuleFunctions(
 		module,
