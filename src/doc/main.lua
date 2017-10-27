@@ -24,6 +24,10 @@ end
 -- }}}
 
 -- Formatting functions {{{
+local function section()
+	return ('='):rep( PAGE_WIDTH )
+end
+
 local function subsection()
 	return ('-'):rep( PAGE_WIDTH )
 end
@@ -427,25 +431,48 @@ local function showFormattedModuleTypes( module, parentName, indentLevel, indent
 end
 -- }}}
 
-print( showFormattedModuleTypes( api, 'love' ) )
+local function showModuleInformation( module, namePrefix , funcSeparator, indentLevel, indentString )
+	local indent
+	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
+
+	local fullName = namePrefix .. module.name
+
+	return  section() .. '\n'
+	.. align.right( formatAsTag( TAG_PREFIX .. fullName ) ) .. '\n'
+	.. align.left( formatAsReference( fullName ) ) .. '\n\n'
+	.. align.left( module.description, indent ) .. '\n\n'
+	.. printTableOfContents( {
+		{ name = 'callbacks' },
+		{ name = 'functions' },
+		{ name = 'types' },
+	}, '', TAG_PREFIX .. fullName .. '-', indentLevel + 1, indentString ) .. '\n\n'
+	.. showFormattedModuleFunctions(
+		module,
+		'callbacks',
+		fullName,
+		funcSeparator,
+		indentLevel,
+		indentString
+	) .. '\n'
+	.. showFormattedModuleFunctions(
+		module,
+		'functions',
+		fullName,
+		funcSeparator,
+		indentLevel,
+		indentString
+	) .. '\n'
+	.. showFormattedModuleTypes( module, fullName, indentLevel, indentString ) .. '\n'
+end
+
+api.name = 'love'
+api.description = 'The LÖVE framework'
+
+print( showModuleInformation( api, '', '.' ) )
 
 for _, module in ipairs( api.modules ) do
-	print( showFormattedModuleTypes( module, 'love.' .. module.name ) )
+	print( showModuleInformation( module, 'love.', '.' ) )
 end
-
---[[
-print( showFormattedModuleFunctions( api, 'functions', 'love', '.' ) )
-
-for _, module in ipairs( api.modules ) do
-	print( showFormattedModuleFunctions( module, 'functions', 'love.' .. module.name, '.' ) )
-end
-
-for _, Type in ipairs( api.types ) do
-	print( showFormattedModuleFunctions( Type, 'functions', Type.name, ':' ) )
-end
-
-print( showFormattedModuleFunctions( api, 'callbacks', 'love', '.' ) )
--- ]]
 
 -- Print modeline (spelling/capitalization errors are ugly; use correct file type)
 -- (Concat to prevent vim from interpreting THIS as a modeline and messing up synxtax)
