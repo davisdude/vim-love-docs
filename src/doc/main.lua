@@ -150,7 +150,7 @@ end
 -- Lists all of a function's synopses
 local function getFormattedSynopses( func, fullName, indentLevel, indentString )
 	local indent
-	indentString, indent = select( 2, getIndentation( indentLevel, indentString ) )
+	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
 
 	local list = {}
 
@@ -159,8 +159,10 @@ local function getFormattedSynopses( func, fullName, indentLevel, indentString )
 		-- Account for synopses that could span multiple lines
 		table.insert( list, align.left(
 			-- Pad number for alignment
-			align.pad( index .. '.', ' ', #indentString ) .. synopsis,
-			indent
+			indent .. align.pad( index .. '.', ' ', #indentString ) .. synopsis,
+			indentString:rep( indentLevel + 1 ),
+			nil,
+			true
 		) )
 	end
 
