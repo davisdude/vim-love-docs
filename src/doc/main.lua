@@ -93,7 +93,7 @@ local function printTableOfContents( tab, namePrefix, tagPrefix, indentLevel, in
 			local trimmedTag = trimFormattedText(
 				tagPrefix .. attr.name,
 				TOC_REF_WIDTH_LIMIT,
-				formatAsTag
+				formatAsReference
 			)
 
 			-- Left-aligns tag
