@@ -116,6 +116,14 @@ local function printBasicTableOfContents( tab, attribute, parentName, namePrefix
 	.. align.left( attribute .. ':', indent ) .. '\n\n'
 	.. printTableOfContents( tab[attribute], namePrefix, TAG_PREFIX .. tagPrefix, indentLevel + 1, indentString )
 end
+
+local function getBasicDescription( attribute, moduleName, indent )
+	indent = indent or ''
+	return align.left(
+		'The ' .. attribute .. ' of ' .. formatAsReference( moduleName) .. ':',
+		indent
+	)
+end
 -- }}}
 
 -- Functions {{{
@@ -314,7 +322,7 @@ local function compileFormattedModuleFunctions(
 	.. align.right( formatAsTag( TAG_PREFIX .. parentName .. '-' .. attribute ) ) .. '\n'
 
 	-- Very basic description
-	.. align.left( 'The ' .. attribute .. ' of ' .. parentName .. ':', indent ) .. '\n\n'
+	.. getBasicDescription( attribute, parentName, indent ) .. '\n\n'
 
 	-- List of functions
 	.. listModulesFunctions(
@@ -424,7 +432,7 @@ local function compileFormattedModuleTypes( module, parentName, indentLevel, ind
 
 	local formattedModuleTypes = subsection() .. '\n'
 	.. align.right( formatAsTag( TAG_PREFIX .. parentName .. '-types' ) ) .. '\n'
-	.. align.left( 'The types of ' .. parentName .. ':', indent ) .. '\n\n'
+	.. getBasicDescription( 'types', parentName, indent ) .. '\n\n'
 	.. listModulesTypes( module.types, indentLevel + 1, indentString ) .. '\n'
 
 	if #module.types == 0 then
@@ -471,7 +479,7 @@ local function compileFormattedModuleEnums( module, parentName, indentLevel, ind
 
 	local formattedEnums = subsection() .. '\n'
 	.. align.right( formatAsTag( TAG_PREFIX .. parentName .. '-enums' ) ) .. '\n'
-	.. align.left( 'The enums of ' .. parentName .. ':', indent ) .. '\n\n'
+	.. getBasicDescription( 'enums', parentName, indent ) .. '\n\n'
 	.. listModulesEnums( module.enums, indentLevel + 1, indentString ) .. '\n'
 
 	if #module.enums == 0 then
