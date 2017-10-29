@@ -41,7 +41,7 @@ local function formatAsReference( str )
 end
 
 -- Formats arguments and return values
--- Don't actually know if there's a specific name for this type of formatting...
+-- I'm not actually sure if there's a specific name for this formatting
 local function formatSpecial( str )
 	return ('`%s`'):format( str )
 end
@@ -350,6 +350,7 @@ local function getFormattedType( Type, indentLevel, indentString )
 	.. align.right( formatAsTag( TAG_PREFIX .. Type.name ) ) .. '\n'
 	.. align.left( formatAsReference( Type.name ) ) .. '\n\n'
 	.. align.left( Type.description, indent ) .. '\n\n'
+
 	-- Constructors
 	.. printBasicTableOfContents( Type, 'constructors', '', indentLevel + 1, indentString ) .. '\n\n'
 	-- Supertypes
@@ -358,6 +359,7 @@ local function getFormattedType( Type, indentLevel, indentString )
 	.. printBasicTableOfContents( Type, 'subtypes', '', indentLevel + 1, indentString ) .. '\n\n'
 	-- Functions (TOC)
 	.. printBasicTableOfContents( Type, 'functions', typePrefix, indentLevel + 1, indentString )
+
 	-- Function variants
 	if #Type.functions == 0 then
 		return formattedType
@@ -460,28 +462,34 @@ local function compileModuleInformation( module, namePrefix, indentLevel, indent
 	return  section() .. '\n'
 	-- Tag
 	.. align.right( formatAsTag( TAG_PREFIX .. fullName ) ) .. '\n'
+
 	-- Name and description
 	.. align.left( formatAsReference( fullName ) ) .. '\n\n'
 	.. align.left( module.description, indent ) .. '\n\n'
+
 	-- Table of contents
 	.. printTableOfContents(
 		{ 'callbacks', 'enums', 'functions', 'types' },
 		TAG_PREFIX .. fullName .. '-', indentLevel + 1, indentString
 	) .. '\n\n'
+
 	-- Callbacks
 	.. compileFormattedModuleFunctions(
 		module, 'callbacks',
 		fullName, '.',
 		indentLevel, indentString
 	) .. '\n'
+
 	-- Enums
 	.. compileFormattedModuleEnums( module, fullName, indentLevel, indentString ) .. '\n'
+
 	-- Functions
 	.. compileFormattedModuleFunctions(
 		module, 'functions',
 		fullName, '.',
 		indentLevel, indentString
 	) .. '\n'
+
 	-- Types
 	.. compileFormattedModuleTypes( module, fullName, indentLevel, indentString ) .. '\n'
 end
