@@ -394,13 +394,13 @@ local function compileFormattedModuleTypes( module, parentName, indentLevel, ind
 	local formattedModuleTypes = subsection() .. '\n'
 	.. align.right( formatAsTag( TAG_PREFIX .. parentName .. '-types' ) ) .. '\n'
 	.. getBasicDescription( 'types', parentName, indent ) .. '\n\n'
-	.. listModulesTypes( module.types, indentLevel + 1, indentString ) .. '\n'
+	.. listModulesTypes( module.types, indentLevel + 1, indentString )
 
 	if #module.types == 0 then
 		return formattedModuleTypes
 	else
-		return formattedModuleTypes .. '\n'
-		.. getFormattedTypes( module.types, indentLevel, indentString ) .. '\n'
+		return formattedModuleTypes .. '\n\n'
+		.. getFormattedTypes( module.types, indentLevel, indentString )
 	end
 end
 -- }}}
