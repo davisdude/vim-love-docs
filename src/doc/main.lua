@@ -79,23 +79,26 @@ local function trimFormattedText( str, width, formatFunc )
 	return formattedStr
 end
 
-local function printTableOfContents( tab, namePrefix, tagPrefix, indentLevel, indentString )
+local function printTableOfContents( tab, tagPrefix, indentLevel, indentString )
 	local indent = select( 3, getIndentation( indentLevel, indentString ) )
+	tab = tab or {}
 
-	if #( tab or {} ) == 0 then
+	if #tab == 0 then
 		return indent .. 'None'
 	else
 		return concat( tab, '\n', function( _, attr )
+			local attrName = attr.name or tostring( attr )
+
 			-- Trims name
 			local name = align.left( trimFormattedText(
-				namePrefix .. attr.name,
+				attrName,
 				TOC_NAME_WIDTH_LIMIT - #indent,
 				formatAsReference
 			), indent )
 
 			-- Trims tag
 			local trimmedTag = trimFormattedText(
-				tagPrefix .. attr.name,
+				tagPrefix .. attrName,
 				TOC_REF_WIDTH_LIMIT,
 				formatAsReference
 			)
@@ -108,13 +111,13 @@ local function printTableOfContents( tab, namePrefix, tagPrefix, indentLevel, in
 	end
 end
 
-local function printBasicTableOfContents( tab, attribute, parentName, namePrefix, tagPrefix, indentLevel, indentString )
+local function printBasicTableOfContents( tab, attribute, tagPrefix, indentLevel, indentString )
 	local indent
 	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
 
-	return align.right( formatAsTag( TAG_PREFIX .. parentName .. '-' .. attribute ) ) .. '\n'
+	return align.right( formatAsTag( TAG_PREFIX .. tab.name .. '-' .. attribute ) ) .. '\n'
 	.. align.left( attribute .. ':', indent ) .. '\n\n'
-	.. printTableOfContents( tab[attribute], namePrefix, TAG_PREFIX .. tagPrefix, indentLevel + 1, indentString )
+	.. printTableOfContents( tab[attribute], TAG_PREFIX .. tagPrefix, indentLevel + 1, indentString )
 end
 
 local function getBasicDescription( attribute, moduleName, indent )
@@ -168,13 +171,12 @@ local function getFormattedSynopses( func, fullName, indentLevel, indentString )
 
 	local synopses = getSynopses( func, fullName )
 	for index, synopsis in ipairs( synopses ) do
-		-- Account for synopses that could span multiple lines
+		-- Accounts for synopses that could span multiple lines
 		table.insert( list, align.left(
-			-- Pad number for alignment
+			-- Pads number for alignment
 			indent .. align.pad( index .. '.', ' ', #indentString ) .. synopsis,
 			indentString:rep( indentLevel + 1 ),
-			nil,
-			true
+			nil, true
 		) )
 	end
 
@@ -189,7 +191,7 @@ local function formatTypedAttribute( value, indentLevel, indentString )
 	-- Indents the value name and type
 	local typedAttribute = align.left(
 		formatSpecial( value.name ) .. ': '
-		..  formatAsType( value.type ),
+		.. formatAsType( value.type ),
 		indent
 	) .. '\n\n'
 	-- Indents the value description
@@ -197,11 +199,10 @@ local function formatTypedAttribute( value, indentLevel, indentString )
 
 	-- Outputs a table's values
 	if value.table then
-		typedAttribute = typedAttribute .. '\n\n' .. concat( value.table, '\n\n',
-		function( _, nestedValue )
+		typedAttribute = typedAttribute .. '\n\n'
+		.. concat( value.table, '\n\n', function( _, nestedValue )
 			return formatTypedAttribute( nestedValue, indentLevel + 1, indentString )
 		end )
-
 	end
 
 	return typedAttribute
@@ -288,7 +289,7 @@ end
 
 -- Lists the functions of a module (or type) in a properly formatted list
 local function listModulesFunctions( functions, functionPrefix, indentLevel, indentString )
-	return printTableOfContents( functions, '', TAG_PREFIX .. functionPrefix, indentLevel, indentString )
+	return printTableOfContents( functions, TAG_PREFIX .. functionPrefix, indentLevel, indentString )
 end
 
 local function getFormattedModuleFunctions( tab, functionPrefix, indentLevel, indentString )
@@ -303,12 +304,9 @@ end
 
 -- Shows all of the functions of a module, then gives the formatted functions
 local function compileFormattedModuleFunctions(
-		module,
-		attribute,
-		parentName,
-		funcSeparator,
-		indentLevel,
-		indentString
+		module, attribute,
+		parentName, funcSeparator,
+		indentLevel, indentString
 	)
 	local indent
 	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
@@ -320,16 +318,12 @@ local function compileFormattedModuleFunctions(
 
 	-- Tag
 	.. align.right( formatAsTag( TAG_PREFIX .. parentName .. '-' .. attribute ) ) .. '\n'
-
-	-- Very basic description
+	-- Description
 	.. getBasicDescription( attribute, parentName, indent ) .. '\n\n'
-
 	-- List of functions
 	.. listModulesFunctions(
-		module[attribute],
-		parentName .. funcSeparator,
-		indentLevel + 1,
-		indentString
+		module[attribute], parentName .. funcSeparator,
+		indentLevel + 1, indentString
 	) .. '\n'
 
 	if #module[attribute] == 0 then
@@ -348,57 +342,22 @@ local function getFormattedType( Type, indentLevel, indentString )
 	local indent
 	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
 
-	-- Convert constructors, supertypes, and subtypes to regular format
-	Type.constructors = Type.constructors or {}
-	Type.supertypes = Type.supertypes or {}
-	Type.subtypes = Type.subtypes or {}
+	-- Handles Types without functions
 	Type.functions = Type.functions or {}
-
-	for i, constructor in ipairs( Type.constructors ) do
-		Type.constructors[i] = { name = constructor }
-	end
-	for i, supertype in ipairs( Type.supertypes ) do
-		Type.supertypes[i] = { name = supertype }
-	end
-	for i, subtype in ipairs( Type.subtypes ) do
-		Type.subtypes[i] = { name = subtype }
-	end
-
 	local typePrefix = Type.name .. ':'
 
 	local formattedType = subsection() .. '\n'
 	.. align.right( formatAsTag( TAG_PREFIX .. Type.name ) ) .. '\n'
 	.. align.left( formatAsReference( Type.name ) ) .. '\n\n'
 	.. align.left( Type.description, indent ) .. '\n\n'
-
 	-- Constructors
-	.. printBasicTableOfContents(
-		Type, 'constructors',
-		Type.name, '', '',
-		indentLevel + 1, indentString
-	) .. '\n\n'
-
+	.. printBasicTableOfContents( Type, 'constructors', '', indentLevel + 1, indentString ) .. '\n\n'
 	-- Supertypes
-	.. printBasicTableOfContents(
-		Type, 'supertypes',
-		Type.name, '', '',
-		indentLevel + 1, indentString
-	) .. '\n\n'
-
+	.. printBasicTableOfContents( Type, 'supertypes', '', indentLevel + 1, indentString ) .. '\n\n'
 	-- Subtypes
-	.. printBasicTableOfContents(
-		Type, 'subtypes',
-		Type.name, '', '',
-		indentLevel + 1, indentString
-	) .. '\n\n'
-
+	.. printBasicTableOfContents( Type, 'subtypes', '', indentLevel + 1, indentString ) .. '\n\n'
 	-- Functions (TOC)
-	.. printBasicTableOfContents(
-		Type, 'functions',
-		Type.name, '', typePrefix,
-		indentLevel + 1, indentString
-	)
-
+	.. printBasicTableOfContents( Type, 'functions', typePrefix, indentLevel + 1, indentString )
 	-- Function variants
 	if #Type.functions == 0 then
 		return formattedType
@@ -420,7 +379,7 @@ end
 
 -- List the types of a module in a properly formatted list
 local function listModulesTypes( types, indentLevel, indentString )
-	return printTableOfContents( types, '', TAG_PREFIX, indentLevel, indentString )
+	return printTableOfContents( types, TAG_PREFIX, indentLevel, indentString )
 end
 
 -- Shows all the formatted types of a module, then gives the formatted functions
@@ -468,7 +427,7 @@ local function getFormattedEnums( enums, indentLevel, indentString )
 end
 
 local function listModulesEnums( enums, indentLevel, indentString )
-	return printTableOfContents( enums, '', TAG_PREFIX, indentLevel, indentString )
+	return printTableOfContents( enums, TAG_PREFIX, indentLevel, indentString )
 end
 
 local function compileFormattedModuleEnums( module, parentName, indentLevel, indentString )
@@ -492,7 +451,7 @@ end
 -- }}}
 
 -- Combines all of a module's information
-local function compileModuleInformation( module, namePrefix , funcSeparator, indentLevel, indentString )
+local function compileModuleInformation( module, namePrefix, indentLevel, indentString )
 	local indent
 	indentLevel, indentString, indent = getIndentation( indentLevel, indentString )
 
@@ -505,31 +464,23 @@ local function compileModuleInformation( module, namePrefix , funcSeparator, ind
 	.. align.left( formatAsReference( fullName ) ) .. '\n\n'
 	.. align.left( module.description, indent ) .. '\n\n'
 	-- Table of contents
-	.. printTableOfContents( {
-		{ name = 'callbacks' },
-		{ name = 'enums' },
-		{ name = 'functions' },
-		{ name = 'types' },
-	}, '', TAG_PREFIX .. fullName .. '-', indentLevel + 1, indentString ) .. '\n\n'
+	.. printTableOfContents(
+		{ 'callbacks', 'enums', 'functions', 'types' },
+		TAG_PREFIX .. fullName .. '-', indentLevel + 1, indentString
+	) .. '\n\n'
 	-- Callbacks
 	.. compileFormattedModuleFunctions(
-		module,
-		'callbacks',
-		fullName,
-		funcSeparator,
-		indentLevel,
-		indentString
+		module, 'callbacks',
+		fullName, '.',
+		indentLevel, indentString
 	) .. '\n'
 	-- Enums
 	.. compileFormattedModuleEnums( module, fullName, indentLevel, indentString ) .. '\n'
 	-- Functions
 	.. compileFormattedModuleFunctions(
-		module,
-		'functions',
-		fullName,
-		funcSeparator,
-		indentLevel,
-		indentString
+		module, 'functions',
+		fullName, '.',
+		indentLevel, indentString
 	) .. '\n'
 	-- Types
 	.. compileFormattedModuleTypes( module, fullName, indentLevel, indentString ) .. '\n'
@@ -538,10 +489,10 @@ end
 -- Gives the love module basic information
 api.name = 'love'
 api.description = 'The LÖVE framework'
-print( compileModuleInformation( api, '', '.' ) )
+print( compileModuleInformation( api, '' ) )
 
 for _, module in ipairs( api.modules ) do
-	print( compileModuleInformation( module, 'love.', '.' ) )
+	print( compileModuleInformation( module, 'love.' ) )
 end
 
 -- Prints modeline (spelling/capitalization errors are ugly; use correct file type)
