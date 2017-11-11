@@ -32,11 +32,6 @@ local function newLine( currentLine, fill, textWidth, determineSpacing )
 	return returnString .. '\n'
 end
 
--- Determine the number of spaces required to right-align currentLine
-local function determineRightAlignSpacing( currentLine, textWidth )
-	return textWidth - #currentLine
-end
-
 -- Loop over words (separated by spaces)
 -- Add space to beginning of line (instead of end) to make linebreaks easier to determine
 local function loopOverTextByWord( line, fill, textWidth, spacingFunc )
@@ -99,8 +94,12 @@ local function loopOverTextByLine( text, fill, textWidth, spacingFunc )
 	return output:match( '^(.-)\n$' )
 end
 
--- Right-align text to a given width
+-- Determine the number of spaces required to right-align currentLine
+local function determineRightAlignSpacing( currentLine, textWidth )
+	return textWidth - #currentLine
+end
 
+-- Right-align text to a given width
 -- TODO: allow multi-character fill
 -- fill is what to use to pad the width of the text (must be one character)
 local function alignRight( text, fill, textWidth )
@@ -110,7 +109,7 @@ local function alignRight( text, fill, textWidth )
 	return loopOverTextByLine( text, fill, textWidth, determineRightAlignSpacing )
 end
 
--- left-align text to a given width
+-- Left-align text to a given width
 local function alignLeft( text, indentStr, textWidth, doNotIndentFirstLine )
 	indentStr = indentStr or ''
 	doNotIndentFirstLine = doNotIndentFirstLine or false
