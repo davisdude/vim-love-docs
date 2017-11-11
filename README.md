@@ -28,17 +28,11 @@ Move the directory containing the generated plugin code to `vimfiles\bundle` (Wi
 
 ### Vundle:
 
-There are two ways you can install vim-love-docs with Vundle: either [fork the repo](#forking) or [install it on your system](#install-it-on-your-system).
+Point Vundle to the [`build`](https://github.com/davisdude/vim-love-docs/tree/build) branch of the repository:
 
-#### Forking
-
-To fork the repo, follow the instructions [here](https://help.github.com/articles/fork-a-repo/). After you've created a local clone of your fork, [build the plugin](#building-the-plugin) then commit those changes to *your* fork.
-
-Then, you may use the plugin just as you use any other plugin with Vundle: `Plugin 'YOURUSERNAME/vim-love-docs'`
-
-#### Install it on Your System
-
-If you don't want to fork the repository, you can still use Vundle by calling `Plugin 'file:///path/to/plugin'`. See `:help vundle` for more.
+```
+Plugin 'https://github.com/davisdude/vim-love-docs/tree/build'
+```
 
 ### No manager:
 
