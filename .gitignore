@@ -1,6 +1,3 @@
-/doc/
-/plugin/
-/after/
 *.db
 /src/love-api/
 /src/doc/love-api/
