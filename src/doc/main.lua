@@ -498,6 +498,7 @@ local function compileFormattedModuleEnums( module, parentName, indentLevel, ind
 end
 -- }}}
 
+-- Output {{{
 -- Combines all of a module's information
 local function compileModuleInformation( module, namePrefix, indentLevel, indentString )
 	local indent
@@ -540,6 +541,34 @@ local function compileModuleInformation( module, namePrefix, indentLevel, indent
 	.. compileFormattedModuleTypes( module, fullName, indentLevel, indentString ) .. '\n'
 end
 
+-- Header {{{
+print( ( [[
+*love.txt* *love2d*                 Documentation for the LOVE game framework.
+
+                        _       o__o __      __ ______ ~
+                       | |     / __ \\ \    / //  ____\~
+                       | |    | |  | |\ \  / / | |__   ~
+                       | |    | |  | | \ \/ /  |  __|  ~
+                       | |____| |__| |  \  /   | |____ ~
+                       \______|\____/    \/    \______/~
+
+                   The complete solution for Vim with LOVE.
+                   Includes highlighting and documentation.
+
+For LOVE (http://love2d.org) version %s.
+
+Generated from
+
+    https://github.com/love2d-community/love-api
+
+using
+
+    https://github.com/davisdude/vim-love-docs
+
+Made by Davis Claiborne under the MIT license. See LICENSE.md for more info.
+]] ):format( api.version ) )
+-- }}}
+
 -- Gives the love module basic information
 api.name = 'love'
 api.description = 'The LÖVE framework'
@@ -552,3 +581,4 @@ end
 -- Prints modeline (spelling/capitalization errors are ugly; use correct file type)
 -- (Uses concat to prevent vim from interpreting THIS as a modeline)
 print( ' vim' .. ':nospell:ft=help:' )
+-- }}}
