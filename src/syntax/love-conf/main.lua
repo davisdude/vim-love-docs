@@ -34,7 +34,7 @@ local function extractData( tab, index )
 							confstr = confstr:sub( 1, -1 ) .. '\\)\\|'
 						end
 					end
-					print( confstr:sub( 1, -3 ) .. '"ms=s+1 containedin=loveconfregion' )
+					print( confstr:sub( 1, -3 ) .. '"ms=s+1 containedin=loveconfregion,luaFunctionBlock' )
 				end
 			end
 			if type( v ) == 'table' then extractData( v ) end
