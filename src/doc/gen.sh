@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 # Set the current directory to the location of this script
 pushd "$(dirname "$0")"
