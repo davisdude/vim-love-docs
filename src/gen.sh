@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the current directory to the location of this script
-pushd "$(dirname "$0")"
+pushd "$(dirname "$0")" > /dev/null
 
 # Quit on errors and unset vars
 set -o errexit
@@ -26,8 +26,8 @@ cp -rf love-api syntax
 cp -rf love-api doc
 
 # Run the generation scripts
-doc/gen.sh
-syntax/gen.sh
+source doc/gen.sh
+source syntax/gen.sh
 
 # Update the plugin
 rm -rf ../plugin
@@ -36,4 +36,4 @@ cp -rf plugin ../
 # Remove love-api
 rm -rf love-api
 
-popd
+popd > /dev/null
