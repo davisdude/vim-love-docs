@@ -47,7 +47,7 @@ local function formatSpecial( str )
 end
 
 local function formatAsType( str )
-	return ('<%s>'):format( str )
+	return ('|%s|'):format( str )
 end
 
 local function concat( tab, sep, func )
