@@ -27,18 +27,9 @@ end
 local function getLoveTypes( tab )
 	for _, attribute in ipairs{ 'enums', 'types' } do
 		for _, t in ipairs( tab[attribute] or {} ) do
-			table.insert( LOVE_TYPES, t.name )
+			LOVE_TYPES[t.name] = true
 		end
 	end
-end
-
-local function isInList( key, tab )
-	for _, v in ipairs( tab ) do
-		if v == key then
-			return true
-		end
-	end
-	return false
 end
 -- }}}
 
@@ -66,7 +57,7 @@ local function formatSpecial( str )
 end
 
 local function formatAsType( str )
-	if isInList( str, LOVE_TYPES ) then
+	if LOVE_TYPES[str] then
 		return ('|%s|'):format( str )
 	else
 		return ('|lrv-%s|'):format( str )
