@@ -162,7 +162,7 @@ end
 local function getBasicDescription( attribute, moduleName, indent )
 	indent = indent or ''
 	return align.left(
-		'The ' .. attribute .. ' of ' .. formatAsReference( moduleName) .. ':',
+		'The ' .. attribute .. ' of ' .. formatAsReference( moduleName ) .. ':',
 		indent
 	)
 end
