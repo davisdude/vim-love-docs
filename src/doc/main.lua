@@ -11,6 +11,8 @@ align.setDefaultWidth( PAGE_WIDTH )
 local TOC_NAME_WIDTH_LIMIT = 40
 local TOC_NAME_REF_SPACING = 2
 local TOC_REF_WIDTH_LIMIT = PAGE_WIDTH - TOC_NAME_WIDTH_LIMIT - TOC_NAME_REF_SPACING
+
+local LOVE_TYPES = {}
 -- }}}
 
 -- Misc. functions {{{
@@ -20,6 +22,23 @@ local function getIndentation( indentLevel, indentString, defaultIndentLevel )
 	local indent = indentString:rep( indentLevel )
 
 	return indentLevel, indentString, indent
+end
+
+local function getLoveTypes( tab )
+	for _, attribute in ipairs{ 'enums', 'types' } do
+		for _, t in ipairs( tab[attribute] or {} ) do
+			table.insert( LOVE_TYPES, t.name )
+		end
+	end
+end
+
+local function isInList( key, tab )
+	for _, v in ipairs( tab ) do
+		if v == key then
+			return true
+		end
+	end
+	return false
 end
 -- }}}
 
@@ -47,7 +66,11 @@ local function formatSpecial( str )
 end
 
 local function formatAsType( str )
-	return ('|%s|'):format( str )
+	if isInList( str, LOVE_TYPES ) then
+		return ('|%s|'):format( str )
+	else
+		return ('|lrv-%s|'):format( str )
+	end
 end
 
 local function concat( tab, sep, func )
@@ -568,6 +591,12 @@ using
 Made by Davis Claiborne under the MIT license. See LICENSE.md for more info.
 ]] ):format( api.version ) )
 -- }}}
+
+-- Gets table information to know how to format types
+getLoveTypes( api )
+for _, module in ipairs( api.modules ) do
+	getLoveTypes( module )
+end
 
 -- Gives the love module basic information
 api.name = 'love'
