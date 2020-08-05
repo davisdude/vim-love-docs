@@ -13,6 +13,18 @@ local TOC_NAME_REF_SPACING = 2
 local TOC_REF_WIDTH_LIMIT = PAGE_WIDTH - TOC_NAME_WIDTH_LIMIT - TOC_NAME_REF_SPACING
 
 local LOVE_TYPES = {}
+
+local LUA_TYPES = {
+	['boolean']        = '|lrv-boolean|',
+	['function']       = '|lrv-function|',
+	['nil']            = '|lrv-nil|',
+	['number']         = '|lrv-number|',
+	['string']         = '|lrv-string|',
+	['table']          = '|lrv-table|',
+	['thread']         = '|lrv-thread|',
+	['userdata']       = '|lrv-userdata|',
+	['light userdata'] = '|lrv-lightuserdata|',
+}
 -- }}}
 
 -- Misc. functions {{{
@@ -58,9 +70,11 @@ end
 
 local function formatAsType( str )
 	if LOVE_TYPES[str] then
-		return ('|%s|'):format( str )
+		return ('|love-%s|'):format( str )
+	elseif LUA_TYPES[str] then
+		return LUA_TYPES[str]
 	else
-		return ('|lrv-%s|'):format( str )
+		return ('<%s>'):format( str )
 	end
 end
 
