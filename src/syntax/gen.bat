@@ -14,6 +14,9 @@ REM Update after\syntax
 rd /q /s ..\..\after\syntax
 mkdir ..\..\after\syntax
 
+REM Copy nongenerated help syntax
+copy help.vim ..\..\after\syntax\.
+
 REM Create syntax files
 !lua! lua\main.lua > ..\..\after\syntax\lua.vim
 !lua! love-conf\main.lua > ..\..\after\syntax\love-conf.vim

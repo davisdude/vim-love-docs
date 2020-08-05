@@ -15,6 +15,9 @@ cp -rf love-api lua
 rm -rf ../../after/syntax
 mkdir -p ../../after/syntax
 
+# Copy nongenerated help syntax
+cp help.vim ../../after/syntax/.
+
 # Create syntax files
 $lua lua/main.lua > ../../after/syntax/lua.vim
 $lua love-conf/main.lua > ../../after/syntax/love-conf.vim
