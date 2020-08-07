@@ -11,6 +11,20 @@ align.setDefaultWidth( PAGE_WIDTH )
 local TOC_NAME_WIDTH_LIMIT = 40
 local TOC_NAME_REF_SPACING = 2
 local TOC_REF_WIDTH_LIMIT = PAGE_WIDTH - TOC_NAME_WIDTH_LIMIT - TOC_NAME_REF_SPACING
+
+local LOVE_TYPES = {}
+
+local LUA_TYPES = {
+	['boolean']        = '|lrv-boolean|',
+	['function']       = '|lrv-function|',
+	['nil']            = '|lrv-nil|',
+	['number']         = '|lrv-number|',
+	['string']         = '|lrv-string|',
+	['table']          = '|lrv-table|',
+	['thread']         = '|lrv-thread|',
+	['userdata']       = '|lrv-userdata|',
+	['light userdata'] = '|lrv-lightuserdata|',
+}
 -- }}}
 
 -- Misc. functions {{{
@@ -20,6 +34,14 @@ local function getIndentation( indentLevel, indentString, defaultIndentLevel )
 	local indent = indentString:rep( indentLevel )
 
 	return indentLevel, indentString, indent
+end
+
+local function getLoveTypes( tab )
+	for _, attribute in ipairs{ 'enums', 'types' } do
+		for _, t in ipairs( tab[attribute] or {} ) do
+			LOVE_TYPES[t.name] = true
+		end
+	end
 end
 -- }}}
 
@@ -47,7 +69,13 @@ local function formatSpecial( str )
 end
 
 local function formatAsType( str )
-	return ('<%s>'):format( str )
+	if LOVE_TYPES[str] then
+		return ('|love-%s|'):format( str )
+	elseif LUA_TYPES[str] then
+		return LUA_TYPES[str]
+	else
+		return ('<%s>'):format( str )
+	end
 end
 
 local function concat( tab, sep, func )
@@ -139,7 +167,7 @@ end
 local function getBasicDescription( attribute, moduleName, indent )
 	indent = indent or ''
 	return align.left(
-		'The ' .. attribute .. ' of ' .. formatAsReference( moduleName) .. ':',
+		'The ' .. attribute .. ' of ' .. formatAsReference( moduleName ) .. ':',
 		indent
 	)
 end
@@ -568,6 +596,12 @@ using
 Made by Davis Claiborne under the MIT license. See LICENSE.md for more info.
 ]] ):format( api.version ) )
 -- }}}
+
+-- Gets table information to know how to format types
+getLoveTypes( api )
+for _, module in ipairs( api.modules ) do
+	getLoveTypes( module )
+end
 
 -- Gives the love module basic information
 api.name = 'love'
